@@ -2,12 +2,15 @@
 
 - type: github
   icon: "fab fa-github"
+  url: "https://github.com/cleissonbarbosa"
 
 - type: twitter
   icon: "fa-brands fa-x-twitter"
+  url: "https://x.com/kekeualencar"
 
 - type: email
   icon: "fas fa-envelope"
+  url: "mailto:cleissonbarbosa68@gmail.com"
   noblank: true # open link in current tab
 
 - type: rss
