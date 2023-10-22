@@ -41,6 +41,16 @@ Then clone it to your local machine and run:
 $ bundle
 ```
 
+## Local Development
+
+To start the local server for previewing the site, please run:
+
+```console
+$ bundle exec jekyll s
+```
+
+Then open a browser and visit to <http://localhost:4000>.
+
 ## Usage
 
 Please see the [theme's docs](https://github.com/cotes2020/jekyll-theme-chirpy#documentation).
