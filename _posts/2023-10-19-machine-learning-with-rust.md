@@ -42,11 +42,11 @@ and you will need to install the following dependencies:
 cargo add ndarray linfa linfa-linear
 ```
 
-[**ndarray**](https://docs.rs/ndarray/latest/ndarray/) is a library for scientific computing, and [**linfa**](https://docs.rs/linfa/latest/linfa/) is a library for machine learning in Rust.
+[**ndarray**](https://docs.rs/ndarray/latest/ndarray/){:target="_blank"} is a library for scientific computing, and [**linfa**](https://docs.rs/linfa/latest/linfa/){:target="_blank"} is a library for machine learning in Rust.
 
 Once you have installed the dependencies, you can start writing machine learning code in Rust. The following code shows a simple example of a linear regression algorithm in Rust:
 
-> **Note:** If you don't know what linear regression is, see [this article](https://en.wikipedia.org/wiki/Linear_regression).
+> **Note:** If you don't know what linear regression is, see [this article](https://en.wikipedia.org/wiki/Linear_regression){:target="_blank"}.
 
 
 ```rust
@@ -95,8 +95,10 @@ This article has provided a brief introduction to machine learning with Rust. We
 
 If you want to learn more about machine learning with Rust, there are a number of resources available online and in books. We recommend the following resources:
 
-- [The Rust Machine Learning Book](https://www.amazon.com/Practical-Machine-Learning-Rust-Applications/dp/1484251202)
-- [Machine Learning for Rust Programmers](https://www.freecodecamp.org/news/how-to-build-a-machine-learning-model-in-rust/)
-- [Linear Regression in Rust](https://medium.com/swlh/machine-learning-in-rust-linear-regression-edef3fb65f93)
+- [The Rust Machine Learning Book](https://www.amazon.com/Practical-Machine-Learning-Rust-Applications/dp/1484251202){:target="_blank"}
+- [Machine Learning for Rust Programmers](https://www.freecodecamp.org/news/how-to-build-a-machine-learning-model-in-rust/){:target="_blank"}
+- [Linear Regression in Rust](https://medium.com/swlh/machine-learning-in-rust-linear-regression-edef3fb65f93){:target="_blank"}
+
+see the code for this project on [github](https://github.com/cleissonbarbosa/ml-linear-regression){:target="_blank"}
 
 We hope this article has been helpful. Happy coding!
