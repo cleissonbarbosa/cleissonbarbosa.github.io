@@ -9,19 +9,17 @@ pin: true
 
 ## Introduction to Machine Learning with Rust
 
+This article will provide a brief introduction to machine learning with Rust. We will cover the basics of machine learning, and we will show you how to get started with some of the most popular machine learning algorithms in Rust.
+
 ---
+
+### What is machine learning?
 
 Machine learning is a field of computer science that gives computers the ability to learn without being explicitly programmed. In other words, machine learning algorithms can learn from data and improve their performance over time without being explicitly told what to do.
 
+### Why rust for machine learning?
+
 Rust is a modern programming language that is well-suited for machine learning. It is fast, safe, and expressive, and it has a growing ecosystem of machine learning libraries.
-
-This article will provide a brief introduction to machine learning with Rust. We will cover the basics of machine learning, and we will show you how to get started with some of the most popular machine learning algorithms in Rust.
-
-## What is machine learning?
-
----
-
-Machine learning is a subset of artificial intelligence (AI) that allows computers to learn without being explicitly programmed. Machine learning algorithms can learn from data and improve their performance over time without being explicitly told what to do.
 
 #### There are three main types of machine learning:
 
@@ -32,14 +30,19 @@ Getting started with machine learning in Rust
 
 ## Getting started with machine learning in Rust
 
-To get started with machine learning in Rust, you will need to install the following dependencies:
+To get started with machine learning in Rust, create a new project with the following command:
 
 ```bash
-cargo install --features=nightly ndarray
-cargo install linfa
+cargo new my-project
 ```
 
-[**ndarray**](https://docs.rs/ndarray/latest/ndarray/) is a library for scientific computing in Rust, and [**linfa**](https://docs.rs/linfa/latest/linfa/) is a library for machine learning in Rust.
+and you will need to install the following dependencies:
+
+```bash
+cargo add ndarray linfa linfa-linear
+```
+
+[**ndarray**](https://docs.rs/ndarray/latest/ndarray/) is a library for scientific computing, and [**linfa**](https://docs.rs/linfa/latest/linfa/) is a library for machine learning in Rust.
 
 Once you have installed the dependencies, you can start writing machine learning code in Rust. The following code shows a simple example of a linear regression algorithm in Rust:
 
@@ -47,24 +50,33 @@ Once you have installed the dependencies, you can start writing machine learning
 
 
 ```rust
-use linfa::linear_models::LinearRegression;
-use ndarray::Array1;
+extern crate linfa;
+extern crate ndarray;
+
+use linfa::prelude::*;
+use linfa::{traits::Fit, DatasetBase};
+use linfa_linear::LinearRegression;
+use ndarray::prelude::*;
 
 fn main() {
-    // Create a new linear regression model
-    let mut model = LinearRegression::new();
+    // Example data
+    let x = arr2(&[[1.0], [2.0], [3.0], [4.0], [5.0]]);
+    let y = arr1(&[2.0, 4.0, 5.5, 7.0, 8.5]);
 
-    // Train the model on some data
-    let x = Array1::from_vec(vec![1.0, 2.0, 3.0, 4.0]);
-    let y = Array1::from_vec(vec![2.0, 4.0, 6.0, 8.0]);
+    // Create a DatasetBase from the data
+    let dataset = DatasetBase::new(x, y);
 
-    model.fit(&x, &y);
+    // Create a linear regression model
+    let model = LinearRegression::default();
 
-    // Make a prediction
-    let prediction = model.predict(&x[0]);
+    // Fit the model to the data
+    let trained_model = model.fit(&dataset).expect("Error fitting the model");
 
-    // Print the prediction
-    println!("Prediction: {}", prediction);
+    // Make predictions using the trained model
+    let x_pred = arr2(&[[6.0]]);
+    let y_pred = trained_model.predict(&x_pred);
+
+    println!("Forecast: {:.2}", y_pred[0]);
 }
 ```
 
@@ -73,7 +85,7 @@ This code will train a linear regression model on some data and then make a pred
 ```bash
 cargo run
 ```
-This will print the prediction to the console.
+This will print the prediction to the console, which should be `10.20`.
 
 ## Conclusion
 
