@@ -3,7 +3,7 @@ title: Machine Learning with Rust (🦀+🤖=😍)
 author: cleissonb
 date: 2023-10-19 00:00:00 -0300
 image: 
-    path: /assets/img/posts/d6372536-31b5-4f2a-9de7-e1c4bc3f2069.jpg
+    path: /assets/img/posts/d6372536-31b5-4f2a-9de7-e1c4bc3f2069.png
     alt: Machine Learning with Rust
 categories: [Rust, Machine Learning]
 tags: [rust, ml, machine learning, ai, artificial intelligence]
