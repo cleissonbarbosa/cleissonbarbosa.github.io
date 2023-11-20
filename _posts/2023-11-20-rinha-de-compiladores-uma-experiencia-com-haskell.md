@@ -14,7 +14,7 @@ pin: true
 
 Neste artigo, eu relato minha participação na Rinha de Compiladores, uma competição online de programação que teve como objetivo escrever um compilador para uma linguagem criada apenas para o evento chamada rinha, que era parecida com JavaScript. A competição foi organizada por [Gabrielle Guimarães de Oliveira](https://github.com/aripiprazole){:target="_blank"} e [Sofia Rodrigues](https://github.com/algebraic-sofia){:target="_blank"}, e contou com a participação de mais de 150 competidores de diferentes níveis de experiência e conhecimento.
 
-Escolhi fazer 3 projetos de compiladores em 3 linguagens diferentes mas com abordagens muito parecidas, nesse artigo vamos nos concentrar em apenas um desses projetos, vamos falar da linguagem Haskell, escolhi o Haskell porque achei que seria interessante usar uma linguagem puramente funcional para esse desafio, além de outras peculiaridades bem interessantes da linguagem. Neste artigo, eu descrevo algumas des principais características da linguagem rinha, as ferramentas e bibliotecas que eu utilizei para criar meu compilador, e os resultados que eu obtive.
+Escolhi fazer 3 projetos de compiladores em 3 linguagens diferentes mas com abordagens muito parecidas, nesse artigo vamos nos concentrar em apenas um desses projetos, vamos falar da linguagem Haskell, escolhi o Haskell porque achei que seria interessante usar uma linguagem puramente funcional para esse desafio, além de outras peculiaridades bem interessantes da linguagem. Neste artigo, eu descrevo algumas das principais características da linguagem rinha, as ferramentas e bibliotecas que eu utilizei para criar meu compilador, e os resultados que eu obtive.
 
 ## A Linguagem Rinha
 
