@@ -10,10 +10,6 @@ tags: [haskell, compiler, compiladores, rinha, compiler-optimization, compiler-a
 pin: true
 ---
 
-# Rinha de Compiladores: Uma Experiência com Haskell
-
----
-
 ## Introdução
 
 Neste artigo, eu relato minha participação na Rinha de Compiladores, uma competição online de programação que teve como objetivo escrever um compilador para uma linguagem criada apenas para o evento chamada rinha, que era parecida com JavaScript. A competição foi organizada por [Gabrielle Guimarães de Oliveira](https://github.com/aripiprazole){:target="_blank"} e [Sofia Rodrigues](https://github.com/algebraic-sofia){:target="_blank"}, e contou com a participação de mais de 150 competidores de diferentes níveis de experiência e conhecimento.
