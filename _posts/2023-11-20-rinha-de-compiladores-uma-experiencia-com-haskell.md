@@ -46,7 +46,7 @@ print(x) // imprime 5
 
 ## O Compilador em Haskell
 
-Para implementar meu compilador em Haskell, utilizei as seguintes ferramentas e bibliotecas:
+Para implementar [meu compilador em Haskell](https://github.com/cleissonbarbosa/rinha-compiladores-haskell/){:target="_blank"}, utilizei as seguintes ferramentas e bibliotecas:
 
 1. **GHC**: o compilador de Haskell mais usado e completo, que oferece várias extensões e otimizações da linguagem.
 
@@ -90,3 +90,10 @@ Os critérios foram baseados em sistemas de pontos e pesos sobre determinados as
 | 8 | coproduto | ⚡Zig | Tree-Walker | 68647 |
 | 9 | Adriano dos Santos Fernandes | C++ | Tree-Walker | 68309 |
 | 10 | Ítalo Paulino (irbp) | Dart 🎯 | Tree-Walker | 67919 |
+
+## Links
+
+- [Repositório do meu compilador em Haskell](https://github.com/cleissonbarbosa/rinha-compiladores-haskell/){:target="_blank"}
+- [Repositório da competição](https://github.com/aripiprazole/rinha-de-compiler){:target="_blank"}
+- [Aprenda mais sobre Haskell](https://www.haskell.org/){:target="_blank"}
+- [Aprenda mais sobre compiladores](https://en.wikipedia.org/wiki/Compiler){:target="_blank"}
