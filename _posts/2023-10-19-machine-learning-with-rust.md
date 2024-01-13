@@ -7,7 +7,7 @@ image:
     alt: Machine Learning with Rust
 categories: [Rust, Machine Learning]
 tags: [rust, ml, machine learning, ai, artificial intelligence]
-pin: true
+pin: false
 ---
 
 ## Introduction to Machine Learning with Rust

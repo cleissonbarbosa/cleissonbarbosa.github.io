@@ -7,7 +7,7 @@ image:
     alt: "Rinha de Compiladores: Uma Experiência com Haskell"
 categories: [Haskell, Compiladores, Competição]
 tags: [haskell, compiler, compiladores, rinha, compiler-optimization, compiler-architecture, compiler-construction]
-pin: true
+pin: false
 ---
 
 ## Introdução
