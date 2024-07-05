@@ -7,7 +7,7 @@ image:
     alt: "Desafiando Limites com Rust e WebAssembly na Rinha de Frontend"
 categories: [Rust, Frontend, Competição]
 tags: [rust, rinha, frontend, front-end, webassembly, WebAssembly, wasm, trunk]
-pin: true
+pin: false
 ---
 
 ## Introdução
