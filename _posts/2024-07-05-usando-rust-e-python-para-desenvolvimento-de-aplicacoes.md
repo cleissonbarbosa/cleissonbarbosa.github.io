@@ -85,7 +85,7 @@ import my_rust_lib
 result = my_rust_lib.sum_as_string(5, 3)
 print(result)  # Output: 8
 ```
-> [!NOTE]
+
 > Veja o projeto completo [aqui](https://github.com/cleissonbarbosa/integration-rust-python){:target="_blank"}.
 
 ## Entendendo os componentes utilizados
