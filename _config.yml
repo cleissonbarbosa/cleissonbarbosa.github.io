@@ -49,8 +49,14 @@ google_site_verification: PJ02GhzMIGYIl7v-lJkcJLDkOErEJUaFtkNgZqiah9A # fill in 
 # ↑ --------------------------
 # The end of `jekyll-seo-tag` settings
 
-google_analytics:
-  id: G-79H465PMM8 # fill in your Google Analytics ID
+analytics:
+  google:
+    id: G-79H465PMM8 # fill in your Google Analytics ID
+  goatcounter:
+    id: cleissonbarbosa
+  
+pageviews:
+  provider: goatcounter
 
 # Prefer color scheme setting.
 #
@@ -70,7 +76,7 @@ theme_mode: # [light|dark]
 # will be added to all image (site avatar & posts' images) paths starting with '/'
 #
 # e.g. 'https://cdn.com'
-img_cdn:
+cdn:
 
 # the avatar on sidebar, support local or CORS resources
 avatar: /assets/img/avatar.jpg
@@ -79,7 +85,7 @@ avatar: /assets/img/avatar.jpg
 toc: true
 
 comments:
-  active: giscus
+  provider: giscus
   # The active options are as follows:
   disqus:
     shortname: # fill with the Disqus shortname. › https://help.disqus.com/en/articles/1717111-what-s-a-shortname
