@@ -84,7 +84,7 @@ impl FerrousDB {
 
 - Utilizamos a crate [serde](https://docs.rs/serde/latest/serde/){:target="\_blank"} para serialização e desserialização de dados.
 - Utilizamos a estrutura `Table` para representar uma tabela no banco de dados (para ver a implementação completa, consulte o código em [`src/core/table.rs`](https://github.com/cleissonbarbosa/ferrousDB/tree/main/src/core/table.rs){:target="\_blank"})
-- Utilizamos a estrutura __BPTree__ para representar um índice B+ (para ver a implementação completa, consulte o código em [`src/core/bptree.rs`](https://github.com/cleissonbarbosa/ferrousDB/tree/main/src/core/table.rs){:target="\_blank"}).
+- Utilizamos a estrutura __BPTree__ para representar um índice B+ (para ver a implementação completa, consulte o código em [`src/core/bptree.rs`](https://github.com/cleissonbarbosa/ferrousDB/tree/main/src/core/bptree.rs){:target="\_blank"}).
     - _Índices são estruturas de dados que melhoram a velocidade das operações de recuperação de dados em uma tabela. O B+ Tree é uma das estruturas mais comuns utilizadas para esse fim, devido à sua eficiência em operações de busca, inserção e remoção._
 
 ## 2. Implementação do REPL
