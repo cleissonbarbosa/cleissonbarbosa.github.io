@@ -48,7 +48,7 @@ cd ferrous_db
 
 Estrutura inicial básica do banco de dados:
 
-```Rust
+```rust
 #[derive(Serialize, Deserialize, Clone, PartialEq)]
 /// Represents the FerrousDB database.
 pub struct FerrousDB {
