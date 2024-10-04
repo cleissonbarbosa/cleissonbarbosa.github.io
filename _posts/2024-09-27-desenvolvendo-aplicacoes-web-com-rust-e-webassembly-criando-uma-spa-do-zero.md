@@ -7,7 +7,7 @@ image:
   alt: "Desenvolvendo Aplicações Web com Rust e WebAssembly: Criando uma SPA do Zero"
 categories: [Rust, Frontend]
 tags: [rust, desenvolvimento, frontend, front-end, webassembly, WebAssembly, wasm, trunk]
-pin: true
+pin: false
 ---
 
 ## Introdução
