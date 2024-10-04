@@ -7,7 +7,7 @@ image:
   alt: "Construindo um banco de dados inspirado no SQLite em Rust - Parte 1"
 categories: [Rust]
 tags: [rust, database, desenvolvimento, sqlite, ferrousdb]
-pin: true
+pin: false
 ---
 
 ## Introdução
