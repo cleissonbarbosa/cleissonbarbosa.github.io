@@ -11,7 +11,6 @@
 - type: email
   icon: "fas fa-envelope"
   url: "mailto:cleissonbarbosa68@gmail.com"
-  noblank: true # open link in current tab
 
 - type: rss
   icon: "fas fa-rss"

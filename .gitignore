@@ -24,4 +24,5 @@ package-lock.json
 
 # Misc
 _sass/dist
+_sass/vendors
 assets/js/dist
