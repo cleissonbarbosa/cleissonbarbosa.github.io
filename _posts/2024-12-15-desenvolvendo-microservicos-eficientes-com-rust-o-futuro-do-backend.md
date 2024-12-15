@@ -1,7 +1,7 @@
 ---
 title: "Desenvolvendo Microserviços Eficientes com Rust: O Futuro do Backend"
 author: cleissonb
-date: 2024-01-15 00:00:00 -0300
+date: 2024-12-15 00:00:00 -0300
 image:
   path: /assets/img/posts/ff4b426a-9a47-4243-b4c2-465c18f3e49c.png
   alt: "Desenvolvendo Microserviços Eficientes com Rust: O Futuro do Backend"
