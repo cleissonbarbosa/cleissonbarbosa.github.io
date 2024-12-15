@@ -7,7 +7,7 @@ image:
   alt: "Desenvolvendo Microserviços Eficientes com Rust: O Futuro do Backend"
 categories: [Rust, Backend]
 tags: [rust, microserviços, backend, desenvolvimento, performance, eficiência]
-pin: false
+pin: true
 ---
 
 ## Introdução
