@@ -7,7 +7,7 @@ image:
   alt: "Deep Learning com Haskell"
 categories: [Haskell, Deep Learning]
 tags: [haskell, deep learning, machine learning, redes neurais, desenvolvimento]
-pin: false
+pin: true
 ---
 
 ## Introdução
