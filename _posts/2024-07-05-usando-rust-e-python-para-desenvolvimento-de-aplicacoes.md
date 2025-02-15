@@ -12,7 +12,13 @@ pin: false
 
 ## Introdução
 
-Integrar Rust com Python pode unir o desempenho do Rust com a simplicidade do Python. Usando ferramentas como [maturin](https://github.com/PyO3/maturin){:target="_blank"} e [pyo3](https://docs.rs/pyo3/latest/pyo3/){:target="_blank"}, é possível criar extensões em Rust que podem ser chamadas diretamente de um código Python. Neste artigo, veremos como fazer essa integração com exemplos práticos.
+Durante minha jornada como desenvolvedor, sempre busquei maneiras de combinar o melhor dos mundos. Python é incrível pela sua simplicidade e rico ecossistema, enquanto Rust se destaca pela performance e segurança. Por que não juntar os dois? Foi essa curiosidade que me levou a explorar a integração entre essas linguagens.
+
+Neste artigo, vou compartilhar não só o código, mas também as descobertas e desafios que enfrentei ao criar extensões em Rust para Python. Você vai ver que, com as ferramentas certas como [maturin](https://github.com/PyO3/maturin){:target="_blank"} e [pyo3](https://docs.rs/pyo3/latest/pyo3/){:target="_blank"}, essa integração é mais simples do que parece.
+
+## Como Começou Essa Ideia?
+
+Tudo começou quando me deparei com um gargalo de performance em um projeto Python. O código funcionava, mas não tão rápido quanto precisávamos. Em vez de reescrever tudo em Rust, pensei: "E se eu pudesse manter a facilidade do Python e usar Rust apenas nas partes críticas?"
 
 ## Passo 1: Configurar o Ambiente
 

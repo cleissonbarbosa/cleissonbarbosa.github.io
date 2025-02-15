@@ -12,26 +12,25 @@ pin: false
 
 ## Introdução
 
-Você já se perguntou como funciona um banco de dados relacional por baixo dos panos? Embora muitos desenvolvedores utilizem bancos como SQLite, MySQL ou PostgreSQL diariamente, entender a mecânica interna desses sistemas pode ser um desafio. Mesmo com uma certa experiência em desenvolvimento de software, ainda considero que muitos aspectos desses bancos são uma caixa preta.
-Foi com esse espírito de curiosidade que decidi embarcar em um projeto ambicioso: construir um banco de dados similar ao SQLite, mas escrito em Rust, o que estou chamando de __FerrousDB__ (eu sei, a escolha do nome é duvidosa).
+Sempre me intrigou o funcionamento interno dos bancos de dados. Como desenvolvedor, uso SQLite, MySQL e PostgreSQL diariamente, mas sempre tive aquela coceira de curiosidade: "Como isso realmente funciona por dentro?". Depois de anos tratando bancos de dados como caixas pretas, decidi que era hora de abrir uma e ver suas engrenagens.
+
+Foi com esse espírito de exploração que iniciei o projeto __FerrousDB__ (sim, o nome é um trocadilho com "ferrugem" em inglês - não me julguem!). A ideia era não apenas replicar o SQLite, mas realmente entender cada decisão de design, cada estrutura de dados, cada algoritmo.
 
 > "O que não posso criar, não entendo." – Richard Feynman
 
 ## Objetivos do Projeto
 
-Este projeto é, acima de tudo, uma jornada de aprendizado. Quero responder perguntas como:
+Este projeto nasceu da minha curiosidade pessoal. Queria respostas para perguntas que me perseguiam há anos:
 
-- Em que formato os dados são armazenados, tanto em memória quanto em disco?
-- Como ocorre a transição de dados da memória para o disco?
-- Por que há apenas uma chave primária por tabela?
-- Como funciona o rollback de uma transação?
-- Como os índices são estruturados e funcionam?
-- Quando e como ocorre um full table scan?
-- Qual estrutura de dados é mais eficiente para armazenar os indices?
+- Como os dados realmente transitam entre memória e disco?
+- Por que aquela limitação de uma única chave primária por tabela?
+- O que acontece nos bastidores quando faço um rollback?
+- Como os índices conseguem ser tão rápidos?
+- O que torna um full table scan tão custoso?
 
 ## Passos Iniciais
 
-Nesta primeira parte, vamos nos concentrar em:
+Quando comecei este projeto, percebi que precisava dividir o elefante em pedaços menores. Aqui está como estruturei os primeiros passos:
 
 1. Configuração do Ambiente: Criação do projeto Rust e estrutura básica.
 1. Implementação de um REPL (Read-Eval-Print Loop): Uma interface de linha de comando simples para interagir com o banco.
