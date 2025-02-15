@@ -12,7 +12,9 @@ pin: true
 
 ## Introdução
 
-Neste artigo, vamos explorar um projeto de [deep learning](https://www.ibm.com/br-pt/topics/deep-learning){:target="_blank"} utilizando Haskell. O objetivo é demonstrar como podemos implementar e treinar uma [rede neural](https://aws.amazon.com/pt/what-is/neural-network){:target="_blank"} simples para resolver problemas de regressão linear. Utilizaremos a biblioteca [`massiv`](https://hackage.haskell.org/package/massiv){:target="_blank"} para manipulação de arrays e a biblioteca [`hspec`](https://hspec.github.io/){:target="_blank"} para testes.
+Você já se perguntou como seria implementar redes neurais usando uma linguagem funcional? Neste artigo, vou compartilhar minha experiência desenvolvendo um projeto de [deep learning](https://www.ibm.com/br-pt/topics/deep-learning){:target="_blank"} usando Haskell. A ideia surgiu da minha curiosidade em explorar como conceitos de programação funcional podem se aplicar ao desenvolvimento de [redes neurais](https://aws.amazon.com/pt/what-is/neural-network){:target="_blank"}, especialmente para problemas de regressão linear.
+
+O que torna essa abordagem interessante é que Haskell, com sua forte tipagem e pureza funcional, nos força a pensar diferente sobre como estruturar uma rede neural. Vamos usar a biblioteca [`massiv`](https://hackage.haskell.org/package/massiv){:target="_blank"} para manipulação eficiente de arrays e a [`hspec`](https://hspec.github.io/){:target="_blank"} para garantir a qualidade do nosso código através de testes.
 
 ## Estrutura do Projeto
 
@@ -34,7 +36,9 @@ deep-learning-haskell
 
 ### Configuração do Ambiente
 
-Para começar, precisamos configurar nosso ambiente de desenvolvimento. Certifique-se de ter o [Haskell Stack](https://docs.haskellstack.org/en/stable){:target="_blank"} instalado. Em seguida, crie um novo projeto com o comando:
+Antes de mergulharmos no código, vamos preparar nosso ambiente de desenvolvimento. Se você ainda não tem o [Haskell Stack](https://docs.haskellstack.org/en/stable){:target="_blank"} instalado, este é o momento. O Stack vai facilitar muito nossa vida gerenciando dependências e builds do projeto.
+
+crie um novo projeto com o comando:
 
 ```bash
 stack new deep-learning-haskell
@@ -122,66 +126,7 @@ train model x y epochs lr = do
         return $ Model new_w new_b) model [1..epochs]
 ```
 
-### Testes
-
-Para garantir que nossa implementação está correta, escrevemos testes utilizando a biblioteca `hspec`. No arquivo `test/Spec/MainSpec.hs`, adicionamos os seguintes testes mais importantes:
-
-#### Teste de Inicialização do Modelo
-
-Verifica se o modelo é inicializado corretamente com pesos e bias.
-
-```haskell
-describe "Model Initialization" $ do
-    it "should initialize model with weights and bias" $ do
-        model <- initModel
-        size (weights model) `shouldNotBe` Sz1 0
-        bias model `shouldSatisfy` (\b -> b >= -1 e <= 1)
-```
-
-#### Teste de Forward Pass
-
-Verifica se o forward pass é realizado corretamente com valores simples.
-
-```haskell
-describe "Forward Pass" $ do
-    it "should perform forward pass correctly with simple values" $ do
-        let model = Model (fromLists' Seq [0.5]) 0.1
-            input = fromLists' Seq [1.0]
-            output = forward model input
-        output `shouldBe` 0.6
-```
-
-#### Teste de Cálculo de Loss
-
-Verifica se o cálculo de MSE loss é realizado corretamente.
-
-```haskell
-describe "Loss Calculation" $ do
-    it "should calculate MSE loss correctly" $ do
-        let y_pred = fromLists' Seq [2.0, 3.0]
-            y_true = fromLists' Seq [1.0, 2.0]
-            l = loss y_pred y_true
-        l `shouldBe` 1.0
-```
-
-#### Teste de Treinamento do Modelo
-
-Verifica se o modelo é treinado corretamente e se a loss é reduzida.
-
-```haskell
-describe "Model Training" $ do
-    it "should train the model and reduce loss" $ do
-        arrList <- replicateM 100 (randomRIO (-10,10))
-        let x = fromLists' Seq (Prelude.map (:[]) arrList) :: Array U Ix2 Double
-            y = compute @U $ A.map (\v -> 2*v + 1) (compute @U $ flatten x)
-        model <- initModel
-        trained <- train model x y 1000 0.01
-        let y_pred = A.singleton $ forward trained (compute @U $ flatten x)
-            final_loss = loss y_pred y
-        final_loss `shouldSatisfy` (< 1.0)
-```
-
-### Executando o Projeto
+## Executando o Projeto
 
 Para executar o projeto, utilize o comando:
 
@@ -194,6 +139,34 @@ Para rodar os testes, utilize o comando:
 ```bash
 stack test
 ```
+
+## Testes: Aprendendo com os Erros
+
+Durante o desenvolvimento, aprendi da maneira mais difícil que testar redes neurais não é trivial. Aqui estão alguns dos testes mais importantes que implementei, depois de vários ciclos de tentativa e erro:
+
+```haskell
+describe "Model Training" $ do
+    it "should train the model and reduce loss" $ do
+        -- Esse teste me salvou várias vezes durante refatorações
+        arrList <- replicateM 100 (randomRIO (-10,10))
+        let x = fromLists' Seq (Prelude.map (:[]) arrList) :: Array U Ix2 Double
+            y = compute @U $ A.map (\v -> 2*v + 1) (compute @U $ flatten x)
+        model <- initModel
+        trained <- train model x y 1000 0.01
+        let y_pred = A.singleton $ forward trained (compute @U $ flatten x)
+            final_loss = loss y_pred y
+        final_loss `shouldSatisfy` (< 1.0)
+```
+
+Uma dica que aprendi na prática: sempre teste com diferentes conjuntos de dados. No início, eu testava apenas com um conjunto fixo e perdi horas debugando problemas que só apareciam com dados diferentes.
+
+## Próximos Passos
+
+Depois de implementar essa versão inicial, já tenho algumas ideias para expandir o projeto:
+
+- Implementar diferentes funções de ativação (ReLU foi minha primeira escolha, mas quero experimentar outras)
+- Adicionar suporte a redes neurais convolucionais
+- Otimizar o treinamento com processamento paralelo
 
 ## Conclusão
 
