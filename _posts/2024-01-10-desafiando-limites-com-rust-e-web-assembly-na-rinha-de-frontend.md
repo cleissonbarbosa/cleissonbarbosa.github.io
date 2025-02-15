@@ -12,13 +12,11 @@ pin: false
 
 ## Introdução
 
-A Rinha de Frontend, uma competição inspirada na "Rinha de Backend", proporcionou uma oportunidade única para desenvolvedores testarem suas habilidades na construção de um visualizador de JSON totalmente no lado do cliente. Este artigo relata minha participação na competição, destacando a solução que desenvolvi utilizando Rust, WebAssembly (Wasm) e a ferramenta [Trunk](https://trunkrs.dev/){:target="_blank"}.
+A Rinha de Frontend foi uma experiência única que me permitiu explorar os limites do desenvolvimento web moderno. Quando vi a proposta de criar um visualizador de JSON, minha primeira reação foi: "Por que não tentar algo diferente?". Em vez de seguir o caminho tradicional com JavaScript, decidi mergulhar de cabeça em uma abordagem mais desafiadora: Rust com WebAssembly.
 
 ## Solução Desenvolvida
 
-Meu projeto, disponível no repositório [aqui](https://github.com/cleissonbarbosa/rinha-frontend){:target="_blank"}, foi desenvolvido em Rust, aproveitando as capacidades de WebAssembly para executar a aplicação no navegador. A escolha de Rust foi motivada pela sua segurança, desempenho e suporte ao desenvolvimento para WebAssembly.
-
-Utilizei o Trunk como ferramenta de compilação e empacotamento, simplificando o processo de integração do Rust com JavaScript e WebAssembly. O código-fonte, estruturado de forma modular, pode ser explorado no repositório, e o deploy da aplicação pode ser acessado [aqui](https://cleissonbarbosa.github.io/rinha-frontend/){:target="_blank"}.
+Minha solução para o desafio foi além do convencional. Utilizei Rust não apenas pela sua performance, mas também pela oportunidade de mostrar que é possível criar aplicações web robustas com tecnologias alternativas. O projeto está disponível no [repositório](https://github.com/cleissonbarbosa/rinha-frontend){:target="_blank"}, e você pode ver o resultado em ação [aqui](https://cleissonbarbosa.github.io/rinha-frontend/){:target="_blank"}.
 
 ### Um exemplo da funcionalidade de upload de arquivos:
 
@@ -48,6 +46,12 @@ pub fn upload_files(files: Option<FileList>) -> Msg {
     Msg::Files(result)
 }
 ```
+
+## Resultados e Desafios
+
+Durante a competição, enfrentei um desafio particularmente interessante com o arquivo `giant.json`. Mesmo tendo implementado paginação, percebi que o JavaScript tinha dificuldades para renderizar a quantidade massiva de dados. Foi uma lição valiosa sobre os limites da integração entre WebAssembly e o DOM.
+
+A experiência me ensinou que nem sempre a solução mais óbvia é a melhor. Às vezes, precisamos dar um passo para trás e repensar nossa abordagem. Se você estiver curioso para contribuir com o projeto, adoraria ver suas ideias para melhorar a renderização do `giant.json`!
 
 ## Resultados e Desafios:
 

@@ -12,13 +12,13 @@ pin: false
 
 ## Introdução
 
-Neste artigo, eu relato minha participação na Rinha de Compiladores, uma competição online de programação que teve como objetivo escrever um compilador para uma linguagem criada apenas para o evento chamada rinha, que era parecida com JavaScript. A competição foi organizada por [Gabrielle Guimarães de Oliveira](https://github.com/aripiprazole){:target="_blank"} e [Sofia Rodrigues](https://github.com/algebraic-sofia){:target="_blank"}, e contou com a participação de mais de 150 competidores de diferentes níveis de experiência e conhecimento.
+Quando me inscrevi na Rinha de Compiladores, não imaginava que seria uma das experiências mais desafiadoras e gratificantes da minha jornada como desenvolvedor. A competição, organizada por [Gabrielle Guimarães de Oliveira](https://github.com/aripiprazole){:target="_blank"} e [Sofia Rodrigues](https://github.com/algebraic-sofia){:target="_blank"}, reuniu mais de 150 desenvolvedores com um objetivo incomum: criar um compilador para uma linguagem especialmente desenvolvida para o evento.
 
-Escolhi fazer 3 projetos de compiladores em 3 linguagens diferentes mas com abordagens muito parecidas, nesse artigo vamos nos concentrar em apenas um desses projetos, vamos falar da linguagem Haskell, escolhi o Haskell porque achei que seria interessante usar uma linguagem puramente funcional para esse desafio, além de outras peculiaridades bem interessantes da linguagem. Neste artigo, eu descrevo algumas das principais características da linguagem rinha, as ferramentas e bibliotecas que eu utilizei para criar meu compilador, e os resultados que eu obtive.
+O que me levou a participar? Bem, sempre fui fascinado por linguagens de programação e seus compiladores, e vi na competição uma oportunidade única de aprender na prática. Decidi aceitar o desafio de três formas diferentes, implementando o compilador em três linguagens distintas. Neste artigo, vou compartilhar minha experiência com a versão em Haskell, uma escolha que pode parecer inusitada à primeira vista, mas que se mostrou extremamente interessante.
 
-## A Linguagem Rinha
+## A Linguagem Rinha: Um Desafio Criativo
 
-A linguagem rinha foi criada pelas organizadoras da competição como uma forma de tornar o desafio mais divertido e original. Ela é uma linguagem imperativa, dinamicamente tipada, com suporte a funções de primeira classe, closures, operadores aritméticos e lógicos, estruturas de controle de execução como ```if``` e ```else```. A sintaxe da linguagem é inspirada no JavaScript, mas com algumas diferenças, como o uso de ```let``` para declarar variáveis, o uso de ```fn``` para declarar funções, o uso de ```=>``` para separar os parâmetros e o corpo das funções, o uso de ```first``` e ```second``` para acessar os elementos de uma **tupla** etc.
+A rinha não era apenas mais uma linguagem de programação - era um playground criativo que mesclava a familiaridade do JavaScript com elementos únicos. Imagine uma linguagem que te permite escrever código de forma similar ao JavaScript, mas com suas próprias peculiaridades, como o uso de ```fn``` para declarar funções e uma maneira especial de lidar com tuplas através de ```first``` e ```second```.
 
 ### Um exemplo de código em rinha:
 
