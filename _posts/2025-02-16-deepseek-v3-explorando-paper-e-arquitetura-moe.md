@@ -4,7 +4,7 @@ author: cleissonb
 date: 2025-02-16 00:00:00 -0300
 image:
   path: /assets/img/posts/2229f29d-a36c-4bb7-9a00-f2c2e1b81066.png
-  alt: "DeepSeek V3: MoE em Ação"
+  alt: "DeepSeek V3: Explorando a Arquitetura de MoE com Previsão Multi-Token"
 categories: [Machine Learning, Deep Learning]
 tags: [deepseek, MoE, pytorch, transformer, neural network]
 pin: true
