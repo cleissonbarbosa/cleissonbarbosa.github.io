@@ -7,7 +7,7 @@ image:
   alt: "DeepSeek V3: MoE em Ação"
 categories: [Machine Learning, Deep Learning]
 tags: [deepseek, MoE, pytorch, transformer, neural network]
-pin: false
+pin: true
 ---
 
 ## Introdução
