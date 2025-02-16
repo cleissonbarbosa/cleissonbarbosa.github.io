@@ -12,7 +12,7 @@ pin: true
 
 ## Introdução
 
-Inspirado pelo [paper do DeepSeek V3](https://github.com/deepseek-ai/DeepSeek-V3/blob/main/DeepSeek_V3.pdf){:target="_blank"}, este projeto demonstra a implementação de uma camada de [Mixture of Experts (MoE)](#o-que-e-moe) combinada com um módulo de previsão multi-token. Utilizando [PyTorch](https://pytorch.org/){:target="_blank"}, o exemplo integra um balanceamento dinâmico de especialistas com um mecanismo de previsão para enriquecer as representações de linguagem. Além disso, o projeto utiliza a estratégia de balanceamento sem perda auxiliar e o treinamento em [precisão mista FP8](https://codingmall.com/knowledge-base/25-global/241992-como-o-uso-do-treinamento-de-preciso-misto-fp8-afeta-o-desempenho-de-deepseek){:target="_blank"} para melhorar a eficiência e o desempenho.
+Inspirado pelo [paper do DeepSeek V3](https://github.com/deepseek-ai/DeepSeek-V3/blob/main/DeepSeek_V3.pdf){:target="_blank"}, este projeto demonstra a implementação de uma camada de [Mixture of Experts (MoE)](#o-que-é-moe) combinada com um módulo de previsão multi-token. Utilizando [PyTorch](https://pytorch.org/){:target="_blank"}, o exemplo integra um balanceamento dinâmico de especialistas com um mecanismo de previsão para enriquecer as representações de linguagem. Além disso, o projeto utiliza a estratégia de balanceamento sem perda auxiliar e o treinamento em [precisão mista FP8](https://codingmall.com/knowledge-base/25-global/241992-como-o-uso-do-treinamento-de-preciso-misto-fp8-afeta-o-desempenho-de-deepseek){:target="_blank"} para melhorar a eficiência e o desempenho.
 
 ## O que é MoE?
 
