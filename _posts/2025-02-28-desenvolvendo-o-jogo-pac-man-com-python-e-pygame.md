@@ -17,10 +17,10 @@ Muita gente acha que precisa de engines complexas ou ser um mestre da programaç
 O Pac-Man é um dos jogos mais icônicos de todos os tempos, e "recriá-lo" foi uma ótima maneira de relembrar alguns conceitos de programação de jogos, estruturas de dados e lógica de colisão. Além disso, esse projeto é uma introdução prática aos princípios básicos de desenvolvimento de jogos, como loops de jogo, renderização e controle de estado.
 
 <div align="center">
-    <video controls width="560" height="auto" frameborder="0" allowfullscreen>
+    <video width="560" height="auto" frameborder="0" autoplay loop muted>
         <source src="https://github.com/user-attachments/assets/9a2c5738-874a-4b65-a3ba-b39d994d772b" type="video/mp4">
+        Your browser does not support the video tag.
     </video>
-
 </div>
 
 ## Estrutura do Projeto
