@@ -1,7 +1,7 @@
 ---
 title: "Desenvolvendo o Jogo Pac-Man com Python e Pygame"
 author: cleissonb
-date: 2025-02-1280 00:00:00 -0300
+date: 2025-02-28 00:00:00 -0300
 image:
   path: /assets/img/posts/2c16296f-3883-45dd-9b33-de789c3eed31.png
   alt: "Desenvolvendo um Jogo Pac-Man com Python e Pygame"
