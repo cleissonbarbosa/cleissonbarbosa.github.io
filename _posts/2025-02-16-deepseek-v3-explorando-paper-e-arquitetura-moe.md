@@ -7,7 +7,7 @@ image:
   alt: "DeepSeek V3: Explorando a Arquitetura de MoE com Previsão Multi-Token"
 categories: [Machine Learning, Deep Learning]
 tags: [deepseek, MoE, pytorch, transformer, neural network]
-pin: true
+pin: false
 ---
 
 ## Introdução
