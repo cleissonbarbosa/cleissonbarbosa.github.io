@@ -7,7 +7,7 @@ image:
   alt: "Desenvolvendo um Jogo Pac-Man com Python e Pygame"
 categories: [Python, Jogos]
 tags: [python, pygame, desenvolvimento, jogos, pacman, tutorial]
-pin: false
+pin: true
 ---
 
 ## Introdução
