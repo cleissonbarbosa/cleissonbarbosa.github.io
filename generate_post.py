@@ -168,13 +168,24 @@ def generate_image(title, categories, tags, content_preview):
         "negative_prompt": "poor quality, low resolution, bad anatomy, text, watermark, signature",
         "num_steps": 20,
         "guidance": 8.5,
-        "strength": 0.75,
+        "strength": 0.85,
         "width": 630,
         "height": 1200,
     }
 
+    model = random.choice(
+        [
+            "lykon/dreamshaper-8-lcm",
+            "runwayml/stable-diffusion-v1-5-img2img",
+            "runwayml/stable-diffusion-v1-5-inpainting",
+            "stabilityai/stable-diffusion-xl-base-1.0",
+            "bytedance/stable-diffusion-xl-lightning",
+        ]
+    )
+    print(f"Modelo de imagem selecionado: {model}")
+
     # Chamar a API do Cloudflare Workers AI
-    url = f"https://api.cloudflare.com/client/v4/accounts/{cf_account_id}/ai/run/@cf/runwayml/stable-diffusion-v1-5-img2img"
+    url = f"https://api.cloudflare.com/client/v4/accounts/{cf_account_id}/ai/run/@cf/{model}"
     headers = {
         "Authorization": f"Bearer {cf_api_token}",
         "Content-Type": "application/json",
