@@ -173,15 +173,7 @@ def generate_image(title, categories, tags, content_preview):
         "height": 1200,
     }
 
-    model = random.choice(
-        [
-            "lykon/dreamshaper-8-lcm",
-            "runwayml/stable-diffusion-v1-5-img2img",
-            "runwayml/stable-diffusion-v1-5-inpainting",
-            "stabilityai/stable-diffusion-xl-base-1.0",
-            "bytedance/stable-diffusion-xl-lightning",
-        ]
-    )
+    model = random.choice(["runwayml/stable-diffusion-v1-5-img2img"])
     print(f"Modelo de imagem selecionado: {model}")
 
     # Chamar a API do Cloudflare Workers AI
