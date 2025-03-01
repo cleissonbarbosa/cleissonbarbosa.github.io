@@ -29,7 +29,7 @@ github:
   username: cleissonbarbosa
 
 twitter:
-  username: kekeualencar 
+  username: kekeualencar
 
 social:
   # Change to your full name.
@@ -71,15 +71,11 @@ analytics:
     id: # fill in your Cloudflare Web Analytics token
   fathom:
     id: # fill in your Fathom Site ID
-  
+
 pageviews:
-  provider: goatcounter  
+  provider: goatcounter
 
-plugins:
-  - jekyll-multiple-languages-plugin
 
-languages: ["pt-br", "en"]
-exclude_from_localizations: ["javascript", "assets", "css"]
 # Prefer color scheme setting.
 #
 # Note: Keep empty will follow the system prefer color by default,
