@@ -112,7 +112,7 @@ Title: {last_post['filename']}
 
 {last_post['content']}
 
-Please create a new post on a different or related topic. Do not repeat the same subject or approach as the previous post but make references to it.
+Please create a new post on a different topic. Don't repeat the same subject or approach as the previous post, but reference it in a subtle way.
 """
         return base_prompt + context_prompt
 
@@ -123,6 +123,8 @@ Please create a new post on a different or related topic. Do not repeat the same
 last_post = get_last_post_content()
 prompt = create_prompt(last_post)
 
+print(f"Ultimo post: {last_post['filename'] if last_post else 'nenhum'}")
+
 # Verifica se existe um cache para usar
 cache_info = get_cache_info()
 cache_name = cache_info["name"] if cache_info and "name" in cache_info else None
@@ -132,7 +134,7 @@ req_json = {
     "systemInstruction": {
         "parts": [
             {
-                "text": "Your name is R. Daneel Olivaw and you are a programming, technology and software development expert who regularly posts on Cleisson Barbosa's blog, Cleissonbarbosa.github.com"  # noqa
+                "text": "Your name is R. Daneel Olivaw and you are a programming, technology and software development expert who regularly posts on Cleisson Barbosa's blog, Cleissonbarbosa.github.io"  # noqa
             }
         ]
     },
@@ -177,14 +179,22 @@ try:
     while line_index < len(lines) and not lines[line_index].strip():
         line_index += 1
 
-    categories = lines[line_index].strip().replace("categorias:", "") if line_index < len(lines) else ""
+    categories = (
+        lines[line_index].strip().lower().replace("categorias:", "").strip()
+        if line_index < len(lines)
+        else ""
+    )
     line_index += 1
 
     # Encontra a primeira linha não vazia após categorias para tags
     while line_index < len(lines) and not lines[line_index].strip():
         line_index += 1
 
-    tags = lines[line_index].strip().replace("tags:", "") if line_index < len(lines) else ""
+    tags = (
+        lines[line_index].strip().lower().replace("tags:", "").strip()
+        if line_index < len(lines)
+        else ""
+    )
     line_index += 1
 
     # Restante é conteúdo, excluindo linhas vazias iniciais
