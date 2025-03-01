@@ -48,7 +48,7 @@ Ensure the final result includes the title, categories, tags, and body of the po
         context_prompt = f"""
 For reference, this was the last post you generated:
 Title: {last_post['filename']}
-url: https://cleissonbarbosa.github.io/posts/{last_post['filename'].replace('.md', '')[10:]}
+url: https://cleissonbarbosa.github.io/posts/{last_post['filename'].replace('.md', '')[11:]}
 
 {last_post['content']}
 
