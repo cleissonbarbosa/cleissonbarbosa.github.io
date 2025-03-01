@@ -15,9 +15,7 @@ On the following line, write relevant tags in Portuguese for the post, also sepa
 Leave a blank line, then begin the body of the post.
 Write the body of the post in Portuguese, using an informal and conversational tone in the first person. Format the entire body in Markdown, using the correct syntax for headers, lists, and emphasis. Whenever including a link, use the format [<TEXT>](<URL>){:target="_blank"} to ensure it opens in a new tab.
 Structure the post with an engaging introduction, a detailed body exploring the topic, and a conclusion summarizing your reflections. Include personal anecdotes, opinions, or experiences to make it authentic and relatable.
-The body of the post should be between 500 and 1000 words, adjusting as needed to fully cover the topic.
 Ensure the final result includes the title, categories, tags, and body of the post.
-
 """  # noqa
 
 # Chamar a API da OpenAI
