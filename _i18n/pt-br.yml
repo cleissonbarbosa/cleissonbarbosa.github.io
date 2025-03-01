@@ -1,0 +1,21 @@
+global:
+  english: Inglês
+  portuguese: Português
+  about: Sobre
+  categories: Categorias
+  tags: Tags
+  archives: Arquivos
+  search: Buscar
+  home: Início
+  read_more: Leia mais
+  published_on: Publicado em
+
+pages:
+  about: Sobre
+  categories: Categorias
+  tags: Tags
+  archives: Arquivos
+
+footer:
+  powered_by: Desenvolvido com
+  theme: Tema
