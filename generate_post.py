@@ -91,7 +91,8 @@ _Este post foi gerado totalmente por uma IA_
 with open(filename, "w") as f:
     f.write(front_matter + content + "\n\n---" + generated_by)
 
-print(f"Post gerado: {filename}")
+print(f"Post gerado: {filename=}")
+print(f"\nPost Body: {content=}")
 
 if "GITHUB_OUTPUT" in os.environ:
     with open(os.environ["GITHUB_OUTPUT"], "a") as f:
