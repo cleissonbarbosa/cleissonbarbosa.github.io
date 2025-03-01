@@ -108,7 +108,7 @@ jobs:
             - File: [${{ needs.generate_post.outputs.post_filename }}](${{github.server_url}}/${{github.repository}}/blob/${{ env.BRANCH_NAME }}/${{ needs.generate_post.outputs.post_filename }})
 
             ### Post Image
-            ![${{ needs.generate_post.outputs.post_image }}](${{github.server_url}}/${{github.repository}}/blob/${{ env.BRANCH_NAME }}${{ needs.generate_post.outputs.post_image }})
+            ![${{ needs.generate_post.outputs.post_image }}](https://raw.githubusercontent.com/${{github.repository}}/refs/heads/${{ env.BRANCH_NAME }}/${{ needs.generate_post.outputs.post_image }})
           branch: ${{ env.BRANCH_NAME }}
           author: "R. Daneel Olivaw <cleissonbarbosa68@gmail.com>"
           labels: "ai-generated,new-post"

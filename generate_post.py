@@ -168,7 +168,7 @@ def generate_image(title, categories, tags, content_preview):
         "negative_prompt": "poor quality, low resolution, bad anatomy, text, watermark, signature",
         "num_steps": 20,
         "guidance": 8.5,
-        "strength": 0.7,
+        "strength": 0.75,
         "width": 630,
         "height": 1200,
     }
