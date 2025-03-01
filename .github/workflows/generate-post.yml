@@ -17,12 +17,13 @@ jobs:
       post_slug: ${{ steps.generate_post.outputs.post_slug }}
       post_categories: ${{ steps.generate_post.outputs.post_categories }}
       post_tags: ${{ steps.generate_post.outputs.post_tags }}
+      post_filename: ${{ steps.generate_post.outputs.post_filename }}
     steps:
       - name: Checkout do repositório
         uses: actions/checkout@v4
 
       - name: Configurar Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: "3.x"
 
@@ -34,6 +35,13 @@ jobs:
         run: python generate_post.py
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          
+      - name: Upload do post gerado como artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-post
+          path: ${{ steps.generate_post.outputs.post_filename }}
+          retention-days: 1
 
   create_pull_request:
     needs: generate_post
@@ -41,6 +49,12 @@ jobs:
     steps:
       - name: Checkout do repositório
         uses: actions/checkout@v4
+        
+      - name: Download do post gerado
+        uses: actions/download-artifact@v4
+        with:
+          name: generated-post
+          path: _posts/
 
       - name: Criar Pull Request
         uses: peter-evans/create-pull-request@v7
@@ -55,6 +69,7 @@ jobs:
             - Slug: ${{ needs.generate_post.outputs.post_slug }}
             - Categorias: ${{ needs.generate_post.outputs.post_categories }}
             - Tags: ${{ needs.generate_post.outputs.post_tags }}
+            - Arquivo: ${{ needs.generate_post.outputs.post_date }}-${{ needs.generate_post.outputs.post_slug }}.md
           branch: "posts/gerados-por-ia"
           author: "R. Daneel Olivaw <cleissonbarbosa68@gmail.com>"
           labels: "gerado-por-ia"

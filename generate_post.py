@@ -95,8 +95,10 @@ with open(filename, "w") as f:
 
 print(f"Post gerado: {filename}")
 
-with open(os.environ["GITHUB_OUTPUT"], "w") as f:
-    f.write(f"post_title={filename}")
-    f.write(f"post_slug={slug}")
-    f.write(f"post_categories={categories}")
-    f.write(f"post_tags={tags}")
+if "GITHUB_OUTPUT" in os.environ:
+    with open(os.environ["GITHUB_OUTPUT"], "a") as f:
+        f.write(f"post_title={title}\n")
+        f.write(f"post_slug={slug}\n")
+        f.write(f"post_categories={categories}\n")
+        f.write(f"post_tags={tags}\n")
+        f.write(f"post_filename={filename}\n")
