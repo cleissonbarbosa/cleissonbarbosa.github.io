@@ -1,0 +1,33 @@
+name: Generate Weekly Post
+
+on:
+  schedule:
+    - cron: "0 0 * * 0" # Todo domingo à meia-noite UTC
+
+jobs:
+  generate-post:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: "3.x"
+
+      - name: Instalar dependências
+        run: pip install requests
+
+      - name: Gerar post
+        run: python generate_post.py
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+
+      - name: Criar Pull Request
+        uses: peter-evans/create-pull-request@v7
+        with:
+          commit-message: "Adiciona post semanal gerado por IA"
+          title: "Novo post gerado automaticamente"
+          body: "Post gerado por IA para revisão."
+          branch: "post-semanal"
