@@ -9,6 +9,9 @@ permissions:
   contents: write
   pull-requests: write
 
+env:
+  BRANCH_NAME: posts/generated-by-ai
+  
 jobs:
   generate_post:
     runs-on: ubuntu-latest
@@ -39,13 +42,21 @@ jobs:
           CF_AI_API_KEY: ${{ secrets.CF_AI_API_KEY }}
           CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
 
+      - name: Salvar arquivo para upload
+        run: |
+          # Garantir que os diretórios existam
+          mkdir -p temp
+          # Copiar os arquivos gerados para a pasta temp
+          cp ${{ steps.generate_post.outputs.post_filename }} temp/post.md
+          if [ -f "${{ steps.generate_post.outputs.post_image }}" ]; then
+            cp ${{ steps.generate_post.outputs.post_image }} temp/image.png
+          fi
+
       - name: Upload do post gerado como artifact
         uses: actions/upload-artifact@v4
         with:
           name: generated-post
-          path: |
-            ${{ steps.generate_post.outputs.post_filename }}
-            ${{ steps.generate_post.outputs.post_image }}
+          path: temp/
           retention-days: 1
 
   create_pull_request:
@@ -63,13 +74,20 @@ jobs:
 
       - name: Mover post gerado para o diretório correto
         run: |
-          mv temp/*.md ${{ needs.generate_post.outputs.post_filename }}
-          mv temp/*.png ${{ needs.generate_post.outputs.post_image }}
+          if [ -f "temp/post.md" ]; then
+            cp temp/post.md "${{ needs.generate_post.outputs.post_filename }}"
+          fi
+
+          if [ -f "temp/image.png" ]; then
+            # Garante que o diretório existe
+            mkdir -p $(dirname "${{ needs.generate_post.outputs.post_image }}")
+            # Copia a imagem para o local correto
+            cp temp/image.png "${{ needs.generate_post.outputs.post_image }}"
+          fi
 
       - name: Configurar Git
         run: |
           git config --local user.name "R. Daneel Olivaw"
-          git config --local user
           git config --local user.email "cleissonbarbosa68@gmail.com"
 
       - name: Criar Pull Request
@@ -85,11 +103,11 @@ jobs:
             - Slug: ${{ needs.generate_post.outputs.post_slug }}
             - Categories: `${{ needs.generate_post.outputs.post_categories }}`
             - Tags: `${{ needs.generate_post.outputs.post_tags }}`
-            - File: [${{ needs.generate_post.outputs.post_filename }}](blob/posts/generated-by-ai/${{ needs.generate_post.outputs.post_filename }})
+            - File: [${{ needs.generate_post.outputs.post_filename }}](${{github.server_url}}/${{github.repository}}/blob/${{ env.BRANCH_NAME }}/${{ needs.generate_post.outputs.post_filename }})
 
             ### Post Image
-            ![${{ needs.generate_post.outputs.post_image }}](blob/posts/generated-by-ai/${{ needs.generate_post.outputs.post_image }})
-          branch: "posts/generated-by-ai"
+            ![${{ needs.generate_post.outputs.post_image }}](${{github.server_url}}/${{github.repository}}/blob/${{ env.BRANCH_NAME }}/${{ needs.generate_post.outputs.post_image }})
+          branch: ${{ env.BRANCH_NAME }}
           author: "R. Daneel Olivaw <cleissonbarbosa68@gmail.com>"
           labels: "ai-generated,new-post"
           reviewers: "cleissonbarbosa"
