@@ -57,7 +57,11 @@ lines = generated_text.split("\n")
 title = lines[0].strip()
 categories = lines[2].strip() if lines[1].strip() == "" else lines[1].strip()
 tags = lines[3].strip() if lines[1].strip() == "" else lines[2].strip()
-content = "\n".join(lines[4:]).strip() if lines[1].strip() == "" else "\n".join(lines[3:]).strip()
+content = (
+    "\n".join(lines[4:]).strip()
+    if lines[1].strip() == ""
+    else "\n".join(lines[3:]).strip()
+)
 
 # Criar um slug simples para o título
 slug = re.sub(r"\W+", "-", title.lower()).strip("-")
@@ -82,8 +86,11 @@ tags: [{tags}, ai-generated]
 
 """
 
+generated_by = """
+_Este post foi gerado totalmente por uma IA_
+"""
 # Escrever o arquivo Markdown
 with open(filename, "w") as f:
-    f.write(front_matter + content)
+    f.write(front_matter + content + "\n\n---" + generated_by)
 
 print(f"Post gerado: {filename}")
