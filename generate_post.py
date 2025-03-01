@@ -1,73 +1,12 @@
 import os
 import requests
-import json
 from datetime import datetime
 import re
+import random
 from pathlib import Path
 
 # Obter a chave da API do ambiente
 api_key = os.getenv("GEMINI_API_KEY")
-
-# Arquivo para armazenar metadados do cache
-CACHE_FILE = Path(os.path.dirname(os.path.abspath(__file__))) / ".cache_metadata.json"
-
-
-def get_cache_info():
-    """Recupera informações sobre o cache atual"""
-    if CACHE_FILE.exists():
-        try:
-            with open(CACHE_FILE, "r") as f:
-                return json.load(f)
-        except json.JSONDecodeError:
-            return None
-    return None
-
-
-def save_cache_info(cache_info):
-    """Salva informações sobre o cache atual"""
-    with open(CACHE_FILE, "w") as f:
-        json.dump(cache_info, f)
-
-
-def create_or_update_cache(content, ttl="3600s"):
-    """Cria ou atualiza o cache de contexto"""
-    cache_info = get_cache_info()
-
-    # Se já existe um cache, tenta deletar antes de criar um novo
-    if cache_info and "name" in cache_info:
-        try:
-            delete_cache(cache_info["name"])
-        except Exception as e:
-            print(f"Aviso: não foi possível deletar o cache anterior: {e}")
-
-    # Cria um novo cache
-    response = requests.post(
-        f"https://generativelanguage.googleapis.com/v1beta/cachedContents?key={api_key}",
-        json={
-            "model": "models/gemini-1.5-flash-001",
-            "contents": [{"parts": [{"text": content}], "role": "user"}],
-            "ttl": ttl,
-        },
-    )
-
-    if response.status_code != 200:
-        print(f"Erro ao criar cache: {response.text}")
-        return None
-
-    cache_data = response.json()
-    save_cache_info(cache_data)
-    return cache_data
-
-
-def delete_cache(cache_name):
-    """Deleta um cache existente"""
-    response = requests.delete(
-        f"https://generativelanguage.googleapis.com/v1beta/{cache_name}?key={api_key}"
-    )
-    if response.status_code not in (200, 204):
-        print(f"Erro ao deletar cache: {response.status_code} - {response.text}")
-        raise Exception(f"Falha ao deletar cache: {response.status_code}")
-    return True
 
 
 def get_last_post_content():
@@ -102,13 +41,14 @@ On the following line, write relevant tags in Portuguese for the post, also sepa
 Leave a blank line, then begin the body of the post.
 Write the body of the post in Portuguese, using an informal and conversational tone in the first person. Format the entire body in Markdown, using the correct syntax for headers, lists, and emphasis. Whenever including a link, use the format [TEXT](URL){:target="_blank"} to ensure it opens in a new tab.
 Structure the post with an engaging introduction, a detailed body exploring the topic, and a conclusion summarizing your reflections. Include personal anecdotes, opinions, or experiences to make it authentic and relatable.
-Ensure the final result includes the title, categories, tags, and body of the post.
+Ensure the final result includes the title, categories, tags, and body of the post. just write the content without any additional explanations or comments.
 """  # noqa
 
     if last_post:
         context_prompt = f"""
 For reference, this was the last post you generated:
 Title: {last_post['filename']}
+url: https://cleissonbarbosa.github.io/posts/{last_post['filename'].replace('.md', '')[10:]}
 
 {last_post['content']}
 
@@ -125,16 +65,12 @@ prompt = create_prompt(last_post)
 
 print(f"Ultimo post: {last_post['filename'] if last_post else 'nenhum'}")
 
-# Verifica se existe um cache para usar
-cache_info = get_cache_info()
-cache_name = cache_info["name"] if cache_info and "name" in cache_info else None
-
 # Preparar o JSON da requisição
 req_json = {
     "systemInstruction": {
         "parts": [
             {
-                "text": "Your name is R. Daneel Olivaw and you are a programming, technology and software development expert who regularly posts on Cleisson Barbosa's blog, Cleissonbarbosa.github.io"  # noqa
+                "text": "Your name is R. Daneel Olivaw and you are a programming, technology and software development expert who regularly posts on Cleisson Barbosa's blog, cleissonbarbosa.github.io"  # noqa
             }
         ]
     },
@@ -154,13 +90,19 @@ req_json = {
     },
 }
 
-# Adiciona o cache se existir
-if cache_name:
-    req_json["cachedContent"] = cache_name
+model = random.choice(
+    [
+        "gemini-1.5-flash-001",
+        "gemini-2.0-flash-001",
+        "gemini-2.0-pro-exp-02-05",
+        "gemini-2.0-flash-thinking-exp-01-21",
+    ]
+)
+print(f"Modelo: {model}")
 
 # Chamar a API do Gemini
 response = requests.post(
-    f"https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash-001:generateContent?key={api_key}",
+    f"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={api_key}",
     json=req_json,
 )
 
@@ -172,7 +114,15 @@ try:
 
     # Separar título, categorias, tags e conteúdo de forma mais robusta
     lines = generated_text.strip().split("\n")
-    title = lines[0].strip().replace('"', "").replace("#", "").strip()
+    title = (
+        lines[0]
+        .strip()
+        .replace('"', "")
+        .replace("#", "")
+        .replace("title:", "")
+        .replace("Title:", "")
+        .strip()
+    )
 
     # Encontra a primeira linha não vazia após o título para categorias
     line_index = 1
@@ -180,7 +130,14 @@ try:
         line_index += 1
 
     categories = (
-        lines[line_index].strip().lower().replace("categorias:", "").strip()
+        lines[line_index]
+        .strip()
+        .lower()
+        .replace("categorias:", "")
+        .replace("categories:", "")
+        .replace("[", "")
+        .replace("]", "")
+        .strip()
         if line_index < len(lines)
         else ""
     )
@@ -191,7 +148,13 @@ try:
         line_index += 1
 
     tags = (
-        lines[line_index].strip().lower().replace("tags:", "").strip()
+        lines[line_index]
+        .strip()
+        .lower()
+        .replace("tags:", "")
+        .replace("[", "")
+        .replace("]", "")
+        .strip()
         if line_index < len(lines)
         else ""
     )
@@ -219,7 +182,7 @@ slug = re.sub(r"\W+", "-", title.lower()).strip("-")
 # Obter a data atual no formato YYYY-MM-DD
 date = datetime.now().strftime("%Y-%m-%d")
 
-# Nome do arquivo no formato Jekyll
+# Nome do arquivo no formato padrão
 filename = f"_posts/{date}-{slug}.md"
 
 # Front matter para o post
@@ -248,16 +211,13 @@ with open(filename, "w") as f:
 
 print(f"Post gerado: {filename}")
 
-# Depois de gerar um novo post, atualiza o cache com ele
-full_post_content = front_matter + content + "\n\n---" + generated_by
-create_or_update_cache(
-    f"Este é o post mais recente que você gerou:\n{full_post_content}"
-)
-
 if "GITHUB_OUTPUT" in os.environ:
     with open(os.environ["GITHUB_OUTPUT"], "a") as f:
-        f.write(f"post_title={title}\n")
-        f.write(f"post_slug={slug}\n")
-        f.write(f"post_categories={categories}\n")
-        f.write(f"post_tags={tags}\n")
-        f.write(f"post_filename={filename}\n")
+        f.write(
+            f"""post_title={title}
+            post_slug={slug}
+            post_categories={categories}
+            post_tags={tags}
+            post_filename={filename}
+            """
+        )
