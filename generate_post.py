@@ -440,12 +440,12 @@ _Este post foi totalmente gerado por uma IA autônoma, sem intervenção humana.
             with open(os.environ["GITHUB_OUTPUT"], "a") as f:
                 f.write(
                     f"""post_title={title}
-                    post_slug={slug}
-                    post_categories={categories}
-                    post_tags={tags}
-                    post_filename={filename}
-                    post_image={image_rel_path}
-                    """
+post_slug={slug}
+post_categories={categories}
+post_tags={tags}
+post_filename={filename}
+post_image={image_rel_path}
+"""
                 )
 
         return True
