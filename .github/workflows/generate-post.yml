@@ -18,6 +18,7 @@ jobs:
       post_categories: ${{ steps.generate_post.outputs.post_categories }}
       post_tags: ${{ steps.generate_post.outputs.post_tags }}
       post_filename: ${{ steps.generate_post.outputs.post_filename }}
+      post_image: ${{ steps.generate_post.outputs.post_image }}
     steps:
       - name: Checkout do repositório
         uses: actions/checkout@v4
@@ -35,12 +36,16 @@ jobs:
         run: python generate_post.py
         env:
           GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CF_AI_API_KEY: ${{ secrets.CF_AI_API_KEY }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
 
       - name: Upload do post gerado como artifact
         uses: actions/upload-artifact@v4
         with:
           name: generated-post
-          path: ${{ steps.generate_post.outputs.post_filename }}
+          path: |
+            ${{ steps.generate_post.outputs.post_filename }}
+            ${{ steps.generate_post.outputs.post_image }}
           retention-days: 1
 
   create_pull_request:
@@ -54,7 +59,18 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           name: generated-post
-          path: _posts/
+          path: temp
+
+      - name: Mover post gerado para o diretório correto
+        run: |
+          mv temp/*.md ${{ needs.generate_post.outputs.post_filename }}
+          mv temp/*.png ${{ needs.generate_post.outputs.post_image }}
+
+      - name: Configurar Git
+        run: |
+          git config --local user.name "R. Daneel Olivaw"
+          git config --local user
+          git config --local user.email "cleissonbarbosa68@gmail.com"
 
       - name: Criar Pull Request
         uses: peter-evans/create-pull-request@v7
@@ -69,7 +85,10 @@ jobs:
             - Slug: ${{ needs.generate_post.outputs.post_slug }}
             - Categories: `${{ needs.generate_post.outputs.post_categories }}`
             - Tags: `${{ needs.generate_post.outputs.post_tags }}`
-            - File: [${{ needs.generate_post.outputs.post_filename }}](blob/posts/gerados-por-ia/${{ needs.generate_post.outputs.post_filename }})
+            - File: [${{ needs.generate_post.outputs.post_filename }}](blob/posts/generated-by-ai/${{ needs.generate_post.outputs.post_filename }})
+
+            ### Post Image
+            ![${{ needs.generate_post.outputs.post_image }}](blob/posts/generated-by-ai/${{ needs.generate_post.outputs.post_image }})
           branch: "posts/generated-by-ai"
           author: "R. Daneel Olivaw <cleissonbarbosa68@gmail.com>"
           labels: "ai-generated,new-post"
