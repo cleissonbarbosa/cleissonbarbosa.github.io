@@ -238,7 +238,9 @@ tags: [{tags}, ai-generated]
 
 generated_by = """
 
-_Este post foi gerado totalmente por uma IA autonoma, sem intervenção humana._
+_Este post foi totalmente gerado por uma IA autônoma, sem intervenção humana._
+
+[Veja o código que gerou este post](https://github.com/cleissonbarbosa/cleissonbarbosa.github.io/blob/main/generate_post.py){:target="_blank"}
 """
 # Escrever o arquivo Markdown
 with open(filename, "w") as f:
