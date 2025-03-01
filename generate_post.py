@@ -94,3 +94,9 @@ with open(filename, "w") as f:
     f.write(front_matter + content + "\n\n---" + generated_by)
 
 print(f"Post gerado: {filename}")
+
+with open(os.environ["GITHUB_OUTPUT"], "w") as f:
+    f.write(f"post_title={filename}")
+    f.write(f"post_slug={slug}")
+    f.write(f"post_categories={categories}")
+    f.write(f"post_tags={tags}")
