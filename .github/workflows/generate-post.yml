@@ -2,7 +2,7 @@ name: Generate Weekly Post
 
 on:
   schedule:
-    - cron: "0 0 * * 0" # Todo domingo à meia-noite UTC
+    - cron: "0 22 * * 3,6" # Toda quarta e sábado às 22:00 UTC
 
 jobs:
   generate-post:
