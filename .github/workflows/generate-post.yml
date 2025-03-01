@@ -62,14 +62,14 @@ jobs:
           commit-message: "Adiciona post gerado por IA"
           title: "Novo post: ${{ needs.generate_post.outputs.post_title }}"
           body: |
-            Este post foi gerado automaticamente por uma IA.
+            ## Este post foi gerado automaticamente por uma IA.
 
             ### Informações do post
             - Título: ${{ needs.generate_post.outputs.post_title }}
             - Slug: ${{ needs.generate_post.outputs.post_slug }}
-            - Categorias: ${{ needs.generate_post.outputs.post_categories }}
-            - Tags: ${{ needs.generate_post.outputs.post_tags }}
-            - Arquivo: ${{ needs.generate_post.outputs.post_date }}-${{ needs.generate_post.outputs.post_slug }}.md
+            - Categorias: `${{ needs.generate_post.outputs.post_categories }}`
+            - Tags: `${{ needs.generate_post.outputs.post_tags }}`
+            - Arquivo: [${{ needs.generate_post.outputs.post_filename }}](${{ hashFiles(needs.generate_post.outputs.post_filename) }})
           branch: "posts/gerados-por-ia"
           author: "R. Daneel Olivaw <cleissonbarbosa68@gmail.com>"
           labels: "gerado-por-ia"
