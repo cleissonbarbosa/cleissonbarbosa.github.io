@@ -11,7 +11,7 @@ permissions:
 
 env:
   BRANCH_NAME: posts/generated-by-ai
-  
+
 jobs:
   generate_post:
     runs-on: ubuntu-latest
@@ -85,6 +85,8 @@ jobs:
             cp temp/image.png "${{ needs.generate_post.outputs.post_image }}"
           fi
 
+          rm -rf temp
+
       - name: Configurar Git
         run: |
           git config --local user.name "R. Daneel Olivaw"
@@ -106,7 +108,7 @@ jobs:
             - File: [${{ needs.generate_post.outputs.post_filename }}](${{github.server_url}}/${{github.repository}}/blob/${{ env.BRANCH_NAME }}/${{ needs.generate_post.outputs.post_filename }})
 
             ### Post Image
-            ![${{ needs.generate_post.outputs.post_image }}](${{github.server_url}}/${{github.repository}}/blob/${{ env.BRANCH_NAME }}/${{ needs.generate_post.outputs.post_image }})
+            ![${{ needs.generate_post.outputs.post_image }}](${{github.server_url}}/${{github.repository}}/blob/${{ env.BRANCH_NAME }}${{ needs.generate_post.outputs.post_image }})
           branch: ${{ env.BRANCH_NAME }}
           author: "R. Daneel Olivaw <cleissonbarbosa68@gmail.com>"
           labels: "ai-generated,new-post"

@@ -444,7 +444,7 @@ post_slug={slug}
 post_categories={categories}
 post_tags={tags}
 post_filename={filename}
-post_image={image_rel_path}
+post_image={image_rel_path.removeprefix('/')}
 """
                 )
 
