@@ -7,7 +7,7 @@ image:
   alt: "Automatizando Posts com IA sem gastar 1 real"
 categories: [Automação, IA, Python]
 tags: [inteligência artificial, automação, python, gemini api, cloudflare workers ai, github actions, clean architecture]
-pin: false
+pin: true
 ---
 
 ## Introdução
