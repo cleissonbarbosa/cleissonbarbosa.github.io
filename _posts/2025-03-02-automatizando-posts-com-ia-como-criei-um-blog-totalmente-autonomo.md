@@ -12,11 +12,11 @@ pin: false
 
 ## Introdução
 
-Sempre acreditei que a automação é o caminho para liberar nossa mente para tarefas mais criativas. Como desenvolvedor e entusiasta de IA, decidi aplicar esse princípio ao meu próprio blog. O resultado? Um sistema completamente autônomo que gera dois posts técnicos por semana, sem qualquer intervenção humana. Neste artigo, vou compartilhar como construí esse sistema usando APIs gratuitas do Google Gemini e Cloudflare Workers AI, seguindo os princípios da Clean Architecture.
+Sempre acreditei que a automação é o caminho para liberar nossa mente para tarefas mais criativas. Como desenvolvedor e entusiasta de IA, decidi aplicar esse princípio ao meu próprio blog. O resultado? Um sistema completamente autônomo que gera dois posts técnicos por semana, sem qualquer intervenção humana. Neste artigo, vou compartilhar como construí esse sistema usando APIs gratuitas do [Google Gemini](https://ai.google.dev/gemini-api/docs/quickstart){:target="_blank"} e [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai){:target="_blank"}, seguindo os princípios da Clean Architecture.
 
 ## Por que Automatizar a Criação de Conteúdo?
 
-Todos os projetos que faço e compartilho nesse blog são para crescimento técnico pessoal, além desse blog funcionar como um "dump" de coisas que estou estudando e gostaria de deixar registrado. Foi por isso que resolvi automatizar alguns posts aqui. Não queria apenas um gerador de texto aleatório – precisava de um sistema que:
+Todos os projetos que faço e compartilho neste blog têm como objetivo meu crescimento técnico pessoal. Este blog também funciona como um "dump" de coisas que estou estudando e que gostaria de deixar registrado. Automações com IAs é o que estou estudando nesse momento, mas não queria apenas um gerador de texto aleatório – precisava de um sistema que:
 
 1. **Criasse conteúdo técnico de qualidade** sobre programação, desenvolvimento e tecnologias
 2. **Mantivesse a consistência** com o estilo dos meus posts anteriores
@@ -26,7 +26,7 @@ Todos os projetos que faço e compartilho nesse blog são para crescimento técn
 
 ## R. Daneel Olivaw: O Autor Robótico
 
-Para dar uma identidade própria aos posts gerados automaticamente, criei um alter ego para a IA: R. Daneel Olivaw. Esse nome não foi escolhido por acaso - é uma homenagem ao personagem robô das obras de Isaac Asimov, onde a inicial "R" significa "Robô". Nos contos de Asimov, Daneel é um robô humanóide avançado capaz de se misturar à sociedade humana.
+Para dar uma identidade própria aos posts gerados automaticamente, criei um alter ego para a IA: [R. Daneel Olivaw](https://en.wikipedia.org/wiki/R._Daneel_Olivaw){:target="_blank"}. Esse nome não foi escolhido por acaso - é uma homenagem ao personagem robô das obras de [Isaac Asimov](https://pt.wikipedia.org/wiki/Isaac_Asimov){:target="_blank"}, onde a inicial "R" significa "Robô". Nos contos de Asimov, Daneel é um robô humanóide avançado capaz de se misturar à sociedade humana.
 
 Cada post gerado automaticamente é assinado por "R. Daneel Olivaw", enquanto os que escrevo manualmente continuam com minha assinatura pessoal. Essa distinção clara permite que os leitores saibam na hora a origem do conteúdo que estão consumindo.
 
@@ -34,7 +34,7 @@ Além disso, todo post gerado por IA contém uma nota ao final informando explic
 
 ## A Arquitetura do Sistema
 
-Decidi construir o sistema seguindo os princípios da Clean Architecture para garantir um código organizado, testável e fácil de manter. Veja como está estruturado:
+Decidi construir o sistema seguindo os princípios da [Clean Architecture](https://medium.com/@gabrielfernandeslemos/clean-architecture-uma-abordagem-baseada-em-princ%C3%ADpios-bf9866da1f9c){:target="_blank"} para garantir um código organizado, testável e fácil de manter. Veja como está estruturado:
 
 ```
 generate_post/
@@ -58,15 +58,15 @@ Essa estrutura permite uma clara separação de responsabilidades e torna o sist
 O fluxo de funcionamento é surpreendentemente simples:
 
 1. **Obtenção de contexto**: O sistema dá uma olhada nos meus posts anteriores para manter o mesmo estilo e temas 
-2. **Geração de conteúdo**: A API do Google Gemini cria o texto do post com base nesse contexto
-3. **Geração de imagens**: A API do Cloudflare Workers AI cria uma imagem de capa legal para o post
-4. **Criação de arquivo markdown**: O sistema formata tudo direitinho no padrão Jekyll do blog
+2. **Geração de conteúdo**: A API do [Google Gemini](https://ai.google.dev/gemini-api/docs/quickstart){:target="_blank"} cria o texto do post com base nesse contexto
+3. **Geração de imagens**: A API do [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai){:target="_blank"} cria uma imagem de capa legal para o post
+4. **Criação de arquivo markdown**: O sistema formata tudo direitinho no padrão [Jekyll](https://jekyllrb.com/){:target="_blank"} do blog
 5. **Publicação**: Tudo é enviado para o GitHub via pull request, pronto para o copilot revisar
 6. **Automação**: O GitHub Actions cuida de toda a parte de execução e publicação
 
 ### A Magia do GitHub Actions
 
-A verdadeira automação vem do GitHub Actions, que executa todo esse fluxo de forma programada:
+A verdadeira automação vem do [GitHub Actions](https://github.com/features/actions){:target="_blank"}, que executa todo esse fluxo de forma programada:
 
 ```yml
 name: Generate weekly posts
@@ -79,11 +79,11 @@ on:
 ...
 ```
 
-Configurei para que sejam gerados dois posts semanais - às quartas e sábados - sem que eu precise levantar um dedo. O GitHub Actions cuida de tudo, desde rodar o script até criar a pull request com o novo post.
+Configurei para que sejam gerados [dois posts semanais](https://crontab.cronhub.io/){:target="_blank"} - às quartas e sábados - sem que eu precise levantar um dedo. O GitHub Actions cuida de tudo, desde rodar o script até criar a pull request com o novo post.
 
 ## Gerando Conteúdo com o Google Gemini
 
-O coração do sistema é o gerador de conteúdo que utiliza o Google Gemini - uma das melhores IAs generativas disponíveis gratuitamente. O mais legal é que o sistema usa randomização para escolher entre diferentes modelos do Gemini:
+O coração do sistema é o gerador de conteúdo que utiliza o Google Gemini - uma das melhores IAs generativas disponíveis gratuitamente. O mais legal é que o sistema usa randomização para escolher entre diferentes [modelos do Gemini](https://ai.google.dev/gemini-api/docs/models/gemini?hl=pt-br){:target="_blank"}:
 
 ```python
 # Seleção de modelo
