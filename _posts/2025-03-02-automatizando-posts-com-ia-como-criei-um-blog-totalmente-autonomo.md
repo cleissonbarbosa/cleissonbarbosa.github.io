@@ -28,7 +28,7 @@ Todos os projetos que faço e compartilho neste blog têm como objetivo meu cres
 
 Para dar uma identidade própria aos posts gerados automaticamente, criei um alter ego para a IA: [R. Daneel Olivaw](https://en.wikipedia.org/wiki/R._Daneel_Olivaw){:target="_blank"}. Esse nome não foi escolhido por acaso - é uma homenagem ao personagem robô das obras de [Isaac Asimov](https://pt.wikipedia.org/wiki/Isaac_Asimov){:target="_blank"}, onde a inicial "R" significa "Robô". Nos contos de Asimov, Daneel é um robô humanóide avançado capaz de se misturar à sociedade humana.
 
-Cada post gerado automaticamente é assinado por "R. Daneel Olivaw", enquanto os que escrevo manualmente continuam com minha assinatura pessoal. Essa distinção clara permite que os leitores saibam na hora a origem do conteúdo que estão consumindo.
+Cada post gerado automaticamente é assinado por "[R. Daneel Olivaw](https://en.wikipedia.org/wiki/R._Daneel_Olivaw){:target="_blank"}", enquanto os que escrevo manualmente continuam com minha assinatura pessoal. Essa distinção clara permite que os leitores saibam na hora a origem do conteúdo que estão consumindo.
 
 Além disso, todo post gerado por IA contém uma nota ao final informando explicitamente que foi totalmente gerado por uma IA autônoma, sem intervenção humana, junto com um link para o código-fonte que tornou isso possível.
 
@@ -110,9 +110,9 @@ O prompt que uso para gerar os posts é cuidadosamente elaborado para:
 
 ## Gerando Imagens com Cloudflare Workers AI
 
-Para as imagens de capa, utilizo o Cloudflare Workers AI - outro serviço com uma generosa camada gratuita. O sistema gera uma imagem baseada no título e conteúdo do post, criando uma identidade visual única para cada artigo.
+Para as imagens de capa, utilizo o [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai){:target="_blank"} - outro serviço com uma generosa camada gratuita. O sistema gera uma imagem baseada no título e conteúdo do post, criando uma identidade visual única para cada artigo.
 
-O mais bacana é que tanto o Gemini quanto o Cloudflare Workers AI oferecem APIs gratuitas com limites bem generosos, permitindo que todo o sistema funcione sem gastar um centavo.
+O mais bacana é que tanto o [Gemini](https://ai.google.dev/gemini-api/docs/quickstart){:target="_blank"} quanto o [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai){:target="_blank"} oferecem APIs gratuitas com limites bem generosos, permitindo que todo o sistema funcione sem gastar um centavo.
 
 ## Desafios e Lições Aprendidas
 
@@ -124,9 +124,9 @@ O desenvolvimento do sistema não foi moleza:
 
 3. **Qualidade das imagens**: Criar prompts que gerassem imagens bonitas e relevantes para cada post exigiu bastante experimentação (ainda não estou satisfeito com as imagens geradas).
 
-4. **Metadados do Jekyll**: O sistema precisa gerar corretamente os metadados no formato Front Matter do Jekyll para que o blog funcione direitinho.
+4. **Metadados do Jekyll**: O sistema precisa gerar corretamente os metadados no formato Front Matter do [Jekyll](https://jekyllrb.com/){:target="_blank"} para que o blog funcione direitinho.
 
-Uma das maiores lições foi perceber o quão importante é o prompt engineering para obter resultados de qualidade. Um bom prompt faz toda a diferença na qualidade do conteúdo gerado.
+Uma das maiores lições foi perceber o quão importante é o prompt engineering para obter resultados de qualidade. Um bom prompt faz toda a diferença na qualidade do conteúdo gerado. O que me ajudou nesse ponto foi ter ajudado na tradução do projeto [Prompt Engineering Guide](https://github.com/dair-ai/Prompt-Engineering-Guide){:target="_blank"}.
 
 ## Resultados e Métricas
 
@@ -143,16 +143,16 @@ Fiquei impressionado com a qualidade dos posts gerados. Em alguns casos, a IA pr
 
 Um aspecto importante deste projeto é a transparência com os leitores. Para isso, implementei algumas características distintivas nos posts gerados automaticamente:
 
-1. **Autoria explícita**: Cada post gerado pela IA é claramente identificado como sendo de autoria de "R. Daneel Olivaw (Autonomous AI)" no metadado do front matter do Jekyll.
+1. **Autoria explícita**: Cada post gerado pela IA é claramente identificado como sendo de autoria de "R. Daneel Olivaw (Autonomous AI)" no metadado do front matter do [Jekyll](https://jekyllrb.com/){:target="_blank"}.
 
 2. **Tag especial**: Todos os posts gerados automaticamente recebem a tag "ai-generated", facilitando sua identificação e filtragem.
 
 3. **Nota de rodapé**: Ao final de cada post gerado por IA, é incluída automaticamente a seguinte nota:
 
-```
+```markdown
 _Este post foi totalmente gerado por uma IA autônoma, sem intervenção humana._
 
-[Veja o código que gerou este post](https://github.com/cleissonbarbosa/cleissonbarbosa.github.io/blob/main/generate_post/README.md){:target="_blank"}
+[Veja o código que gerou este post](https://github.com/cleissonbarbosa/cleissonbarbosa.github.io/blob/main/generate_post/README.md)
 ```
 
 Essa abordagem garante total transparência com os leitores e também serve como uma forma interessante de mostrar o potencial da geração de conteúdo por IA.
