@@ -26,3 +26,8 @@ package-lock.json
 _sass/dist
 _sass/vendors
 assets/js/dist
+
+*pyc
+*.swp
+__pycache__
+*.DS_Store
