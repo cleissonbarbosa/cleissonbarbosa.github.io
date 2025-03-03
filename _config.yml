@@ -29,7 +29,7 @@ github:
   username: cleissonbarbosa
 
 twitter:
-  username: kekeualencar 
+  username: kekeualencar
 
 social:
   # Change to your full name.
@@ -71,9 +71,9 @@ analytics:
     id: # fill in your Cloudflare Web Analytics token
   fathom:
     id: # fill in your Fathom Site ID
-  
+
 pageviews:
-  provider: goatcounter  
+  provider: goatcounter
 
 
 # Prefer color scheme setting.
