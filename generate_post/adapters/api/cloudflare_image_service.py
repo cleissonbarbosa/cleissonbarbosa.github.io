@@ -88,16 +88,20 @@ use the reference image as background
         # Preparar o JSON para a chamada da API
         req_json = {
             "prompt": prompt,
-            "image_b64": image_b64,
+            #"image_b64": image_b64,
             "negative_prompt": "poor quality, low resolution, bad anatomy, text, watermark, signature",  # noqa
             "num_steps": 20,
             "guidance": 8.5,
             "strength": 0.85,
-            "width": 630,
-            "height": 1200,
+            "width": 1200, # Increased width for better resolution
+            "height": 600, # Adjusted height to maintain aspect ratio
         }
 
-        model = random.choice(["runwayml/stable-diffusion-v1-5-img2img"])
+        model = random.choice([
+            "bytedance/stable-diffusion-xl-lightning", # Lightning fast model
+            "stabilityai/stable-diffusion-xl-base-1.0", # Base model for high quality images
+            "lykon/dreamshaper-8-lcm" # Dreamshaper model for creative images
+        ])
         print(f"Modelo de imagem selecionado: {model}")
 
         # Chamar a API do Cloudflare Workers AI
