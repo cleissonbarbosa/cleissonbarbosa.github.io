@@ -70,8 +70,7 @@ modified:   arquivo2.txt
 
 Você precisa corrigir um bug urgente na branch `develop`.
 
-1.  **Stasheie suas alterações:**
-
+1.  **Stash suas alterações:**
     ```bash
     git stash push -m "Trabalho em andamento na nova funcionalidade"
     ```
