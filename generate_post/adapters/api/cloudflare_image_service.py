@@ -98,10 +98,10 @@ use the reference image as background
         }
 
         model = random.choice([
-            "bytedance/stable-diffusion-xl-lightning", 
-            "stabilityai/stable-diffusion-xl-base-1.0", 
-            "stabilityai/stable-diffusion-xl-base-1.0", 
-            "lykon/dreamshaper-8-lcm"
+            "bytedance/stable-diffusion-xl-lightning", # Lightning fast model
+            "stabilityai/stable-diffusion-xl-base-1.0", # Base model for high quality images
+            "stabilityai/stable-diffusion-xl-base-1.0", # Base model for high quality images
+            "lykon/dreamshaper-8-lcm" # Dreamshaper model for creative images
         ])
         print(f"Modelo de imagem selecionado: {model}")
 
