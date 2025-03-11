@@ -93,8 +93,8 @@ use the reference image as background
             "num_steps": 20,
             "guidance": 8.5,
             "strength": 0.85,
-            "width": 1200,
-            "height": 600,
+            "width": 1200, # Increased width for better resolution
+            "height": 600, # Adjusted height to maintain aspect ratio
         }
 
         model = random.choice([
