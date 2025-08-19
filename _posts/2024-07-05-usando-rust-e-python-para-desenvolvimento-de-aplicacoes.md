@@ -7,7 +7,7 @@ image:
     alt: "Como Integrar Rust com Python para Desenvolvimento de Aplicações"
 categories: [Rust, Python]
 tags: [rust, python, backend, integracao, desenvolvimento, aplicacoes]
-pin: false
+pin: true
 ---
 
 ## Introdução
