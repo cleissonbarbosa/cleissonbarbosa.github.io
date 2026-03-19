@@ -1,4 +1,4 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, asdict
 from datetime import datetime
 
 
@@ -19,15 +19,6 @@ class Post:
         if self.date is None:
             self.date = datetime.now()
 
-    def to_dict(self):
+    def to_dict(self) -> dict:
         """Converte o post para um dicionário"""
-        return {
-            "title": self.title,
-            "categories": self.categories,
-            "tags": self.tags,
-            "content": self.content,
-            "date": self.date,
-            "image_path": self.image_path,
-            "slug": self.slug,
-            "filename": self.filename,
-        }
+        return asdict(self)
