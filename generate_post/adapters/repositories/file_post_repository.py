@@ -1,4 +1,4 @@
-import os
+import logging
 from pathlib import Path
 from typing import Optional
 import re
@@ -7,8 +7,16 @@ from datetime import datetime
 from generate_post.core.domain.entities.post import Post
 from generate_post.core.domain.interfaces.post_repository import (
     PostRepositoryInterface,
-)  # noqa
+)
 from generate_post.config.constants import POSTS_DIR
+
+logger = logging.getLogger(__name__)
+
+_FRONT_MATTER_RE = re.compile(r"^---\s*\n(.+?)\n---\s*\n", re.DOTALL)
+_TITLE_RE = re.compile(r'title:\s*"([^"]+)"')
+_CATEGORIES_RE = re.compile(r"categories:\s*\[(.*)?\]")
+_TAGS_RE = re.compile(r"tags:\s*\[(.*)?\]")
+_DATE_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})")
 
 
 class FilePostRepository(PostRepositoryInterface):
@@ -16,95 +24,89 @@ class FilePostRepository(PostRepositoryInterface):
 
     def save_post(self, post: Post) -> bool:
         """Salva um post como arquivo markdown"""
-        try:
-            # Front matter para o post
-            front_matter = f"""---
-title: "{post.title}"
-author: ia
-date: {post.date.strftime("%Y-%m-%d") if post.date else datetime.now().strftime("%Y-%m-%d")} 00:00:00 -0300
-image:
-  path: {post.image_path}
-  alt: "{post.title}"
-categories: [{post.categories}]
-tags: [{post.tags}, ai-generated]
----
+        if not post.filename:
+            raise ValueError("Post.filename é obrigatório para salvar")
 
-"""  # noqa
+        full_path = Path(post.filename)
+        full_path.parent.mkdir(parents=True, exist_ok=True)
 
-            generated_by = """
+        date_str = (
+            post.date.strftime("%Y-%m-%d")
+            if post.date
+            else datetime.now().strftime("%Y-%m-%d")
+        )
 
-_Este post foi totalmente gerado por uma IA autônoma, sem intervenção humana._
+        front_matter = (
+            f"---\n"
+            f'title: "{post.title}"\n'
+            f"author: ia\n"
+            f"date: {date_str} 00:00:00 -0300\n"
+            f"image:\n"
+            f"  path: {post.image_path}\n"
+            f'  alt: "{post.title}"\n'
+            f"categories: [{post.categories}]\n"
+            f"tags: [{post.tags}, ai-generated]\n"
+            f"---\n\n"
+        )
 
-[Veja o código que gerou este post](https://github.com/cleissonbarbosa/cleissonbarbosa.github.io/blob/main/generate_post/README.md){:target="_blank"}
-"""  # noqa
+        generated_by = (
+            "\n\n---\n\n"
+            "_Este post foi totalmente gerado por uma IA autônoma, "
+            "sem intervenção humana._\n\n"
+            "[Veja o código que gerou este post]"
+            "(https://github.com/cleissonbarbosa/"
+            "cleissonbarbosa.github.io/blob/main/"
+            'generate_post/README.md){:target="_blank"}\n'
+        )
 
-            # Garantir que o diretório existe
-            os.makedirs(os.path.dirname(post.filename), exist_ok=True)  # type: ignore  # noqa
+        full_path.write_text(
+            front_matter + post.content + generated_by,
+            encoding="utf-8",
+        )
 
-            # Escrever o arquivo Markdown
-            full_path = Path(post.filename if post.filename else "")
-            if not full_path:
-                raise ValueError("Filename is required")
-            with open(full_path, "w", encoding="utf-8") as f:
-                f.write(front_matter + post.content + "\n\n---" + generated_by)
-
-            print(f"Post gerado: {post.filename}")
-            print(f"Imagem do post: {post.image_path}")
-
-            return True
-        except Exception as e:
-            print(f"Erro ao salvar post: {e}")
-            return False
+        logger.info("Post gerado: %s", post.filename)
+        logger.info("Imagem do post: %s", post.image_path)
+        return True
 
     def get_last_post(self) -> Optional[Post]:
         """Recupera o último post do repositório"""
-        try:
-            post_files = list(POSTS_DIR.glob("*.md"))
-
-            if not post_files:
-                return None
-
-            # Ordena por data de modificação (mais recente primeiro)
-            last_post_file = sorted(
-                post_files, key=lambda p: p.stat().st_mtime, reverse=True
-            )[0]
-
-            with open(last_post_file, "r", encoding="utf-8") as f:
-                content = f.read()
-
-            # Extrair informações do Front Matter
-            title_match = re.search(r'title: "([^"]+)"', content)
-            title = title_match.group(1) if title_match else ""
-
-            categories_match = re.search(r"categories: \[(.*)\]", content)
-            categories = categories_match.group(1) if categories_match else ""
-
-            tags_match = re.search(r"tags: \[(.*)\]", content)
-            tags = tags_match.group(1) if tags_match else ""
-
-            # Extrair data do nome do arquivo
-            date_match = re.match(r"(\d{4}-\d{2}-\d{2})", last_post_file.name)
-            date_str = date_match.group(1) if date_match else None
-            date = datetime.strptime(date_str, "%Y-%m-%d") if date_str else None  # noqa
-
-            # Extrair conteúdo (tudo após o front matter)
-            content_match = re.search(
-                r"---\s*\n(.*?)(\n---\s*\n_Este post)", content, re.DOTALL
-            )
-            post_content = content_match.group(1) if content_match else ""
-
-            # Criar objeto Post
-            post = Post(
-                title=title,
-                categories=categories,
-                tags=tags,
-                content=post_content,
-                date=date,
-                filename=str(last_post_file),
-            )
-
-            return post
-
-        except Exception as e:
-            print(f"Erro ao recuperar último post: {e}")
+        post_files = list(POSTS_DIR.glob("*.md"))
+        if not post_files:
             return None
+
+        # Ordena pelo nome do arquivo (data YYYY-MM-DD no prefixo)
+        # em vez de st_mtime que pode mudar com git checkout
+        last_post_file = max(post_files, key=lambda p: p.name)
+
+        content = last_post_file.read_text(encoding="utf-8")
+
+        # Extrair front matter
+        fm_match = _FRONT_MATTER_RE.search(content)
+        front_matter = fm_match.group(1) if fm_match else ""
+
+        title_match = _TITLE_RE.search(front_matter)
+        title = title_match.group(1) if title_match else ""
+
+        categories_match = _CATEGORIES_RE.search(front_matter)
+        categories = categories_match.group(1) if categories_match else ""
+
+        tags_match = _TAGS_RE.search(front_matter)
+        tags = tags_match.group(1) if tags_match else ""
+
+        # Extrair data do nome do arquivo
+        date_match = _DATE_RE.match(last_post_file.name)
+        date = (
+            datetime.strptime(date_match.group(1), "%Y-%m-%d") if date_match else None
+        )
+
+        # Conteúdo: tudo após o front matter
+        post_content = content[fm_match.end() :].strip() if fm_match else ""
+
+        return Post(
+            title=title,
+            categories=categories,
+            tags=tags,
+            content=post_content,
+            date=date,
+            filename=str(last_post_file),
+        )

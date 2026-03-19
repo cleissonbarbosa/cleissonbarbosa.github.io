@@ -31,3 +31,5 @@ assets/js/dist
 *.swp
 __pycache__
 *.DS_Store
+_sass/vendors
+assets/js/dist

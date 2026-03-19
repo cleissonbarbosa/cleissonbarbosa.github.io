@@ -1,10 +1,7 @@
 from pathlib import Path
-import os
 
 # Diretório raiz do projeto
-ROOT_DIR = Path(
-    os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))  # noqa
-)
+ROOT_DIR = Path(__file__).resolve().parents[2]
 
 # Diretório de assets para posts
 ASSETS_DIR = ROOT_DIR / "assets" / "img" / "posts"

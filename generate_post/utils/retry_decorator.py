@@ -1,36 +1,43 @@
+import logging
 import time
 from functools import wraps
 
 from generate_post.config.constants import MAX_RETRIES, RETRY_DELAY
 
+logger = logging.getLogger(__name__)
+
 
 def retry(max_attempts=MAX_RETRIES, delay=RETRY_DELAY):
-    """Decorator para implementar retry em funções"""
+    """Decorator para implementar retry com exponential backoff."""
 
     def decorator(func):
         @wraps(func)
         def wrapper(*args, **kwargs):
-            attempts = 0
             last_exception = None
 
-            while attempts < max_attempts:
+            for attempt in range(1, max_attempts + 1):
                 try:
                     return func(*args, **kwargs)
                 except Exception as e:
-                    attempts += 1
                     last_exception = e
-                    wait_time = delay * (
-                        2 ** (attempts - 1)
-                    )  # Exponential backoff  # noqa
-                    print(
-                        f"Tentativa {attempts}/{max_attempts} falhou: {str(e)}. Aguardando {wait_time}s..."  # noqa
-                    )
-                    time.sleep(wait_time)
+                    if attempt < max_attempts:
+                        wait_time = delay * (2 ** (attempt - 1))
+                        logger.warning(
+                            "Tentativa %d/%d de %s falhou: %s. " "Aguardando %ds...",
+                            attempt,
+                            max_attempts,
+                            func.__qualname__,
+                            e,
+                            wait_time,
+                        )
+                        time.sleep(wait_time)
 
-            print(
-                f"Todas as {max_attempts} tentativas falharam. Último erro: {last_exception}"  # noqa
+            logger.error(
+                "Todas as %d tentativas de %s falharam.",
+                max_attempts,
+                func.__qualname__,
             )
-            raise last_exception
+            raise last_exception  # type: ignore[misc]
 
         return wrapper
 
