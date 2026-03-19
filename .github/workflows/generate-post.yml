@@ -62,6 +62,8 @@ jobs:
   create_pull_request:
     needs: generate_post
     runs-on: ubuntu-latest
+    outputs:
+      pull_request_number: ${{ steps.create_pr.outputs.pull-request-number }}
     steps:
       - name: Checkout do repositório
         uses: actions/checkout@v4
@@ -93,6 +95,7 @@ jobs:
           git config --local user.email "cleissonbarbosa68@gmail.com"
 
       - name: Criar Pull Request
+        id: create_pr
         uses: peter-evans/create-pull-request@v7
         with:
           commit-message: "Add a new AI generated post"
@@ -112,5 +115,101 @@ jobs:
           branch: ${{ env.BRANCH_NAME }}
           author: "R. Daneel Olivaw <cleissonbarbosa68@gmail.com>"
           labels: "ai-generated,new-post"
-          reviewers: "cleissonbarbosa"
           committer: "R. Daneel Olivaw <cleissonbarbosa@gmail.com>"
+
+  validate_and_merge:
+    needs: [generate_post, create_pull_request]
+    if: needs.create_pull_request.outputs.pull_request_number
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout da branch do PR
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH_NAME }}
+
+      - name: Validar formato do post
+        run: |
+          POST_FILE="${{ needs.generate_post.outputs.post_filename }}"
+
+          if [ ! -f "$POST_FILE" ]; then
+            echo "::error::Arquivo do post não encontrado: $POST_FILE"
+            exit 1
+          fi
+
+          # Extrair front matter
+          FRONT_MATTER=$(sed -n '/^---$/,/^---$/p' "$POST_FILE")
+
+          # Verificar campos obrigatórios do front matter
+          ERRORS=""
+
+          if ! echo "$FRONT_MATTER" | grep -qE '^title:\s*".+"'; then
+            ERRORS="${ERRORS}Campo 'title' ausente ou vazio\n"
+          fi
+
+          if ! echo "$FRONT_MATTER" | grep -qE '^author:\s*.+'; then
+            ERRORS="${ERRORS}Campo 'author' ausente ou vazio\n"
+          fi
+
+          if ! echo "$FRONT_MATTER" | grep -qE '^date:\s*[0-9]{4}-[0-9]{2}-[0-9]{2}'; then
+            ERRORS="${ERRORS}Campo 'date' ausente ou com formato inválido\n"
+          fi
+
+          if ! echo "$FRONT_MATTER" | grep -qE '^categories:\s*\[.+\]'; then
+            ERRORS="${ERRORS}Campo 'categories' ausente ou vazio\n"
+          fi
+
+          if ! echo "$FRONT_MATTER" | grep -qE '^tags:\s*\[.+\]'; then
+            ERRORS="${ERRORS}Campo 'tags' ausente ou vazio\n"
+          fi
+
+          if ! echo "$FRONT_MATTER" | grep -qE '^\s+path:\s*/.+'; then
+            ERRORS="${ERRORS}Campo 'image.path' ausente ou vazio\n"
+          fi
+
+          # Verificar que o corpo do post tem conteúdo (pelo menos 500 caracteres após o front matter)
+          BODY=$(sed '1,/^---$/!d; /^---$/,/^---$/d' "$POST_FILE" | wc -c)
+          BODY_LENGTH=$(awk '/^---$/{n++; next} n>=2' "$POST_FILE" | wc -c)
+          if [ "$BODY_LENGTH" -lt 500 ]; then
+            ERRORS="${ERRORS}Corpo do post muito curto (${BODY_LENGTH} caracteres, mínimo 500)\n"
+          fi
+
+          if [ -n "$ERRORS" ]; then
+            echo "::error::Validação do post falhou:"
+            printf "$ERRORS"
+            exit 1
+          fi
+
+          echo "✅ Formato do post válido"
+
+      - name: Validar imagem do post
+        run: |
+          IMAGE_PATH="${{ needs.generate_post.outputs.post_image }}"
+
+          if [ ! -f "$IMAGE_PATH" ]; then
+            echo "::error::Imagem não encontrada: $IMAGE_PATH"
+            exit 1
+          fi
+
+          # Verificar tamanho mínimo (não aceitar arquivos vazios ou muito pequenos)
+          IMAGE_SIZE=$(stat -c%s "$IMAGE_PATH")
+          if [ "$IMAGE_SIZE" -lt 1024 ]; then
+            echo "::error::Imagem muito pequena (${IMAGE_SIZE} bytes), pode estar corrompida"
+            exit 1
+          fi
+
+          # Verificar se é uma imagem válida (magic bytes PNG ou JPEG)
+          FILE_TYPE=$(file --brief --mime-type "$IMAGE_PATH")
+          if [[ "$FILE_TYPE" != image/png && "$FILE_TYPE" != image/jpeg ]]; then
+            echo "::error::Arquivo não é uma imagem válida (tipo detectado: $FILE_TYPE)"
+            exit 1
+          fi
+
+          echo "✅ Imagem válida ($FILE_TYPE, $IMAGE_SIZE bytes)"
+
+      - name: Auto-merge do PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER="${{ needs.create_pull_request.outputs.pull_request_number }}"
+          echo "Mergeando PR #${PR_NUMBER}..."
+          gh pr merge "$PR_NUMBER" --squash --delete-branch
