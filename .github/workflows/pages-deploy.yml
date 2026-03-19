@@ -12,6 +12,14 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
+  # Trigger after AI post generation workflow merges to main
+  workflow_run:
+    workflows: ["Generate Weekly Post"]
+    types:
+      - completed
+    branches:
+      - main
+
 permissions:
   contents: read
   pages: write
@@ -25,6 +33,9 @@ concurrency:
 jobs:
   build:
     runs-on: ubuntu-latest
+    if: >-
+      github.event_name != 'workflow_run' ||
+      github.event.workflow_run.conclusion == 'success'
 
     steps:
       - name: Checkout
