@@ -126,9 +126,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout da branch do PR
-        uses: actions/checkout@v4
+        uses: actions/checkout@v6
         with:
           ref: ${{ env.BRANCH_NAME }}
+          fetch-depth: 0
 
       - name: Validar formato do post
         run: |
