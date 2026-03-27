@@ -1,0 +1,211 @@
+name: Generate Weekly News Digest
+
+on:
+  schedule:
+    - cron: "0 20 * * 0" # Todo domingo às 20:00 UTC
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+env:
+  BRANCH_NAME: posts/weekly-digest
+
+jobs:
+  generate_digest:
+    runs-on: ubuntu-latest
+    outputs:
+      post_title: ${{ steps.generate_digest.outputs.post_title }}
+      post_slug: ${{ steps.generate_digest.outputs.post_slug }}
+      post_categories: ${{ steps.generate_digest.outputs.post_categories }}
+      post_tags: ${{ steps.generate_digest.outputs.post_tags }}
+      post_filename: ${{ steps.generate_digest.outputs.post_filename }}
+      post_image: ${{ steps.generate_digest.outputs.post_image }}
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+
+      - name: Configurar Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.x"
+
+      - name: Instalar dependências
+        run: pip install requests
+
+      - name: Gerar resumo semanal
+        id: generate_digest
+        run: python generate_post.py --weekly-digest
+        env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
+          CF_AI_API_KEY: ${{ secrets.CF_AI_API_KEY }}
+          CF_ACCOUNT_ID: ${{ secrets.CF_ACCOUNT_ID }}
+
+      - name: Salvar arquivo para upload
+        run: |
+          mkdir -p temp
+          cp ${{ steps.generate_digest.outputs.post_filename }} temp/post.md
+          if [ -f "${{ steps.generate_digest.outputs.post_image }}" ]; then
+            cp ${{ steps.generate_digest.outputs.post_image }} temp/image.png
+          fi
+
+      - name: Upload do digest gerado como artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: generated-digest
+          path: temp/
+          retention-days: 1
+
+  create_pull_request:
+    needs: generate_digest
+    runs-on: ubuntu-latest
+    outputs:
+      pull_request_number: ${{ steps.create_pr.outputs.pull-request-number }}
+    steps:
+      - name: Checkout do repositório
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Download do digest gerado
+        uses: actions/download-artifact@v4
+        with:
+          name: generated-digest
+          path: temp
+
+      - name: Mover digest para o diretório correto
+        run: |
+          if [ -f "temp/post.md" ]; then
+            cp temp/post.md "${{ needs.generate_digest.outputs.post_filename }}"
+          fi
+
+          if [ -f "temp/image.png" ]; then
+            mkdir -p $(dirname "${{ needs.generate_digest.outputs.post_image }}")
+            cp temp/image.png "${{ needs.generate_digest.outputs.post_image }}"
+          fi
+
+          rm -rf temp
+
+      - name: Configurar Git
+        run: |
+          git config --local user.name "R. Daneel Olivaw"
+          git config --local user.email "cleissonbarbosa68@gmail.com"
+
+      - name: Criar Pull Request
+        id: create_pr
+        uses: peter-evans/create-pull-request@v7
+        with:
+          base: main
+          commit-message: "Add weekly news digest"
+          title: "📰 Weekly Digest: ${{ needs.generate_digest.outputs.post_title }}"
+          body: |
+            ## Resumo semanal de notícias gerado automaticamente por IA.
+
+            ### Informações do Post
+            - Título: ${{ needs.generate_digest.outputs.post_title }}
+            - Slug: ${{ needs.generate_digest.outputs.post_slug }}
+            - Categorias: `${{ needs.generate_digest.outputs.post_categories }}`
+            - Tags: `${{ needs.generate_digest.outputs.post_tags }}`
+            - Arquivo: [${{ needs.generate_digest.outputs.post_filename }}](${{github.server_url}}/${{github.repository}}/blob/${{ env.BRANCH_NAME }}/${{ needs.generate_digest.outputs.post_filename }})
+
+            ### Imagem do Post
+            ![${{ needs.generate_digest.outputs.post_image }}](https://raw.githubusercontent.com/${{github.repository}}/refs/heads/${{ env.BRANCH_NAME }}/${{ needs.generate_digest.outputs.post_image }})
+
+            ---
+            > Este digest usa **Google Search Grounding** do Gemini para buscar e sintetizar notícias reais da semana.
+          branch: ${{ env.BRANCH_NAME }}
+          author: "R. Daneel Olivaw <cleissonbarbosa68@gmail.com>"
+          labels: "ai-generated,weekly-digest"
+          committer: "R. Daneel Olivaw <cleissonbarbosa@gmail.com>"
+
+  validate_and_merge:
+    needs: [generate_digest, create_pull_request]
+    if: needs.create_pull_request.outputs.pull_request_number
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout da branch do PR
+        uses: actions/checkout@v6
+        with:
+          ref: ${{ env.BRANCH_NAME }}
+          fetch-depth: 0
+
+      - name: Validar formato do post
+        run: |
+          POST_FILE="${{ needs.generate_digest.outputs.post_filename }}"
+
+          if [ ! -f "$POST_FILE" ]; then
+            echo "::error::Arquivo do post não encontrado: $POST_FILE"
+            exit 1
+          fi
+
+          FRONT_MATTER=$(sed -n '/^---$/,/^---$/p' "$POST_FILE")
+          ERRORS=""
+
+          if ! echo "$FRONT_MATTER" | grep -qE '^title:\s*".+"'; then
+            ERRORS="${ERRORS}Campo 'title' ausente ou vazio\n"
+          fi
+
+          if ! echo "$FRONT_MATTER" | grep -qE '^author:\s*.+'; then
+            ERRORS="${ERRORS}Campo 'author' ausente ou vazio\n"
+          fi
+
+          if ! echo "$FRONT_MATTER" | grep -qE '^date:\s*[0-9]{4}-[0-9]{2}-[0-9]{2}'; then
+            ERRORS="${ERRORS}Campo 'date' ausente ou com formato inválido\n"
+          fi
+
+          if ! echo "$FRONT_MATTER" | grep -qE '^categories:\s*\[.+\]'; then
+            ERRORS="${ERRORS}Campo 'categories' ausente ou vazio\n"
+          fi
+
+          if ! echo "$FRONT_MATTER" | grep -qE '^tags:\s*\[.+\]'; then
+            ERRORS="${ERRORS}Campo 'tags' ausente ou vazio\n"
+          fi
+
+          if ! echo "$FRONT_MATTER" | grep -qE '^\s+path:\s*/.+'; then
+            ERRORS="${ERRORS}Campo 'image.path' ausente ou vazio\n"
+          fi
+
+          BODY_LENGTH=$(awk '/^---$/{n++; next} n>=2' "$POST_FILE" | wc -c)
+          if [ "$BODY_LENGTH" -lt 500 ]; then
+            ERRORS="${ERRORS}Corpo do post muito curto (${BODY_LENGTH} caracteres, mínimo 500)\n"
+          fi
+
+          if [ -n "$ERRORS" ]; then
+            echo "::error::Validação do post falhou:"
+            printf "$ERRORS"
+            exit 1
+          fi
+
+          echo "✅ Formato do digest válido"
+
+      - name: Validar imagem do post
+        run: |
+          IMAGE_PATH="${{ needs.generate_digest.outputs.post_image }}"
+
+          if [ ! -f "$IMAGE_PATH" ]; then
+            echo "::error::Imagem não encontrada: $IMAGE_PATH"
+            exit 1
+          fi
+
+          IMAGE_SIZE=$(stat -c%s "$IMAGE_PATH")
+          if [ "$IMAGE_SIZE" -lt 1024 ]; then
+            echo "::error::Imagem muito pequena (${IMAGE_SIZE} bytes), pode estar corrompida"
+            exit 1
+          fi
+
+          FILE_TYPE=$(file --brief --mime-type "$IMAGE_PATH")
+          if [[ "$FILE_TYPE" != image/png && "$FILE_TYPE" != image/jpeg ]]; then
+            echo "::error::Arquivo não é uma imagem válida (tipo detectado: $FILE_TYPE)"
+            exit 1
+          fi
+
+          echo "✅ Imagem válida ($FILE_TYPE, $IMAGE_SIZE bytes)"
+
+      - name: Auto-merge do PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER="${{ needs.create_pull_request.outputs.pull_request_number }}"
+          echo "Mergeando PR #${PR_NUMBER}..."
+          gh pr merge "$PR_NUMBER" --squash --delete-branch

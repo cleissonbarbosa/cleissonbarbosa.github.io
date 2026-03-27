@@ -1,12 +1,14 @@
 import logging
+from typing import Protocol
 
 from generate_post.core.domain.entities.post import Post
-from generate_post.core.use_cases.generate_post_use_case import (
-    GeneratePostUseCase,
-)
 from generate_post.config.env_config import EnvConfig
 
 logger = logging.getLogger(__name__)
+
+
+class _UseCaseProtocol(Protocol):
+    def execute(self) -> Post: ...
 
 
 class CLIHandler:
@@ -14,7 +16,7 @@ class CLIHandler:
 
     def __init__(
         self,
-        generate_post_use_case: GeneratePostUseCase,
+        generate_post_use_case: _UseCaseProtocol,
         env_config: EnvConfig,
     ):
         self._use_case = generate_post_use_case
