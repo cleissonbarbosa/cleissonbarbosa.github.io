@@ -2,7 +2,9 @@ import logging
 import random
 import re
 import requests
+from pathlib import PurePosixPath
 from typing import Dict, Optional
+from urllib.parse import quote
 
 from generate_post.core.domain.interfaces.content_generator_service import (
     ContentGeneratorServiceInterface,
@@ -81,11 +83,14 @@ Linha 5 em diante: Corpo do post em Markdown
 
         if last_post:
             filename = last_post.get("filename", "")
-            slug = filename.replace(".md", "")[11:] if len(filename) > 11 else ""
+            # Extract the stem (no dir, no .md) then strip YYYY-MM-DD- date prefix
+            name = PurePosixPath(filename).stem
+            slug = name[11:] if len(name) > 11 else name
+            slug_url = quote(slug, safe="-")
             base_prompt += f"""
 ## CONTEXTO: ÚLTIMO POST PUBLICADO
-Título: {filename}
-URL: https://cleissonbarbosa.github.io/posts/{slug}
+Título: {last_post.get('title', name)}
+URL: https://cleissonbarbosa.github.io/posts/{slug_url}/
 
 Resumo do conteúdo anterior:
 {last_post.get('content', '')[:1000]}

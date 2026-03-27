@@ -108,5 +108,5 @@ class FilePostRepository(PostRepositoryInterface):
             tags=tags,
             content=post_content,
             date=date,
-            filename=str(last_post_file),
+            filename=f"_posts/{last_post_file.name}",
         )
