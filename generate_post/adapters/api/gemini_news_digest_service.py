@@ -14,7 +14,8 @@ from generate_post.utils.retry_decorator import retry
 logger = logging.getLogger(__name__)
 
 # Modelos que suportam Google Search grounding
-_GROUNDED_MODELS = ["gemini-2.5-flash", "gemini-2.5-flash-lite"]
+# Nota: gemini-2.5-flash-lite removido pois não activa consistentemente o grounding
+_GROUNDED_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"]
 
 _SYSTEM_INSTRUCTION = (
     "Você é R. Daneel Olivaw, um engenheiro de software sênior "
@@ -74,8 +75,7 @@ Linha 5 em diante: Corpo do post em Markdown
 - Extensão: entre 1500 e 3000 palavras no corpo
 - Cubra entre 5 e 10 notícias principais, agrupadas por tema
 - Para CADA notícia: resuma o que aconteceu, por que importa e qual sua opinião/análise
-- OBRIGATÓRIO: Para cada notícia citada, inclua pelo menos um link real para a fonte original usando o formato: [TEXTO](URL){{:target="_blank"}}
-- Ao mencionar uma notícia ou fato, coloque o link inline logo na primeira menção (ex: "O [Google lançou o Gemini 3.5](https://blog.google/...){{:target="_blank"}} esta semana")
+- NÃO inclua URLs ou links inline no corpo do texto — as fontes serão adicionadas automaticamente ao final
 - Use headers (##, ###) para separar as seções temáticas
 - NÃO invente notícias — use apenas informações reais encontradas via busca
 - NÃO inclua front matter YAML — apenas título, categorias, tags e corpo
@@ -103,7 +103,8 @@ Linha 5 em diante: Corpo do post em Markdown
         req_json = {
             "systemInstruction": {"parts": [{"text": _SYSTEM_INSTRUCTION}]},
             "contents": [{"parts": [{"text": prompt}]}],
-            "tools": [{"google_search": {}}],
+            # camelCase é o formato correto para o JSON da API Gemini (proto JSON encoding)
+            "tools": [{"googleSearch": {}}],
             "safetySettings": [
                 {
                     "category": "HARM_CATEGORY_DANGEROUS_CONTENT",
@@ -149,14 +150,100 @@ Linha 5 em diante: Corpo do post em Markdown
         # Extrair fontes do grounding metadata
         grounding = candidates[0].get("groundingMetadata", {})
         queries = grounding.get("webSearchQueries", [])
+        chunks = grounding.get("groundingChunks", [])
+        supports = grounding.get("groundingSupports", [])
+
+        logger.info(
+            "Grounding: %d queries, %d chunks, %d supports",
+            len(queries),
+            len(chunks),
+            len(supports),
+        )
         if queries:
             logger.info("Buscas realizadas pelo Gemini: %s", queries)
+        if not chunks:
+            logger.warning(
+                "groundingChunks vazio — o modelo pode não ter realizado buscas. "
+                "Verifique se o modelo suporta google_search grounding."
+            )
+
+        # IMPORTANTE: injetar citações ANTES de qualquer limpeza, pois os byte
+        # offsets do groundingSupports são relativos ao texto original da API.
+        text = self._inject_inline_citations(text, grounding)
+        # Só depois remover links alucinados (preserva [N](url) que injetamos).
+        text = self._remove_hallucinated_links(text)
 
         sources = self._extract_sources(grounding)
         if sources:
             text = self._append_sources(text, sources)
 
         return text
+
+    @staticmethod
+    def _remove_hallucinated_links(text: str) -> str:
+        """Remove links inline alucinados pelo modelo, mantendo apenas o texto de exibição.
+
+        Preserva citações numéricas [N](url) que foram injetadas via groundingSupports.
+        """
+        # Remove [texto descritivo](url) mas preserva [1](url), [12](url), etc.
+        return re.sub(
+            r"\[(?!\d+\])([^\]]+)\]\([^)]+\)(?:\{[^}]*\})?",
+            r"\1",
+            text,
+        )
+
+    @staticmethod
+    def _inject_inline_citations(
+        text: str,
+        grounding_metadata: dict,
+    ) -> str:
+        """Insere citações reais inline usando groundingSupports + groundingChunks.
+
+        A API retorna 'groundingSupports' mapeando segmentos do texto (por byte offset)
+        aos índices de 'groundingChunks'. Isso permite inserir [n](url) imediatamente
+        após cada trecho fundamentado, com URLs verificados pelo Google.
+        """
+        chunks = grounding_metadata.get("groundingChunks", [])
+        supports = grounding_metadata.get("groundingSupports", [])
+
+        if not chunks or not supports:
+            return text
+
+        # Trabalhar com bytes para respeitar os offsets da API (são byte offsets UTF-8)
+        text_bytes = text.encode("utf-8")
+
+        # Ordenar por endIndex decrescente para não deslocar índices ao inserir
+        sorted_supports = sorted(
+            supports,
+            key=lambda s: s.get("segment", {}).get("endIndex", 0),
+            reverse=True,
+        )
+
+        for support in sorted_supports:
+            segment = support.get("segment", {})
+            end_index = segment.get("endIndex", 0)
+            chunk_indices = support.get("groundingChunkIndices", [])
+
+            if not chunk_indices or end_index <= 0:
+                continue
+
+            citations = []
+            for i in chunk_indices:
+                if i < len(chunks):
+                    web = chunks[i].get("web", {})
+                    uri = web.get("uri", "").strip()
+                    if uri:
+                        citations.append(f"[{i + 1}]({uri})")
+
+            if not citations:
+                continue
+
+            citation_bytes = (" " + " ".join(citations)).encode("utf-8")
+            text_bytes = (
+                text_bytes[:end_index] + citation_bytes + text_bytes[end_index:]
+            )
+
+        return text_bytes.decode("utf-8")
 
     @staticmethod
     def _extract_sources(
