@@ -12,191 +12,198 @@ pin: true
 
 ## Introdução
 
-Sempre acreditei que a automação é o caminho para liberar nossa mente para tarefas mais criativas. Como desenvolvedor e entusiasta de IA, decidi aplicar esse princípio ao meu próprio blog. O resultado? Um sistema completamente autônomo que gera dois posts técnicos por semana, sem qualquer intervenção humana. Neste artigo, vou compartilhar como construí esse sistema usando APIs gratuitas do [Google Gemini](https://ai.google.dev/gemini-api/docs/quickstart){:target="_blank"} e [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai){:target="_blank"}, seguindo os princípios da Clean Architecture.
+Eu tenho uma implicância antiga com tarefas repetitivas. Quando percebo que estou fazendo a mesma coisa pela terceira vez, minha reação quase automática é abrir o editor e tentar transformar aquilo em script. Com o blog aconteceu a mesma coisa. Eu queria continuar publicando com frequência, mas sem transformar escrita em uma esteira manual. Foi daí que saiu a ideia de usar [Google Gemini](https://ai.google.dev/gemini-api/docs/quickstart){:target="_blank"} e [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai){:target="_blank"} para gerar posts técnicos sem gastar nada.
 
-## Por que Automatizar a Criação de Conteúdo?
+Desde a primeira versão desse experimento, mexi bastante no projeto. O que antes era um fluxo único virou dois caminhos diferentes: um para artigos técnicos completos e outro para um resumo semanal de notícias sobre desenvolvimento, IA e segurança. No meio disso, também fui aparando as arestas mais chatas. Os prompts ficaram melhores, a geração de imagem parou de quebrar por qualquer detalhe, e a publicação agora passa por validações antes do merge. Hoje o resultado está bem menos com cara de demo e bem mais com cara de pipeline editorial.
 
-Todos os projetos que faço e compartilho neste blog têm como objetivo meu crescimento técnico pessoal. Este blog também funciona como um "dump" de coisas que estou estudando e que gostaria de deixar registrado. Automações com IAs é o que estou estudando nesse momento, mas não queria apenas um gerador de texto aleatório – precisava de um sistema que:
+## Atualização: o que mudou no gerador
 
-1. **Criasse conteúdo técnico de qualidade** sobre programação, desenvolvimento e tecnologias
-2. **Mantivesse a consistência** com o estilo dos meus posts anteriores
-3. **Funcionasse de forma totalmente autônoma**, sem precisar ficar mexendo toda hora
-4. **Utilizasse recursos gratuitos** para não gastar nada 
-5. **Seguisse boas práticas de engenharia de software**
+O projeto de hoje já está bem diferente da versão original. As mudanças que mais mexeram na qualidade do resultado foram estas:
 
-## R. Daneel Olivaw: O Autor Robótico
+1. Agora existe um modo separado para gerar um digest semanal com notícias reais da última semana.
+2. O resumo semanal passou a usar Google Search grounding no Gemini para não ficar solto de fonte.
+3. O fluxo padrão olha para o último post publicado antes de escrever o próximo, o que ajuda a evitar repetição de tema e abordagem.
+4. A geração de imagens ficou mais resistente porque o pipeline alterna entre modelos diferentes da Cloudflare e trata respostas em formatos distintos.
+5. O GitHub Actions ganhou validações de front matter, corpo e imagem antes de liberar auto-merge.
 
-Para dar uma identidade própria aos posts gerados automaticamente, criei um alter ego para a IA: [R. Daneel Olivaw](https://en.wikipedia.org/wiki/R._Daneel_Olivaw){:target="_blank"}. Esse nome não foi escolhido por acaso - é uma homenagem ao personagem robô das obras de [Isaac Asimov](https://pt.wikipedia.org/wiki/Isaac_Asimov){:target="_blank"}, onde a inicial "R" significa "Robô". Nos contos de Asimov, Daneel é um robô humanóide avançado capaz de se misturar à sociedade humana.
+## Por que eu quis automatizar a criação de conteúdo?
 
-Cada post gerado automaticamente é assinado por "[R. Daneel Olivaw](https://en.wikipedia.org/wiki/R._Daneel_Olivaw){:target="_blank"}", enquanto os que escrevo manualmente continuam com minha assinatura pessoal. Essa distinção clara permite que os leitores saibam na hora a origem do conteúdo que estão consumindo.
+Este blog sempre funcionou como meu caderno de laboratório. Eu escrevo aqui sobre coisas que estou estudando, testando ou simplesmente tentando entender melhor. Como eu estava mergulhado em automação com IA, fazia sentido usar o próprio blog como campo de teste. Só que eu não queria um gerador que cuspisse texto técnico genérico. O sistema precisava:
 
-Além disso, todo post gerado por IA contém uma nota ao final informando explicitamente que foi totalmente gerado por uma IA autônoma, sem intervenção humana, junto com um link para o código-fonte que tornou isso possível.
+1. escrever sobre programação, desenvolvimento e tecnologia de um jeito que eu realmente toparia publicar;
+2. manter algum parentesco com o tom que eu uso nos textos manuais;
+3. rodar sozinho, sem me transformar em operador de esteira;
+4. caber no orçamento de zero reais;
+5. continuar organizado o bastante para eu não me arrepender seis meses depois.
 
-## A Arquitetura do Sistema
+## R. Daneel Olivaw: o autor robótico
 
-Decidi construir o sistema seguindo os princípios da [Clean Architecture](https://medium.com/@gabrielfernandeslemos/clean-architecture-uma-abordagem-baseada-em-princ%C3%ADpios-bf9866da1f9c){:target="_blank"} para garantir um código organizado, testável e fácil de manter. Veja como está estruturado:
+Dar um nome para a IA foi meio brincadeira, meio decisão editorial. Escolhi [R. Daneel Olivaw](https://en.wikipedia.org/wiki/R._Daneel_Olivaw){:target="_blank"} por causa do personagem robô das obras de [Isaac Asimov](https://pt.wikipedia.org/wiki/Isaac_Asimov){:target="_blank"}. A inicial "R" vem de "robô", e a referência fazia sentido para um sistema que escreve sozinho, mas não tenta fingir que é humano.
 
-```
-generate_post/
-├── __init__.py
-├── main.py             # Ponto de entrada da aplicação
-├── adapters/           # Implementações concretas das interfaces
-│   ├── api/            # Serviços de API externos
-│   ├── cli/            # Interface de linha de comando
-│   └── repositories/   # Implementações de repositórios
-├── config/             # Configurações da aplicação
-├── core/               # Regras de negócio independentes
-│   ├── domain/         # Entidades e interfaces do domínio
-│   ├── use_cases/      # Casos de uso da aplicação
-└── utils/              # Utilitários diversos
-```
+Hoje isso aparece de um jeito simples: os posts automáticos usam `author: ia` no front matter, e o site resolve esse valor em `_data/authors.yml` para R. Daneel Olivaw (Autonomous AI). Os textos escritos manualmente continuam com minha assinatura normal. Essa separação me parece importante. Eu não queria poluir o template do blog, mas também não queria misturar autoria humana com conteúdo gerado por pipeline como se fosse a mesma coisa.
 
-Essa estrutura permite uma clara separação de responsabilidades e torna o sistema facilmente extensível para novos recursos no futuro.
+Também deixei uma nota no fim de cada post gerado por IA, com um link para o código que tornou aquilo possível. Transparência aqui não é detalhe cosmético. É parte do experimento.
 
-## Como Funciona o Sistema
+## Como o fluxo funciona hoje
 
-O fluxo de funcionamento é surpreendentemente simples:
+Hoje o processo está mais ou menos assim:
 
-1. **Obtenção de contexto**: O sistema dá uma olhada nos meus posts anteriores para manter o mesmo estilo e temas 
-2. **Geração de conteúdo**: A API do [Google Gemini](https://ai.google.dev/gemini-api/docs/quickstart){:target="_blank"} cria o texto do post com base nesse contexto
-3. **Geração de imagens**: A API do [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai){:target="_blank"} cria uma imagem de capa legal para o post
-4. **Criação de arquivo markdown**: O sistema formata tudo direitinho no padrão [Jekyll](https://jekyllrb.com/){:target="_blank"} do blog
-5. **Publicação**: Tudo é enviado para o GitHub via pull request, pronto para o copilot revisar
-6. **Automação**: O GitHub Actions cuida de toda a parte de execução e publicação
+1. No fluxo tradicional, o sistema busca o último post publicado e usa título, URL e um resumo do conteúdo como contexto para o próximo artigo.
+2. O [Gemini](https://ai.google.dev/gemini-api/docs/quickstart){:target="_blank"} gera o texto principal tentando fugir do assunto e da abordagem do post anterior.
+3. Quando eu executo com `--weekly-digest`, entra um serviço separado que busca notícias reais da semana, organiza os temas e injeta as fontes no resultado.
+4. A [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai){:target="_blank"} gera a imagem de capa, com fallback para a imagem padrão do blog se as credenciais não estiverem disponíveis.
+5. O sistema monta o markdown no formato do [Jekyll](https://jekyllrb.com/){:target="_blank"}, adiciona a tag `ai-generated` e inclui a nota de transparência no final.
+6. O GitHub Actions abre uma pull request, valida o que foi gerado e só depois faz o merge automático.
 
-### A Magia do GitHub Actions
+### Onde o GitHub Actions entra nisso
 
-A verdadeira automação vem do [GitHub Actions](https://github.com/features/actions){:target="_blank"}, que executa todo esse fluxo de forma programada:
+A automação de verdade mora no [GitHub Actions](https://github.com/features/actions){:target="_blank"}. Dá para rodar tudo localmente, claro, mas é o pipeline que evita que eu vire operador de rotina. O resumo semanal, por exemplo, ganhou uma agenda própria:
 
 ```yml
-name: Generate weekly posts
+name: Generate Weekly News Digest
 
 on:
   schedule:
-    - cron: "0 22 * * 3,6" # Toda quarta e sábado às 22:00 UTC
+      - cron: "0 20 * * 0" # Todo domingo às 20:00 UTC
   workflow_dispatch:
 
 ...
 ```
 
-Configurei para que sejam gerados [dois posts semanais](https://crontab.cronhub.io/){:target="_blank"} - às quartas e sábados - sem que eu precise levantar um dedo. O GitHub Actions cuida de tudo, desde rodar o script até criar a pull request com o novo post.
+Além dele, mantive um workflow separado para os posts tradicionais. Hoje a coisa ficou mais organizada: o fluxo padrão pode ser disparado manualmente quando eu quiser gerar um artigo novo, enquanto o resumo semanal roda sozinho aos domingos. Nos dois casos, o pipeline gera o conteúdo, salva post e imagem como artifact, cria uma pull request e só libera o auto-merge depois das validações.
 
-## Gerando Conteúdo com o Google Gemini
+## Como estou usando o Google Gemini
 
-O coração do sistema é o gerador de conteúdo que utiliza o Google Gemini - uma das melhores IAs generativas disponíveis gratuitamente. O mais legal é que o sistema usa randomização para escolher entre diferentes [modelos do Gemini](https://ai.google.dev/gemini-api/docs/models/gemini?hl=pt-br){:target="_blank"}:
+O Gemini continua sendo o núcleo do gerador, só que agora em dois caminhos bem diferentes.
+
+Para os posts completos, o serviço padrão alterna entre modelos mais novos do [Gemini](https://ai.google.dev/gemini-api/docs/models/gemini?hl=pt-br){:target="_blank"}:
 
 ```python
-# Seleção de modelo
-model_name = random.choice(
-    [
-        "gemini-1.5-flash-001",
-        "gemini-2.0-flash-001",
-        "gemini-2.0-pro-exp-02-05",
-        "gemini-2.0-flash-thinking-exp-01-21",
-    ]
-)
+_MODELS = [
+   "gemini-2.5-flash",
+   "gemini-2.5-pro",
+   "gemini-3-flash-preview",
+]
 ```
 
-Isso traz mais variação aos textos gerados, evitando que os posts fiquem muito parecidos entre si.
+Mas a principal melhoria não foi a lista de modelos. Foi o contexto. Em vez de pedir um artigo isolado, eu passo para o modelo o último post publicado, com URL e resumo. Isso força o gerador a escolher outro tema, variar a abordagem e não reciclar assunto com tanta facilidade. Parece detalhe pequeno, mas fez bastante diferença.
 
-O prompt que uso para gerar os posts é cuidadosamente elaborado para:
+Hoje o prompt do fluxo padrão pede, entre outras coisas:
 
-1. Criar um título cativante em português
-2. Sugerir categorias e tags relevantes
-3. Estruturar o post com introdução, desenvolvimento e conclusão
-4. Incluir exemplos práticos de código quando relevante
-5. Adicionar links e referências externas
-6. Manter um tom conversacional em primeira pessoa
+1. um título bom em português;
+2. categorias e tags coerentes;
+3. uma estrutura de artigo que faça sentido;
+4. exemplos práticos quando couber;
+5. links no formato do blog;
+6. primeira pessoa;
+7. opinião, experiência e analogia suficientes para o texto não soar como manual de produto.
 
-## Gerando Imagens com Cloudflare Workers AI
+Para o resumo semanal, eu separei um serviço próprio com modelos que suportam [Google Search grounding](https://ai.google.dev/gemini-api/docs/grounding?hl=pt-br){:target="_blank"} de maneira mais confiável:
 
-Para as imagens de capa, utilizo o [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai){:target="_blank"} - outro serviço com uma generosa camada gratuita. O sistema gera uma imagem baseada no título e conteúdo do post, criando uma identidade visual única para cada artigo.
+```python
+_GROUNDED_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"]
+```
 
-O mais bacana é que tanto o [Gemini](https://ai.google.dev/gemini-api/docs/quickstart){:target="_blank"} quanto o [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai){:target="_blank"} oferecem APIs gratuitas com limites bem generosos, permitindo que todo o sistema funcione sem gastar um centavo.
+Esse fluxo pede ao Gemini para buscar notícias reais dos últimos 7 dias, agrupar os assuntos por tema e escrever um texto entre 1500 e 3000 palavras. O pós-processamento foi a parte chata e, por isso mesmo, a mais importante. O código lê o `groundingMetadata`, encaixa citações inline só onde a busca realmente sustenta o trecho, remove links inventados pelo modelo e monta uma seção final de Fontes. Sem isso, o digest ficava convincente, mas frouxo. Com isso, ele ficou bem mais útil.
 
-## Desafios e Lições Aprendidas
+## Como estou gerando as imagens
 
-O desenvolvimento do sistema não foi moleza:
+Para as capas, eu continuo usando o [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai){:target="_blank"}, mas aprendi rápido que depender de um único modelo era um jeito eficiente de fazer a automação falhar no pior momento. Hoje o pipeline alterna entre `flux-1-schnell`, `lucid-origin` e `phoenix-1.0`, cada um com parâmetros próprios.
 
-1. **Consistência de estilo**: Garantir que os posts mantivessem um estilo parecido com os meus próprios textos foi um desafio que exigiu várias tentativas no prompt.
+Também precisei tratar a parte menos glamourosa da integração. A API da Cloudflare às vezes responde com imagem binária direta e às vezes com JSON em base64. Não é difícil de resolver, mas é o tipo de detalhe que transforma automação em loteria quando você ignora. Além disso, deixei um fallback para a imagem padrão do blog caso as credenciais não estejam disponíveis. Prefiro publicar com uma capa genérica do que quebrar o fluxo inteiro por causa dessa etapa.
 
-2. **Limitações de API**: As APIs gratuitas têm limites de uso, então precisei implementar estratégias de retry e backoff para lidar com falhas.
+O ponto continua o mesmo do começo: tanto o [Gemini](https://ai.google.dev/gemini-api/docs/quickstart){:target="_blank"} quanto o [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai){:target="_blank"} me deixaram tocar o projeto sem gastar dinheiro.
 
-3. **Qualidade das imagens**: Criar prompts que gerassem imagens bonitas e relevantes para cada post exigiu bastante experimentação (ainda não estou satisfeito com as imagens geradas).
+## O que deu trabalho de verdade
 
-4. **Metadados do Jekyll**: O sistema precisa gerar corretamente os metadados no formato Front Matter do [Jekyll](https://jekyllrb.com/){:target="_blank"} para que o blog funcione direitinho.
+O projeto parece bem alinhado quando aparece resumido em diagrama, mas os problemas reais foram bem mais específicos:
 
-Uma das maiores lições foi perceber o quão importante é o prompt engineering para obter resultados de qualidade. Um bom prompt faz toda a diferença na qualidade do conteúdo gerado. O que me ajudou nesse ponto foi ter ajudado na tradução do projeto [Prompt Engineering Guide](https://github.com/dair-ai/Prompt-Engineering-Guide){:target="_blank"}.
+1. Consistência de estilo. Fazer o texto lembrar a minha voz sem cair num clone ruim exigiu muita iteração de prompt e bastante contexto.
+2. Instabilidade de API. Serviço gratuito é ótimo até começar a responder fora do padrão ou limitar uso. Retry com exponential backoff virou obrigação.
+3. Grounding do Gemini. Nem todo modelo faz busca com a mesma confiabilidade, então eu precisei separar explicitamente os que funcionavam bem o suficiente para o digest.
+4. Citações no digest. O `groundingSupports` trabalha com byte offsets em UTF-8. Se eu limpasse o texto antes de injetar as citações, os índices quebravam.
+5. Descobrir o último post. No começo eu usei `mtime` do arquivo. Foi um erro. Depois de checkout e merge, a noção de "mais recente" ficava confusa. Ordenar pelo nome do arquivo com prefixo de data resolveu isso do jeito certo.
+6. Qualidade do pipeline. Gerar o post era só metade do trabalho. O workflow também precisava validar front matter, tamanho mínimo do corpo e integridade da imagem antes de liberar merge.
 
-## Resultados e Métricas
+Se teve uma lição central aqui, foi esta: prompt ruim cobra duas vezes. Primeiro na geração. Depois na limpeza. Ter ajudado na tradução do [Prompt Engineering Guide](https://github.com/dair-ai/Prompt-Engineering-Guide){:target="_blank"} me deu uma base boa para mexer nisso sem transformar o projeto em um festival de tentativa aleatória.
 
-O sistema tem funcionado muito bem:
+## Onde o projeto está hoje
 
-- **Geração consistente**: Dois posts por semana, sem falhas
-- **Qualidade de conteúdo**: Posts tecnicamente precisos e bem estruturados
-- **Economia de tempo**: Aproximadamente 8-10 horas economizadas por semana
-- **Custo zero**: Usando apenas recursos gratuitos
+Hoje eu já não vejo isso como um brinquedo para fazer post sozinho. Vejo como um pipeline editorial pequeno, mas funcional. Ele já tem:
 
-Fiquei impressionado com a qualidade dos posts gerados. Em alguns casos, a IA produziu conteúdo que eu mesmo não teria pensado em escrever, trazendo uma diversidade interessante aos temas do blog.
+- um fluxo para artigos técnicos sob demanda;
+- um fluxo para digest semanal aos domingos;
+- mais variedade temática porque o gerador olha para o último post antes de escrever;
+- citações inline e seção de fontes no resumo semanal;
+- pull request, validação de arquivo, validação de imagem e auto-merge;
+- custo zero, usando apenas os recursos gratuitos das plataformas.
 
-## Transparência e Identificação
+O resumo semanal foi a parte que mais me surpreendeu. Ele saiu do terreno da curiosidade e virou algo que eu realmente abriria para acompanhar a semana sem precisar caçar notícia em vinte abas.
 
-Um aspecto importante deste projeto é a transparência com os leitores. Para isso, implementei algumas características distintivas nos posts gerados automaticamente:
+## Transparência com quem lê
 
-1. **Autoria explícita**: Cada post gerado pela IA é claramente identificado como sendo de autoria de "R. Daneel Olivaw (Autonomous AI)" no metadado do front matter do [Jekyll](https://jekyllrb.com/){:target="_blank"}.
+Se tem uma decisão da qual eu não abro mão aqui, é deixar claro quando o texto veio de um pipeline autônomo. Para isso, mantive algumas regras simples:
 
-2. **Tag especial**: Todos os posts gerados automaticamente recebem a tag "ai-generated", facilitando sua identificação e filtragem.
-
-3. **Nota de rodapé**: Ao final de cada post gerado por IA, é incluída automaticamente a seguinte nota:
+1. Cada post gerado pela IA usa a chave `author: ia`, que o site resolve para "R. Daneel Olivaw (Autonomous AI)".
+2. Todo post automático recebe a tag `ai-generated`.
+3. No fim de cada texto entra a seguinte nota:
 
 ```markdown
 _Este post foi totalmente gerado por uma IA autônoma, sem intervenção humana._
 
 [Veja o código que gerou este post](https://github.com/cleissonbarbosa/cleissonbarbosa.github.io/blob/main/generate_post/README.md)
 ```
+4. No digest semanal, além da autoria, o texto também ganha citações inline e uma seção final de fontes baseada no grounding do Gemini.
 
-Essa abordagem garante total transparência com os leitores e também serve como uma forma interessante de mostrar o potencial da geração de conteúdo por IA.
+Eu acho esse ponto importante por honestidade mesmo. A graça do experimento está justamente em mostrar o que foi automatizado, não em esconder.
 
-## Como Replicar Esse Sistema
+## Como replicar esse sistema
 
-Se você quer criar seu próprio blog autônomo, aqui estão os passos básicos:
+Se você quiser montar algo parecido, o caminho básico é este:
 
-1. **Configure as APIs**:
-   - Consiga uma chave para o Google Gemini API [aqui](https://ai.google.dev/gemini-api/docs/quickstart){:target="_blank"}
-   - Crie uma conta no Cloudflare e configure o Workers AI [seguindo este guia](https://developers.cloudflare.com/workers-ai/){:target="_blank"}
+1. Configure as APIs.
+   - Consiga uma chave para o Google Gemini API [aqui](https://ai.google.dev/gemini-api/docs/quickstart){:target="_blank"}.
+   - Crie uma conta no Cloudflare e configure o Workers AI [seguindo este guia](https://developers.cloudflare.com/workers-ai/){:target="_blank"}.
 
-2. **Clone o repositório**:
+2. Clone o repositório.
    ```bash
    git clone https://github.com/cleissonbarbosa/cleissonbarbosa.github.io
-   cd cleissonbarbosa.github.io/generate_post
+   cd cleissonbarbosa.github.io
    ```
 
-3. **Configure as variáveis de ambiente**:
+3. Configure as variáveis de ambiente.
    ```bash
    export GEMINI_API_KEY="sua-chave-da-api-gemini"
    export CF_AI_API_KEY="seu-token-da-api-cloudflare"
    export CF_ACCOUNT_ID="seu-id-da-conta-cloudflare"
    ```
 
-4. **Execute o script**:
+4. Execute o gerador.
    ```bash
-   python generate_post/main.py
+   python generate_post.py
    ```
 
-5. **Configure o GitHub Actions** para automatizar a geração seguindo o modelo no meu repositório.
+   Para gerar especificamente o resumo semanal:
+
+   ```bash
+   python generate_post.py --weekly-digest
+   ```
+
+5. Configure o GitHub Actions para automatizar os dois fluxos.
+   - `generate-post.yml` para posts tradicionais.
+   - `generate-weekly-digest.yml` para o resumo semanal com pull request, validação e auto-merge.
 
 ## Conclusão
 
-Criar um sistema de geração autônoma de posts foi uma experiência fascinante que combinou meu interesse por automação, IA e arquitetura de software. O mais impressionante é como as APIs gratuitas do Google e Cloudflare possibilitaram construir algo tão funcional sem gastar nada.
+Montar esse gerador foi divertido justamente porque misturou três coisas de que eu gosto: automação, IA e arquitetura de software. Mas, olhando hoje, o que mais me interessa no projeto não é a ideia de "blog que escreve sozinho". É a ideia de usar IA como parte de um processo editorial controlado, com contexto, validação e transparência.
 
-Este projeto demonstra como podemos usar a IA não apenas como um assistente, mas como um criador autônomo de conteúdo. É claro que sempre haverá espaço para a escrita humana - e continuo escrevendo posts manualmente quando tenho vontade. Mas ter um sistema que mantém meu blog ativo enquanto foco em outros projetos é uma vantagem incrível.
-
-O futuro da criação de conteúdo provavelmente será uma mistura de contribuições humanas e de IA. Este projeto é apenas um pequeno passo nessa direção, explorando o que é possível hoje com as ferramentas disponíveis gratuitamente.
+Tem dias em que eu quero escrever tudo manualmente. Tem dias em que prefiro deixar o pipeline cuidar do trabalho repetitivo. Para mim, o ponto não é substituir uma coisa pela outra. É ganhar mais tempo para testar ideias, estudar assuntos novos e escrever quando eu realmente tiver algo meu para dizer.
 
 ## Links
 
 - [Repositório do projeto](https://github.com/cleissonbarbosa/cleissonbarbosa.github.io){:target="_blank"}
 - [Google Gemini API](https://ai.google.dev/){:target="_blank"}
+- [Google Search grounding do Gemini](https://ai.google.dev/gemini-api/docs/grounding){:target="_blank"}
 - [Cloudflare Workers AI](https://developers.cloudflare.com/workers-ai){:target="_blank"}
 - [GitHub Actions](https://github.com/features/actions){:target="_blank"}
 - [Obras de Isaac Asimov sobre robôs](https://en.wikipedia.org/wiki/Robot_series){:target="_blank"}
