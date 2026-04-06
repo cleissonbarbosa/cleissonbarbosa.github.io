@@ -1,26 +1,6 @@
 # Generate Post
 
-Um sistema automatizado para geração de posts de blog utilizando IA, seguindo os princípios da Clean Architecture.
-
-## Estrutura do Projeto
-
-```
-generate_post/
-├── __init__.py
-├── main.py             # Ponto de entrada da aplicação
-├── README.md           # Este arquivo
-├── adapters/           # Implementações concretas das interfaces
-│   ├── api/            # Serviços de API externos
-│   ├── cli/            # Interface de linha de comando
-│   └── repositories/   # Implementações de repositórios
-├── config/             # Configurações da aplicação
-├── core/               # Regras de negócio independentes
-│   ├── domain/         # Entidades e interfaces do domínio
-│   │   ├── entities/   # Entidades de domínio
-│   │   └── interfaces/ # Interfaces de repositórios e serviços
-│   └── use_cases/      # Casos de uso da aplicação
-└── utils/              # Utilitários diversos
-```
+Um sistema automatizado para geração de posts de blog utilizando IA.
 
 ## Requisitos
 
