@@ -14,7 +14,7 @@ on:
 
   # Trigger after AI post generation workflow merges to main
   workflow_run:
-    workflows: ["Generate Weekly Post"]
+    workflows: ["Generate Weekly Post", "Generate Weekly News Digest"]
     types:
       - completed
     branches:
