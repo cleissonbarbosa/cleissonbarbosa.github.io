@@ -8,6 +8,7 @@ image:
 categories: [Automação, IA, Python]
 tags: [inteligência artificial, automação, python, gemini api, cloudflare workers ai, github actions, clean architecture]
 pin: true
+audio: /assets/audio/posts/automatizando-posts-com-ia-como-criei-um-blog-totalmente-autonomo.mp3
 ---
 
 ## Introdução

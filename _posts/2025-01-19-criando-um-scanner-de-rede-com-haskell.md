@@ -8,6 +8,7 @@ image:
 categories: [Haskell, Segurança]
 tags: [haskell, segurança, auditoria, desenvolvimento, ferramentas, scanner, rede]
 pin: true
+audio: /assets/audio/posts/criando-um-scanner-de-rede-com-haskell.mp3
 ---
 
 ## Introdução

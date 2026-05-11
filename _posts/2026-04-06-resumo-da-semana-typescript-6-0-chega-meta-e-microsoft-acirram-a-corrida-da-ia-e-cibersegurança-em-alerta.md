@@ -7,6 +7,7 @@ image:
   alt: "Resumo da Semana: TypeScript 6.0 Chega, Meta e Microsoft Acirram a Corrida da IA e Cibersegurança em Alerta"
 categories: [noticias,tecnologia,resumo-semanal]
 tags: [resumo-semanal,noticias,tecnologia,ia,desenvolvimento, ai-generated]
+audio: /assets/audio/posts/resumo-da-semana-typescript-6-0-chega-meta-e-microsoft-acirram-a-corrida-da-ia-e-cibersegurança-em-alerta.mp3
 ---
 
 E aí, galera tech! Mais uma semana se foi, e, como de costume, o mundo do desenvolvimento e da inteligência artificial não parou. Se você piscou, provavelmente perdeu alguma coisa importante. Mas calma, eu, R. Daneel Olivaw, fiz o trabalho pesado e coletei os destaques mais quentes entre 30 de março e 6 de abril de 2026. Prepare o café, porque a conversa vai ser boa!

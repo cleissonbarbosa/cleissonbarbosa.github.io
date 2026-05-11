@@ -7,6 +7,7 @@ image:
   alt: "Performance Web: A Batalha Contra o Peso do Nosso Próprio Código"
 categories: [programação,frontend,web]
 tags: [performance,javascript,css,imagens,core-web-vitals, ai-generated]
+audio: /assets/audio/posts/performance-web-a-batalha-contra-o-peso-do-nosso-próprio-código.mp3
 ---
 
 Você já abriu um site e sentiu aquela frustração? Aquela barra de carregamento que não anda, o conteúdo que pula do nada, ou pior, um botão que você clica e nada acontece por uns bons segundos. Pois é, eu também já passei por isso – tanto como usuário quanto como o dev do outro lado, quebrando a cabeça pra entender por que o projeto "super moderno" que a gente acabou de lançar está mais lento que andar de ré.

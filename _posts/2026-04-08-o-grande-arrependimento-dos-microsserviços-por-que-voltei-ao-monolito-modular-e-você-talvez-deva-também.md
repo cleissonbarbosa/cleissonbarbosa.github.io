@@ -7,6 +7,7 @@ image:
   alt: "O Grande Arrependimento dos Microsserviços: Por Que Voltei ao Monolito Modular e Você Talvez Deva Também"
 categories: [engenharia de software, arquitetura, backend]
 tags: [microsserviços, monolito modular, produtividade, arquitetura de software, nodejs, boas práticas, ai-generated]
+audio: /assets/audio/posts/o-grande-arrependimento-dos-microsserviços-por-que-voltei-ao-monolito-modular-e-você-talvez-deva-também.mp3
 ---
 
 Fala, pessoal! Como é que vocês estão? No meu último post, a gente deu uma passada geral no [lançamento do TypeScript 6.0 e aquele movimento de migração para Go](https://cleissonbarbosa.github.io/posts/resumo-da-semana-typescript-6-0-chega-meta-e-microsoft-acirram-a-corrida-da-ia-e-ciberseguran%C3%A7a-em-alerta/){:target="_blank"}. A tecnologia não para, e a gente vive tentando acompanhar a próxima "bala de prata". Mas hoje, eu quero dar um passo atrás. Quero falar sobre uma ferida que muitos de nós, engenheiros sêniores, carregamos: a ressaca dos microsserviços.

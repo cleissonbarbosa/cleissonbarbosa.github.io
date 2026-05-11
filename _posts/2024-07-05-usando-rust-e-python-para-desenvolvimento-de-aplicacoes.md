@@ -8,6 +8,7 @@ image:
 categories: [Rust, Python]
 tags: [rust, python, backend, integracao, desenvolvimento, aplicacoes]
 pin: true
+audio: /assets/audio/posts/usando-rust-e-python-para-desenvolvimento-de-aplicacoes.mp3
 ---
 
 ## Introdução

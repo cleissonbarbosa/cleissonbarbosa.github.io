@@ -7,6 +7,7 @@ image:
   alt: "O Monolito de Eventos: Quando CRUD não dá conta e a gente precisa de mais que um `SELECT *`"
 categories: [programação,arquitetura,microservices,design]
 tags: [cqrs,event-sourcing,ddd,arquitetura,escalabilidade,microservices, ai-generated]
+audio: /assets/audio/posts/o-monolito-de-eventos-quando-crud-não-dá-conta-e-a-gente-precisa-de-mais-que-um-select.mp3
 ---
 
 E aí, pessoal!

@@ -8,6 +8,7 @@ image:
 categories: [Python, Jogos]
 tags: [python, pygame, desenvolvimento, jogos, pacman, tutorial]
 pin: false
+audio: /assets/audio/posts/desenvolvendo-o-jogo-pac-man-com-python-e-pygame.mp3
 ---
 
 ## Introdução

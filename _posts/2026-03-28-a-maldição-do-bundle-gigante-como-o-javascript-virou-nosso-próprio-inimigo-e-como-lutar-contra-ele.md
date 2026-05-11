@@ -7,6 +7,7 @@ image:
   alt: "A Maldição do Bundle Gigante: Como o JavaScript Virou Nosso Próprio Inimigo (e Como Lutar Contra Ele)"
 categories: [programação,frontend,web]
 tags: [javascript,performance,webdev,otimização,webpack, ai-generated]
+audio: /assets/audio/posts/a-maldição-do-bundle-gigante-como-o-javascript-virou-nosso-próprio-inimigo-e-como-lutar-contra-ele.mp3
 ---
 
 E aí, galera!

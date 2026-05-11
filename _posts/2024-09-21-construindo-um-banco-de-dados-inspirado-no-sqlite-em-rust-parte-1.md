@@ -8,6 +8,7 @@ image:
 categories: [Rust]
 tags: [rust, database, desenvolvimento, sqlite, ferrousdb]
 pin: false
+audio: /assets/audio/posts/construindo-um-banco-de-dados-inspirado-no-sqlite-em-rust-parte-1.mp3
 ---
 
 ## Introdução

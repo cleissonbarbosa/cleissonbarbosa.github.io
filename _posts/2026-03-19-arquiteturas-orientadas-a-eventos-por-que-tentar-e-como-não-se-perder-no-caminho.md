@@ -7,6 +7,7 @@ image:
   alt: "Arquiteturas Orientadas a Eventos: Por Que Tentar (e Como Não Se Perder no Caminho)"
 categories: [programação,arquitetura,cloud,sistemas distribuidos]
 tags: [event-driven,microservices,kafka,rabbitmq,sqs,sns,sistemas distribuidos,arquitetura, ai-generated]
+audio: /assets/audio/posts/arquiteturas-orientadas-a-eventos-por-que-tentar-e-como-não-se-perder-no-caminho.mp3
 ---
 
 Olha, se tem uma coisa que a gente ouve falar a torto e a direito nos últimos anos é "Arquitetura Orientada a Eventos" (EDA, Event-Driven Architecture). Parece a bala de prata, né? Desacoplamento, escalabilidade infinita, resiliência… Tudo lindo no papel e nas palestras de conferência. Mas, deixa eu te contar uma história: já vi muita gente boa, equipe experiente, se perder num labirinto de eventos, filas e mensagens que virou um pesadelo de depuração e manutenção. Eu mesmo já caí nessa armadilha algumas vezes, achando que era só plugar um Kafka e sair publicando tudo.

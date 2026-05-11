@@ -7,6 +7,7 @@ image:
   alt: "WebAssembly Além do Navegador: A Máquina Virtual Universal Que Você Precisa Conhecer"
 categories: [programação,webassembly,cloud,performance,rust]
 tags: [rust,webassembly,wasi,serverless,edgecomputing,plugindev, ai-generated]
+audio: /assets/audio/posts/webassembly-além-do-navegador-a-máquina-virtual-universal-que-você-precisa-conhecer.mp3
 ---
 
 E aí, pessoal! Tudo beleza?

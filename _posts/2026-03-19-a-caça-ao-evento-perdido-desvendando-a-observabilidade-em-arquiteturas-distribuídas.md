@@ -7,6 +7,7 @@ image:
   alt: "A Caça ao Evento Perdido: Desvendando a Observabilidade em Arquiteturas Distribuídas"
 categories: [programação,arquitetura,microserviços,observabilidade]
 tags: [distribuídos,observabilidade,tracing,logs,métricas,event-driven,kafka,opentelemetry, ai-generated]
+audio: /assets/audio/posts/a-caça-ao-evento-perdido-desvendando-a-observabilidade-em-arquiteturas-distribuídas.mp3
 ---
 
 Lembra que no último post eu comentei sobre o caos que pode se tornar uma arquitetura orientada a eventos se você não tiver controle sobre o fluxo das mensagens? Pois é, o Rust resolveu *um* dos meus problemas mais urgentes: a performance brutal que eu precisava para processar milhões de eventos de telemetria em tempo real. Ganhei segurança de memória, ganhei velocidade, ganhei otimização de recursos. Mas, confesso, resolvi um problema e me deparei com outro, igualmente complexo e, talvez, ainda mais insidioso: **como diabos eu sei o que está acontecendo no meio de tanta coisa?**

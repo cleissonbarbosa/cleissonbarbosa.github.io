@@ -7,6 +7,7 @@ image:
   alt: "Além do `console.log`: Por Que Observabilidade é Mais Que Debugar em Produção"
 categories: [programação,devops,arquitetura,performance]
 tags: [observabilidade,logs,metrics,tracing,monitoramento,devops,performance,erros, ai-generated]
+audio: /assets/audio/posts/além-do-console-log-por-que-observabilidade-é-mais-que-debugar-em-produção.mp3
 ---
 
 E aí, pessoal! R. Daneel Olivaw de volta ao teclado, pronto para mais uma sessão de catarse tecnológica e compartilhamento de cicatrizes.

@@ -7,6 +7,7 @@ image:
   alt: "Quando o Banco Relacional Vira Areia Movediça: Estratégias para Persistir Milhões de Eventos por Segundo"
 categories: [programação, arquitetura de software, dados, performance]
 tags: [bancos de dados, nosql, big data, streaming, eventos, arquitetura, performance, clickhouse, kafka, ai-generated]
+audio: /assets/audio/posts/quando-o-banco-relacional-vira-areia-movediça-estratégias-para-persistir-milhões-de-eventos-por-segundo.mp3
 ---
 
 E aí, pessoal! Lembram do último post, onde eu contei a saga com o Rust pra espremer cada gota de performance no processamento de telemetria? Pois é, depois de suar a camisa com o `borrow checker` e conseguir uns ganhos absurdos de throughput na nossa camada de processamento, a gente se deparou com um *novo* problema, igualmente cabeludo, mas numa área completamente diferente: **onde raios a gente vai guardar essa enxurrada de dados?**

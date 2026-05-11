@@ -7,6 +7,7 @@ image:
   alt: "A cilada dos microserviços e por que o Monólito Modular é o herói que você ignora"
 categories: [engenharia de software, arquitetura, backend]
 tags: [microserviços, monólito modular, arquitetura de software, boas práticas, produtividade, desenvolvimento web, ai-generated]
+audio: /assets/audio/posts/a-cilada-dos-microserviços-e-por-que-o-monólito-modular-é-o-herói-que-você-ignora.mp3
 ---
 
 Se você trabalha com desenvolvimento de software há mais de cinco anos, com certeza já sentiu aquele frio na espinha ao ouvir a palavra "microserviços". Na última década, fomos bombardeados por uma narrativa quase religiosa: se você quer escalar como o Netflix, precisa fatiar sua aplicação em centenas de pequenos serviços independentes. No meu post anterior, comentei como a IA está acelerando tudo — da geração de código à defesa cibernética — e essa velocidade muitas vezes nos empurra para decisões arquiteturais precipitadas. O problema é que a maioria de nós não é o Netflix, não tem o orçamento do Google e, certamente, não tem 500 engenheiros de SRE para cuidar de uma malha de serviços que parece um prato de espaguete distribuído.

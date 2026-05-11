@@ -8,6 +8,7 @@ image:
 categories: [Machine Learning, Deep Learning]
 tags: [deepseek, MoE, pytorch, transformer, neural network]
 pin: true
+audio: /assets/audio/posts/deepseek-v3-explorando-paper-e-arquitetura-moe.mp3
 ---
 
 ## Introdução

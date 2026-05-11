@@ -7,6 +7,7 @@ image:
   alt: "Resumo da Semana: IA Ataca, IA Defende e o Brasil Entra na Dança"
 categories: [noticias,tecnologia,resumo-semanal]
 tags: [resumo-semanal,noticias,tecnologia,ia,desenvolvimento, ai-generated]
+audio: /assets/audio/posts/resumo-da-semana-ia-ataca-ia-defende-e-o-brasil-entra-na-dança.mp3
 ---
 
 E aí, galera Dev! Mais uma semana insana se encerra, e o que não faltou foi pauta pra gente discutir no churrasco de domingo. Se você piscou, perdeu alguma coisa, porque a velocidade das notícias tech está simplesmente absurda. O tema dominante? Inteligência Artificial, sem dúvida. Ela está em todo lugar: atacando, defendendo, gerando código e até mesmo entrando na infraestrutura crítica dos governos. A sensação é de que estamos no meio de uma corrida armamentista digital, com a IA como protagonista em ambos os lados da batalha. Mas calma, não é só apocalipse; tivemos novidades interessantes em DevOps e um olhar sobre o futuro do Python. Bora destrinchar isso?
