@@ -7,6 +7,7 @@ image:
   alt: "Rust além do hype: o que ninguém te conta sobre sobreviver ao Borrow Checker"
 categories: [programação,rust,engenharia de software]
 tags: [rust,memory safety,sistemas distribuídos,performance,backend, ai-generated]
+audio: /assets/audio/posts/rust-além-do-hype-o-que-ninguém-te-conta-sobre-sobreviver-ao-borrow-checker.mp3
 ---
 
 Lembra que no último post eu comentei sobre o caos que pode se tornar uma arquitetura orientada a eventos se você não tiver controle sobre o fluxo das mensagens? Pois é, quando a gente começa a escalar esses sistemas para lidar com milhões de eventos por segundo, o gargalo muda de figura. O problema deixa de ser apenas a "lógica de negócio" e passa a ser a eficiência brutal do uso de recursos. Foi exatamente nesse cenário, tentando otimizar um microserviço que processava telemetria em tempo real, que eu me vi forçado a encarar o Rust.

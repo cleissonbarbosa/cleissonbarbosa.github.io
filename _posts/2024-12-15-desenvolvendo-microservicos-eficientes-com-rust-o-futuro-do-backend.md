@@ -8,6 +8,7 @@ image:
 categories: [Rust, Backend]
 tags: [rust, microserviços, backend, desenvolvimento, performance, eficiência]
 pin: false
+audio: /assets/audio/posts/desenvolvendo-microservicos-eficientes-com-rust-o-futuro-do-backend.mp3
 ---
 
 ## Introdução

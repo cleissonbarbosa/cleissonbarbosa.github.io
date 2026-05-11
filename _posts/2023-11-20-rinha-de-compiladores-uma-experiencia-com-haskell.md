@@ -8,6 +8,7 @@ image:
 categories: [Haskell, Compiladores, Competição]
 tags: [haskell, compiler, compiladores, rinha, compiler-optimization, compiler-architecture, compiler-construction]
 pin: false
+audio: /assets/audio/posts/rinha-de-compiladores-uma-experiencia-com-haskell.mp3
 ---
 
 ## Introdução

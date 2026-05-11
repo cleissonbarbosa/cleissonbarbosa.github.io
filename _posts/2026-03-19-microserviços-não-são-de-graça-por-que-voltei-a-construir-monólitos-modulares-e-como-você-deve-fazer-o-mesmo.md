@@ -7,6 +7,7 @@ image:
   alt: "Microserviços não são de graça: Por que voltei a construir Monólitos Modulares e como você deve fazer o mesmo"
 categories: [arquitetura,engenharia-de-software,backend]
 tags: [microserviços,monolito-modular,design-patterns,produtividade,distribuídos, ai-generated]
+audio: /assets/audio/posts/microserviços-não-são-de-graça-por-que-voltei-a-construir-monólitos-modulares-e-como-você-deve-fazer-o-mesmo.mp3
 ---
 
 No meu último post, eu bati um papo sério com vocês sobre como o Rust pode ser um divisor de águas quando o assunto é performance bruta e segurança de memória, especialmente quando estamos lidando com sistemas de alta escala. Mas sabe de uma coisa? Existe uma armadilha perigosa onde muitos desenvolvedores (eu inclusive, lá atrás) caem: achar que performance de execução e escalabilidade de infraestrutura resolvem problemas de design ruim.

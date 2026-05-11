@@ -7,6 +7,7 @@ image:
   alt: "A Revolução Silenciosa do Local-First: Por Que o Seu Próximo Banco de Dados Pode Estar no Navegador"
 categories: [programação,arquitetura,web]
 tags: [local-first,sqlite,wasm,typescript,react,banco de dados, ai-generated]
+audio: /assets/audio/posts/a-revolução-silenciosa-do-local-first-por-que-o-seu-próximo-banco-de-dados-pode-estar-no-navegador.mp3
 ---
 
 Fala, pessoal! Como é que vocês estão? No meu último post, a gente teve aquela conversa sincera sobre a [ressaca dos microsserviços e o retorno triunfal do monolito modular](https://cleissonbarbosa.github.io/posts/o-grande-arrependimento-dos-microsservi%C3%A7os-por-que-voltei-ao-monolito-modular-e-voc%C3%AA-talvez-deva-tamb%C3%A9m/){:target="_blank"}. Foi legal ver que muita gente se identificou com aquela dor de gerenciar 40 repositórios para uma aplicação que poderia ser um único binário. Mas, enquanto a gente discutia como arrumar a casa no backend, uma mudança de paradigma ainda mais radical começou a ganhar corpo no frontend.

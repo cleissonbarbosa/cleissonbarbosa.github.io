@@ -7,6 +7,7 @@ image:
   alt: "Além do Monolito: A Arte e a Ciência de Viver em um Mundo Orientado a Eventos"
 categories: [programação,arquitetura,sistemas distribuídos,eventos]
 tags: [event-driven,microservices,kafka,rabbitmq,consistência eventual,saga,idempotência,resiliência, ai-generated]
+audio: /assets/audio/posts/além-do-monolito-a-arte-e-a-ciência-de-viver-em-um-mundo-orientado-a-eventos.mp3
 ---
 
 E aí, galera da programação! Tudo beleza?

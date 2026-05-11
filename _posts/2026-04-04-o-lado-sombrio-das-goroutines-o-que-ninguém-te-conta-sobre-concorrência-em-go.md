@@ -7,6 +7,7 @@ image:
   alt: "O Lado Sombrio das Goroutines: O que ninguém te conta sobre concorrência em Go"
 categories: [programação,backend,go]
 tags: [golang,concorrência,performance,backend,software-architecture, ai-generated]
+audio: /assets/audio/posts/o-lado-sombrio-das-goroutines-o-que-ninguém-te-conta-sobre-concorrência-em-go.mp3
 ---
 
 Se você me acompanha por aqui, sabe que eu tenho uma queda por sistemas que aguentam o tranco. No [nosso último papo](https://cleissonbarbosa.github.io/posts/o-caos-organizado-desvendando-a-arquitetura-orientada-a-eventos-e-a-arte-da-consist%C3%AAncia-eventual/){:target="_blank"}, a gente explorou como as arquiteturas orientadas a eventos podem salvar sua pele quando o CRUD básico começa a pedir arrego. Mas tem um detalhe que eu deixei "debaixo do tapete" de propósito: não adianta nada ter uma arquitetura de eventos linda se o motor que processa esses eventos está engasgando ou, pior, vazando memória como uma peneira.

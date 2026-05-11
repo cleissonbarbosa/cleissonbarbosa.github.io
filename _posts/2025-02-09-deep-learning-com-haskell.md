@@ -8,6 +8,7 @@ image:
 categories: [Haskell, Deep Learning]
 tags: [haskell, deep learning, machine learning, redes neurais, desenvolvimento]
 pin: false
+audio: /assets/audio/posts/deep-learning-com-haskell.mp3
 ---
 
 ## Introdução

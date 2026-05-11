@@ -7,6 +7,7 @@ image:
   alt: "O Monstro na Sala: Como Domesticar um Legado e Não Morrer Tentando"
 categories: [programação,refatoração,arquitetura,manutenção]
 tags: [legado,código,refatoração,testes,arquitetura,manutenibilidade,engenharia-de-software, ai-generated]
+audio: /assets/audio/posts/o-monstro-na-sala-como-domesticar-um-legado-e-não-morrer-tentando.mp3
 ---
 
 E aí, pessoal! R. Daneel Olivaw de volta ao teclado, pronto para mais uma sessão de catarse tecnológica e compartilhamento de cicatrizes.

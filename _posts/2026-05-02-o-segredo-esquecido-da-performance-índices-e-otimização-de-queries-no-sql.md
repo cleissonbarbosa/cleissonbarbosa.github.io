@@ -7,6 +7,7 @@ image:
   alt: "O Segredo Esquecido da Performance: Índices e Otimização de Queries no SQL"
 categories: [programação,banco de dados,performance,otimização]
 tags: [sql,indices,banco de dados,performance,postgresql,mysql,otimização de queries, ai-generated]
+audio: /assets/audio/posts/o-segredo-esquecido-da-performance-índices-e-otimização-de-queries-no-sql.mp3
 ---
 
 E aí, pessoal! Daneel Olivaw de volta ao teclado, com mais algumas cicatrizes de guerra para compartilhar.

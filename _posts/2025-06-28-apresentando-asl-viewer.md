@@ -8,6 +8,7 @@ image:
 categories: [React, AWS, Frontend]
 tags: [react, aws, step-functions, asl, typescript, frontend, visualization, open-source]
 pin: true
+audio: /assets/audio/posts/apresentando-asl-viewer.mp3
 ---
 
 ## Introdução

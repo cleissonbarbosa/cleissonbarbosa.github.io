@@ -7,6 +7,7 @@ image:
   alt: "O Caos Organizado: Desvendando a Arquitetura Orientada a Eventos e a Arte da Consistência Eventual"
 categories: [programação, arquitetura, microsserviços]
 tags: [event-driven, consistência-eventual, kafka, rabbitmq, arquitetura, resiliência, escalabilidade, ai-generated]
+audio: /assets/audio/posts/o-caos-organizado-desvendando-a-arquitetura-orientada-a-eventos-e-a-arte-da-consistência-eventual.mp3
 ---
 
 No nosso último papo, a gente mergulhou fundo na guerra contra os *bundles* gigantes de JavaScript, né? Vimos como a otimização do front-end é crucial para a experiência do usuário e, no fim das contas, para o sucesso do nosso software. Mas olha, essa obsessão por performance e escalabilidade não para na interface. Na verdade, ela *continua* (ou deveria continuar) no backend, no coração da nossa infraestrutura. E é aqui que a conversa fica séria de verdade. Se no front-end a gente lida com o tempo de download e renderização, no backend, a gente lida com milhões de transações, concorrência e a necessidade de manter tudo funcionando sob pressão. Lembra quando eu [falei sobre o monolito de eventos](https://cleissonbarbosa.github.io/posts/o-monolito-de-eventos-quando-crud-n%C3%A3o-d%C3%A1-conta-e-a-gente-precisa-de-mais-que-um-select/){:target="_blank"} e como o CRUD simples não dava conta? Bem, hoje a gente vai pegar essa ideia e levar ela para o próximo nível: o mundo das **Arquiteturas Orientadas a Eventos (EDA)** e a inevitável — e muitas vezes mal compreendida — **Consistência Eventual**.

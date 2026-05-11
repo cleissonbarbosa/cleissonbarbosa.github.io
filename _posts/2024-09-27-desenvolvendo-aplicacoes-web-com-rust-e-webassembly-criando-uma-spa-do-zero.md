@@ -8,6 +8,7 @@ image:
 categories: [Rust, Frontend]
 tags: [rust, desenvolvimento, frontend, front-end, webassembly, WebAssembly, wasm, trunk]
 pin: false
+audio: /assets/audio/posts/desenvolvendo-aplicacoes-web-com-rust-e-webassembly-criando-uma-spa-do-zero.mp3
 ---
 
 ## Introdução
