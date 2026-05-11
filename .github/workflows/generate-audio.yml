@@ -122,6 +122,7 @@ jobs:
 
       - name: Validate generated audio files
         run: |
+          git config core.quotePath false
           NEW_AUDIO=$(git diff --name-only --diff-filter=AM origin/main..HEAD -- 'assets/audio/**/*.mp3' || true)
           if [ -z "$NEW_AUDIO" ]; then
             echo "::error::PR has no MP3 changes — refusing to merge"
@@ -158,6 +159,7 @@ jobs:
 
       - name: Validate frontmatter references
         run: |
+          git config core.quotePath false
           UPDATED_POSTS=$(git diff --name-only --diff-filter=M origin/main..HEAD -- '_posts/**/*.md' || true)
           if [ -z "$UPDATED_POSTS" ]; then
             echo "::error::PR didn't touch any _posts/*.md frontmatter"
