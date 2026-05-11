@@ -22,7 +22,9 @@ env:
 jobs:
   narrate:
     runs-on: ubuntu-latest
-    timeout-minutes: 90
+    timeout-minutes: 350
+    outputs:
+      pr_number: ${{ steps.cpr.outputs.pull-request-number }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -83,6 +85,7 @@ jobs:
           git config --local user.email "cleissonbarbosa68@gmail.com"
 
       - name: Create Pull Request
+        id: cpr
         if: steps.diff.outputs.changed == 'true'
         uses: peter-evans/create-pull-request@v7
         with:
@@ -105,3 +108,87 @@ jobs:
           add-paths: |
             _posts/**
             assets/audio/**
+
+  validate_and_merge:
+    needs: narrate
+    if: needs.narrate.outputs.pr_number
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout PR branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ env.BRANCH_NAME }}
+          fetch-depth: 0
+
+      - name: Validate generated audio files
+        run: |
+          NEW_AUDIO=$(git diff --name-only --diff-filter=AM origin/main..HEAD -- 'assets/audio/**/*.mp3' || true)
+          if [ -z "$NEW_AUDIO" ]; then
+            echo "::error::PR has no MP3 changes — refusing to merge"
+            exit 1
+          fi
+
+          ERRORS=0
+          while IFS= read -r f; do
+            [ -z "$f" ] && continue
+            if [ ! -f "$f" ]; then
+              echo "::error::Missing file: $f"
+              ERRORS=$((ERRORS + 1))
+              continue
+            fi
+            SIZE=$(stat -c%s "$f")
+            if [ "$SIZE" -lt 4096 ]; then
+              echo "::error::MP3 too small ($SIZE bytes): $f"
+              ERRORS=$((ERRORS + 1))
+              continue
+            fi
+            TYPE=$(file --brief --mime-type "$f")
+            if [ "$TYPE" != "audio/mpeg" ]; then
+              echo "::error::Unexpected mime type ($TYPE) for $f"
+              ERRORS=$((ERRORS + 1))
+              continue
+            fi
+            echo "✅ $f ($TYPE, $SIZE bytes)"
+          done <<< "$NEW_AUDIO"
+
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "::error::$ERRORS audio file(s) failed validation"
+            exit 1
+          fi
+
+      - name: Validate frontmatter references
+        run: |
+          UPDATED_POSTS=$(git diff --name-only --diff-filter=M origin/main..HEAD -- '_posts/**/*.md' || true)
+          if [ -z "$UPDATED_POSTS" ]; then
+            echo "::error::PR didn't touch any _posts/*.md frontmatter"
+            exit 1
+          fi
+          ERRORS=0
+          while IFS= read -r p; do
+            [ -z "$p" ] && continue
+            AUDIO_URL=$(sed -n 's/^audio:[[:space:]]*//p' "$p" | head -n1 | tr -d '"' | tr -d "'")
+            if [ -z "$AUDIO_URL" ]; then
+              echo "::error::No audio: field in $p"
+              ERRORS=$((ERRORS + 1))
+              continue
+            fi
+            REL="${AUDIO_URL#/}"
+            if [ ! -f "$REL" ]; then
+              echo "::error::audio: $AUDIO_URL referenced by $p does not exist"
+              ERRORS=$((ERRORS + 1))
+              continue
+            fi
+            echo "✅ $p → $AUDIO_URL"
+          done <<< "$UPDATED_POSTS"
+          if [ "$ERRORS" -gt 0 ]; then
+            echo "::error::$ERRORS post(s) failed frontmatter validation"
+            exit 1
+          fi
+
+      - name: Auto-merge PR
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          PR_NUMBER="${{ needs.narrate.outputs.pr_number }}"
+          echo "Merging PR #${PR_NUMBER}..."
+          gh pr merge "$PR_NUMBER" --squash --delete-branch
