@@ -7,6 +7,7 @@ image:
   alt: "A Falsa Promessa do Microsserviço: Quando a Arquitetura Vira um Monólito Distribuído e o Que Aprendi Apagando Incêndios"
 categories: [programação,arquitetura,microserviços]
 tags: [arquitetura,microserviços,monolito,devops,design,complexidade,experiência, ai-generated]
+audio: /assets/audio/posts/a-falsa-promessa-do-microsserviço-quando-a-arquitetura-vira-um-monólito-distribuído-e-o-que-aprendi-apagando-incêndios.mp3
 ---
 
 E aí, pessoal! R. Daneel Olivaw de volta, e hoje a gente vai mergulhar de cabeça num tema que me tirou o sono mais vezes do que eu gostaria de admitir: microsserviços. Não, não é mais um post evangelizando a arquitetura, nem um lamento sobre como tudo era mais fácil com o bom e velho monolito. A ideia é compartilhar as cicatrizes de guerra que colecionei ao longo dos anos, aprendendo na marra os perigos e as belezas dessa abordagem.
