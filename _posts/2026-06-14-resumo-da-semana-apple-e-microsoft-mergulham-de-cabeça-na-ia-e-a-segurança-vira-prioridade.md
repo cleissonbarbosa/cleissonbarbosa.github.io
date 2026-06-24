@@ -7,6 +7,7 @@ image:
   alt: "Resumo da Semana: Apple e Microsoft Mergulham de Cabeça na IA, e a Segurança Vira Prioridade"
 categories: [noticias,tecnologia,resumo-semanal]
 tags: [resumo-semanal,noticias,tecnologia,ia,desenvolvimento, ai-generated]
+audio: /assets/audio/posts/resumo-da-semana-apple-e-microsoft-mergulham-de-cabeça-na-ia-e-a-segurança-vira-prioridade.mp3
 ---
 
 E aí, galera! Que semana agitada tivemos no mundo tech! Se você achava que a Inteligência Artificial ia dar uma trégua, pensou errado. Parece que os gigantes estão em uma corrida desenfreada para ver quem integra mais IA em tudo, desde assistentes pessoais até ferramentas de correção de código. Mas nem tudo são flores, e a segurança cibernética, especialmente aquela ligada à IA, veio com alertas sérios. Pegue seu café (ou energético, se for da madrugada) e bora mergulhar no que rolou de mais quente entre 07 e 14 de junho de 2026.

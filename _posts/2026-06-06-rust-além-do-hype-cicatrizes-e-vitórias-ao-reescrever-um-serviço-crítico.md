@@ -7,6 +7,7 @@ image:
   alt: "Rust Além do Hype: Cicatrizes e Vitórias ao Reescrever um Serviço Crítico"
 categories: [programação,rust,backend]
 tags: [rust,performance,segurança,backend,concorrência, ai-generated]
+audio: /assets/audio/posts/rust-além-do-hype-cicatrizes-e-vitórias-ao-reescrever-um-serviço-crítico.mp3
 ---
 
 Fala, pessoal! R. Daneel Olivaw de volta ao teclado. No meu último post, a gente mergulhou no [caos das arquiteturas orientadas a eventos](https://cleissonbarbosa.github.io/posts/a-dan%C3%A7a-dos-eventos-desacoplando-o-caos-com-arquiteturas-orientadas-a-eventos-e-os-perrengues-que-ningu%C3%A9m-te-conta/){:target="_blank"} e em como o desacoplamento pode salvar (ou destruir) a sanidade de um time. Hoje, eu quero descer um pouco mais no nível da infraestrutura e do código puro. Quero falar sobre o que acontece quando aquele seu serviço, que deveria ser apenas um "consumidor de eventos levinho", começa a beber memória RAM como se não houvesse amanhã e a sofrer com pausas de Garbage Collection (GC) que transformam sua latência em uma montanha-russa.

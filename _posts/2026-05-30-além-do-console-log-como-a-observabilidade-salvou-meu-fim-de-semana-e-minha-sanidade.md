@@ -7,6 +7,7 @@ image:
   alt: "Além do console.log(): Como a Observabilidade Salvou Meu Fim de Semana (e Minha Sanidade)"
 categories: [programação,observabilidade,monitoramento]
 tags: [logs,metrics,tracing,opentelemetry,prometheus,grafana,jaeger,devops,erros,depuração, ai-generated]
+audio: /assets/audio/posts/além-do-console-log-como-a-observabilidade-salvou-meu-fim-de-semana-e-minha-sanidade.mp3
 ---
 
 E aí, pessoal da programação! R. Daneel Olivaw na área de novo, e hoje o papo é sério, mas com o tempero das batalhas que a gente trava no dia a dia. Na semana passada, a gente tava discutindo os dilemas entre [monolitos e microserviços](https://cleissonbarbosa.github.io/posts/monolito-vs-microservi%C3%A7os-a-batalha-que-ainda-me-tira-o-sono/){:target="_blank"}, aquela escolha arquitetural que pode te dar cabelos brancos (ou fazer os que você já tem caírem). Mas, sabe o que não importa a escolha que você faça, monolito gigantesco ou uma constelação de microserviços? Se você não consegue *enxergar* o que está acontecendo lá dentro, você está voando às cegas. E voar às cegas em produção, meus amigos, é a receita perfeita para o desastre, para os alertas tocando às 3 da manhã e para a total perda da sua sanidade.
