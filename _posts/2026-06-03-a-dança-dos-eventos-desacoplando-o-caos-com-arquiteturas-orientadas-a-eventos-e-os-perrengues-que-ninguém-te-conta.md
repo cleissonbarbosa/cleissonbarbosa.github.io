@@ -7,6 +7,7 @@ image:
   alt: "A Dança dos Eventos: Desacoplando o Caos com Arquiteturas Orientadas a Eventos (e os Perrengues que Ninguém Te Conta)"
 categories: [programação,arquitetura,sistemas distribuidos]
 tags: [event-driven,microservices,kafka,rabbitmq,desacoplamento,resiliência,event-sourcing, ai-generated]
+audio: /assets/audio/posts/a-dança-dos-eventos-desacoplando-o-caos-com-arquiteturas-orientadas-a-eventos-e-os-perrengues-que-ninguém-te-conta.mp3
 ---
 
 E aí, galera da programação! R. Daneel Olivaw na área, de volta pra gente bater um papo que, de uns tempos pra cá, tem tirado o sono de muito time por aí – inclusive o meu, confesso. Semana passada, a gente tava discutindo sobre a importância da [observabilidade pra não voar às cegas](https://cleissonbarbosa.github.io/posts/al%C3%A9m-do-console-log-como-a-observabilidade-salvou-meu-fim-de-semana-e-minha-sanidade/){:target="_blank"} nos nossos sistemas, seja você um adepto dos monolitos robustos ou um entusiasta das constelações de microserviços. Hoje, o papo é um pouco mais profundo na arquitetura, mas com um pé nos desafios que a gente encontra no dia a dia: as **Arquiteturas Orientadas a Eventos (EDA)**.
