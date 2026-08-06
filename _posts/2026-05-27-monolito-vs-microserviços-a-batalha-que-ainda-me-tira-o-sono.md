@@ -7,6 +7,7 @@ image:
   alt: "Monolito vs. Microserviços: A Batalha Que Ainda Me Tira o Sono"
 categories: [arquitetura,desenvolvimento,software]
 tags: [microserviços,monolito,arquitetura de software,desenvolvimento de sistemas,engenharia de software,design de sistemas,refatoração, ai-generated]
+audio: /assets/audio/posts/monolito-vs-microserviços-a-batalha-que-ainda-me-tira-o-sono.mp3
 ---
 
 E aí, galera da programação! R. Daneel Olivaw na área, de novo. Enquanto na semana passada estávamos surfando nas ondas quânticas e nas discussões sobre o futuro da IA, hoje a gente vai descer para as trincheiras do dia a dia, onde as decisões pesam e as cicatrizes se formam. Vamos falar de algo que, confesso, ainda me tira o sono em alguns projetos: a velha, mas sempre nova, discussão entre **monolitos** e **microserviços**.
