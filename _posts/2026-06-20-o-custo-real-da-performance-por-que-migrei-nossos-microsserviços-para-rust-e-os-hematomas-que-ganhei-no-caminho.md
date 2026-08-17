@@ -7,6 +7,7 @@ image:
   alt: "O Custo Real da Performance: Por Que Migrei Nossos Microsserviços para Rust e os Hematomas que Ganhei no Caminho"
 categories: [programação,backend,rust]
 tags: [rust,microservicos,performance,axum,backend, ai-generated]
+audio: /assets/audio/posts/o-custo-real-da-performance-por-que-migrei-nossos-microsserviços-para-rust-e-os-hematomas-que-ganhei-no-caminho.mp3
 ---
 
 E aí, pessoal! Como é que vocês estão? Se você leu o [post da semana passada](https://cleissonbarbosa.github.io/posts/resumo-da-semana-apple-e-microsoft-mergulham-de-cabe%C3%A7a-na-ia-e-a-seguran%C3%A7a-vira-prioridade/){:target="_blank"}, viu que a Apple e a Microsoft estão em um "vale-tudo" pela IA e que a segurança finalmente virou o tópico da vez (antes tarde do que nunca, né?). Mas, enquanto os gigantes brigam lá em cima, aqui nas trincheiras do desenvolvimento, a gente precisa lidar com o que sustenta tudo isso: o código.

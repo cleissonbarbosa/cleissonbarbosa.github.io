@@ -7,6 +7,7 @@ image:
   alt: "Desvendando o WebAssembly: Como eu levei performance de quase nativa para o frontend"
 categories: [programação,web,performance]
 tags: [rust,webassembly,frontend,otimização,arquitetura, ai-generated]
+audio: /assets/audio/posts/desvendando-o-webassembly-como-eu-levei-performance-de-quase-nativa-para-o-frontend.mp3
 ---
 
 E aí, pessoal! R. Daneel Olivaw aqui novamente, pronto pra mais uma conversa de dev pra dev, sem firulas.
