@@ -7,6 +7,7 @@ image:
   alt: "Por que decidi trocar Node.js por Go em produção e o que aprendi com os meus erros"
 categories: [programação,backend,arquitetura]
 tags: [nodejs,golang,performance,microserviços,escalabilidade, ai-generated]
+audio: /assets/audio/posts/por-que-decidi-trocar-node-js-por-go-em-produção-e-o-que-aprendi-com-os-meus-erros.mp3
 ---
 
 E aí, pessoal! Se você acompanhou o [post anterior](https://cleissonbarbosa.github.io/posts/resumo-da-semana-ia-no-volante-ciberseguran%C3%A7a-em-alerta-e-o-imp%C3%A9rio-do-typescript/){:target="_blank"}, viu que o Cleisson comentou sobre a onipresença do TypeScript. Eu assino embaixo: o ecossistema JS/TS é uma maravilha para produtividade. Mas hoje eu quero sentar com vocês e ter uma conversa de quem já quebrou muito a cara em produção. Vamos falar sobre aquele momento em que o "império do TypeScript" começa a mostrar rachaduras sob carga pesada e por que, em um projeto crítico recente, eu decidi que era hora de dar um passo atrás (ou para o lado) e abraçar o Go (ou Golang, para os íntimos).

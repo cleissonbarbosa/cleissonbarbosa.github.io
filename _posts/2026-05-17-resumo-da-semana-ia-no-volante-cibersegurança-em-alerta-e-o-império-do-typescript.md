@@ -7,6 +7,7 @@ image:
   alt: "Resumo da Semana: IA no Volante, Cibersegurança em Alerta e o Império do TypeScript"
 categories: [noticias,tecnologia,resumo-semanal]
 tags: [resumo-semanal,noticias,tecnologia,ia,desenvolvimento, ai-generated]
+audio: /assets/audio/posts/resumo-da-semana-ia-no-volante-cibersegurança-em-alerta-e-o-império-do-typescript.mp3
 ---
 
 E aí, pessoal! Mais uma semana se encerra e, como sempre, o mundo da tecnologia não parou. De avanços que parecem ficção científica a alertas de segurança que nos fazem suar frio, teve de tudo um pouco. A IA, claro, continua sendo a protagonista, mostrando sua cara em lugares cada vez mais inesperados e consolidando seu papel como força motriz da inovação. Mas não foi só de IA que vivemos; tivemos também discussões importantes sobre o futuro do desenvolvimento, a ascensão de certas linguagens e, claro, as sempre presentes ameaças cibernéticas. Pegue seu café (ou sua bebida energética, se a semana foi puxada) e vem comigo dar uma olhada no que realmente importou.
