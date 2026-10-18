@@ -1,5 +1,11 @@
-from .gemini_content_service import GeminiContentService
 from .cloudflare_image_service import CloudflareImageService
-from .gemini_news_digest_service import GeminiNewsDigestService
+from .cloudflare_text_generator import CloudflareTextGenerator
+from .fallback_text_generator import FallbackTextGenerator
+from .gemini_text_generator import GeminiTextGenerator
 
-__all__ = ["GeminiContentService", "CloudflareImageService", "GeminiNewsDigestService"]
+__all__ = [
+    "CloudflareImageService",
+    "CloudflareTextGenerator",
+    "FallbackTextGenerator",
+    "GeminiTextGenerator",
+]

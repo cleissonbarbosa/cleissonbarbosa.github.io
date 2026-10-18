@@ -1,22 +1,22 @@
-import logging
-import re
 from datetime import datetime
+from typing import Callable
 
+from generate_post.config.constants import TIMEZONE
 from generate_post.core.domain.entities.post import Post
-from generate_post.core.domain.interfaces.post_repository import (
-    PostRepositoryInterface,
-)
-from generate_post.core.domain.interfaces.content_generator_service import (
-    ContentGeneratorServiceInterface,
-)
 from generate_post.core.domain.interfaces.image_generator_service import (
     ImageGeneratorServiceInterface,
 )
+from generate_post.core.domain.interfaces.post_repository import (
+    PostRepositoryInterface,
+)
+from generate_post.core.domain.interfaces.text_generator import TextGeneratorInterface
+from generate_post.core.use_cases import prompts
+from generate_post.core.use_cases.drafts import parse_draft
+from generate_post.core.use_cases.publish import publish_draft
 
-logger = logging.getLogger(__name__)
-
-_DEFAULT_IMAGE = "/assets/img/posts/ia-generated.png"
-_SLUG_RE = re.compile(r"\W+")
+# Títulos recentes entram no prompt para o modelo não repetir temas
+_RECENT_POSTS = 15
+_DEFAULT_LABELS = ["programação"]
 
 
 class GeneratePostUseCase:
@@ -25,47 +25,25 @@ class GeneratePostUseCase:
     def __init__(
         self,
         post_repository: PostRepositoryInterface,
-        content_generator: ContentGeneratorServiceInterface,
+        text_generator: TextGeneratorInterface,
         image_generator: ImageGeneratorServiceInterface,
+        clock: Callable[[], datetime] = lambda: datetime.now(TIMEZONE),
     ):
         self._post_repository = post_repository
-        self._content_generator = content_generator
+        self._text_generator = text_generator
         self._image_generator = image_generator
+        self._clock = clock
+
+    def build_prompt(self) -> str:
+        return prompts.post_prompt(self._post_repository.get_recent_posts(_RECENT_POSTS))
 
     def execute(self) -> Post:
         """Executa o caso de uso de geração de post"""
-        # Contexto do último post
-        last_post = self._post_repository.get_last_post()
-        last_post_dict = last_post.to_dict() if last_post else None
-
-        # Gera conteúdo
-        prompt = self._content_generator.create_prompt(last_post_dict)
-        generated_text = self._content_generator.generate_content(prompt)
-        post_data = self._content_generator.parse_generated_content(generated_text)
-
-        title = post_data["title"]
-        categories = post_data["categories"]
-        tags = post_data["tags"]
-        content = post_data["content"]
-
-        slug = _SLUG_RE.sub("-", title.lower()).strip("-")
-        date = datetime.now()
-
-        # Gera imagem
-        image_path = self._image_generator.generate_image(
-            title, categories, tags, content
+        draft = self._text_generator.generate(
+            prompts.POST_SYSTEM,
+            self.build_prompt(),
+            lambda text: parse_draft(text, _DEFAULT_LABELS, _DEFAULT_LABELS),
         )
-
-        post = Post(
-            title=title,
-            categories=categories,
-            tags=tags,
-            content=content,
-            date=date,
-            image_path=image_path or _DEFAULT_IMAGE,
-            slug=slug,
-            filename=f"_posts/{date:%Y-%m-%d}-{slug}.md",
+        return publish_draft(
+            draft, draft.content, self._clock(), self._post_repository, self._image_generator
         )
-
-        self._post_repository.save_post(post)
-        return post

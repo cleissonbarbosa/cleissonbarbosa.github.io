@@ -113,7 +113,7 @@ jobs:
             ![${{ needs.generate_digest.outputs.post_image }}](https://raw.githubusercontent.com/${{github.repository}}/refs/heads/${{ env.BRANCH_NAME }}/${{ needs.generate_digest.outputs.post_image }})
 
             ---
-            > Este digest usa **Google Search Grounding** do Gemini para buscar e sintetizar notícias reais da semana.
+            > Este digest resume notícias coletadas do **Hacker News** e de feeds RSS de tecnologia; cada citação aponta para a URL original da notícia.
           branch: ${{ env.BRANCH_NAME }}
           author: "R. Daneel Olivaw <cleissonbarbosa68@gmail.com>"
           labels: "ai-generated,weekly-digest"

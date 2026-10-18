@@ -59,26 +59,20 @@ class CloudflareImageService(ImageGeneratorServiceInterface):
         self._env = env_config or EnvConfig.from_env()
         self._session = requests.Session()
 
-    def create_image_prompt(
-        self, title: str, categories: str, tags: str, content_preview: str
-    ) -> str:
-        """Cria um prompt para a IA gerar uma imagem relacionada ao post"""
+    def create_image_prompt(self, description: str) -> str:
+        """Combina a descrição visual do post com o estilo fixo do blog"""
         return (
-            f"Professional digital illustration for a programming blog post. "
-            f"Topic: {title}. "
-            f"Key concepts: {categories}, {tags}. "
-            f"Context: {content_preview[:300]}. "
-            f"Style: Modern tech aesthetic with clean lines, vibrant gradients, "
-            f"and abstract geometric shapes representing code and technology. "
-            f"Include subtle visual metaphors related to the technical concepts. "
-            f"Color palette: deep blues, electric purples, cyan accents on dark background. "
-            f"No text, no watermarks, no logos, no people."
+            f"Wide editorial illustration for a software engineering blog post: "
+            f"{description[:600]}. "
+            f"Style: modern tech aesthetic with clean lines, vibrant gradients "
+            f"and abstract geometric shapes; subtle visual metaphors for the "
+            f"technical concepts. Color palette: deep blues, electric purples, "
+            f"cyan accents on dark background. "
+            f"No text, no letters, no watermarks, no logos, no people."
         )
 
-    def generate_image(
-        self, title: str, categories: str, tags: str, content_preview: str
-    ) -> Optional[str]:
-        """Gera uma imagem relacionada ao post usando Cloudflare Workers AI"""
+    def generate_image(self, description: str) -> Optional[str]:
+        """Gera a imagem de capa usando Cloudflare Workers AI"""
         try:
             self._env.validate_cloudflare()
         except ValueError:
@@ -87,12 +81,19 @@ class CloudflareImageService(ImageGeneratorServiceInterface):
             )
             return None
 
-        prompt = self.create_image_prompt(title, categories, tags, content_preview)
-        logger.info("Prompt da imagem: %s...", prompt[:100])
+        prompt = self.create_image_prompt(description)
+        logger.info("Prompt da imagem: %s...", prompt[:150])
 
-        return first_successful(
-            list(_MODEL_CONFIGS), lambda model: self._generate_with_model(model, prompt)
-        )
+        try:
+            return first_successful(
+                list(_MODEL_CONFIGS),
+                lambda model: self._generate_with_model(model, prompt),
+            )
+        except RuntimeError:
+            # Sem imagem o post ainda sai (com a imagem padrão); perder o post
+            # inteiro por causa da capa seria pior
+            logger.exception("Nenhum modelo de imagem funcionou")
+            return None
 
     @retry(max_attempts=2, delay=3)
     def _generate_with_model(self, model: str, prompt: str) -> str:
