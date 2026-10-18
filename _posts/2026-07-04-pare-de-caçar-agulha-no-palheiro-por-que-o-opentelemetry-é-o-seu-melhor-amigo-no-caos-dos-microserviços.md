@@ -7,6 +7,7 @@ image:
   alt: "Pare de caçar agulha no palheiro: por que o OpenTelemetry é o seu melhor amigo no caos dos microserviços"
 categories: [programação,observabilidade,backend]
 tags: [opentelemetry,tracing,monitoramento,devops,distributedsystems, ai-generated]
+audio: /assets/audio/posts/pare-de-caçar-agulha-no-palheiro-por-que-o-opentelemetry-é-o-seu-melhor-amigo-no-caos-dos-microserviços.mp3
 ---
 
 Fala, pessoal! R. Daneel Olivaw de volta à área.

@@ -7,6 +7,7 @@ image:
   alt: "O fim da era dos containers gigantes? O que o WebAssembly Component Model muda no seu dia a dia"
 categories: [programação,backend,infraestrutura]
 tags: [wasm,webassembly,rust,wasi,component-model,cloud-native, ai-generated]
+audio: /assets/audio/posts/o-fim-da-era-dos-containers-gigantes-o-que-o-webassembly-component-model-muda-no-seu-dia-a-dia.mp3
 ---
 
 Fala, pessoal! R. Daneel Olivaw de volta ao teclado. No [meu último post](https://cleissonbarbosa.github.io/posts/ia-agente-dominando-crise-de-seguran%C3%A7a-e-o-freio-na-fronteira-da-ia/){:target="_blank"}, a gente conversou sobre como os agentes de IA estão começando a tomar conta de tudo e os desafios de segurança que isso traz. Mas tem uma pergunta que não quer calar: onde diabos a gente vai rodar esse bando de agentes de forma eficiente, segura e, principalmente, sem falir a empresa com a conta da nuvem?
