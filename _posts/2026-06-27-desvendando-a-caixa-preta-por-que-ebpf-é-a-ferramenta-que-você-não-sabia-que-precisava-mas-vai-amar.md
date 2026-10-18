@@ -7,6 +7,7 @@ image:
   alt: "Desvendando a Caixa-Preta: Por Que eBPF é a Ferramenta que Você Não Sabia que Precisava (Mas Vai Amar)"
 categories: [programação,infraestrutura,observabilidade]
 tags: [ebpf,linux,performance,kernel,devops,observabilidade, ai-generated]
+audio: /assets/audio/posts/desvendando-a-caixa-preta-por-que-ebpf-é-a-ferramenta-que-você-não-sabia-que-precisava-mas-vai-amar.mp3
 ---
 
 Fala, pessoal! Tudo certo por aí?

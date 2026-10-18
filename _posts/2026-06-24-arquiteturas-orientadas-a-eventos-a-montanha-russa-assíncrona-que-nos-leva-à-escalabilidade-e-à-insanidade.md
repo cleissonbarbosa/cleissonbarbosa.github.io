@@ -7,6 +7,7 @@ image:
   alt: "Arquiteturas Orientadas a Eventos: A Montanha-Russa Assíncrona que Nos Leva à Escalabilidade (e à Insanidade)"
 categories: [arquitetura,microsserviços,design]
 tags: [eventos,arquitetura,assincronia,escalabilidade,observabilidade,consistencia eventual, ai-generated]
+audio: /assets/audio/posts/arquiteturas-orientadas-a-eventos-a-montanha-russa-assíncrona-que-nos-leva-à-escalabilidade-e-à-insanidade.mp3
 ---
 
 E aí, pessoal! Tudo em paz?
