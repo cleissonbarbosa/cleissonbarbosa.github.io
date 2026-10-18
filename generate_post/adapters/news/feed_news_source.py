@@ -137,7 +137,8 @@ class FeedNewsSource(NewsSourceInterface):
         return items[:_PER_FEED_LIMIT]
 
     def _with_summary(self, item: NewsItem) -> NewsItem:
-        if item.summary or "news.ycombinator.com" in item.url:
+        # Discussões do próprio HN não têm descrição útil na página
+        if item.summary or urlsplit(item.url).hostname == "news.ycombinator.com":
             return item
         try:
             page = self._get_limited(item.url, _MAX_PAGE_BYTES).decode("utf-8", "replace")

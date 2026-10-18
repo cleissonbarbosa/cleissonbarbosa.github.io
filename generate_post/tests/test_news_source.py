@@ -50,12 +50,15 @@ class FeedNewsSourceTest(unittest.TestCase):
                 {"title": "Mesma notícia", "url": "https://www.ex.com/a/", "points": 300, "created_at_i": 1792065600, "objectID": "1"},
                 {"title": "Ask HN: algo", "url": None, "points": 200, "created_at_i": 1792065600, "objectID": "2"},
                 {"title": "Página nova", "url": "https://site.com/p", "points": 500, "created_at_i": 1792065600, "objectID": "3"},
+                # O host não é o HN, então a descrição da página deve ser buscada
+                {"title": "Host parecido", "url": "https://site.com/news.ycombinator.com", "points": 160, "created_at_i": 1792065600, "objectID": "4"},
             ]
         }
         bodies = {
             "https://ex.com/rss": RSS,
             "https://ex.com/atom": ATOM,
             "https://site.com/p": b'<html><head><meta content="Descri\xc3\xa7\xc3\xa3o da p\xc3\xa1gina" property="og:description"></head></html>',
+            "https://site.com/news.ycombinator.com": b'<meta name="description" content="Outra descri\xc3\xa7\xc3\xa3o">',
         }
 
         def limited(url, limit):
@@ -74,9 +77,11 @@ class FeedNewsSourceTest(unittest.TestCase):
                 ("Hacker News", "Página nova"),
                 ("Hacker News", "Mesma notícia"),  # o item do RSS com a mesma URL sai
                 ("Hacker News", "Ask HN: algo"),
+                ("Hacker News", "Host parecido"),
                 ("Atom", "Atom post"),
             ],
         )
+        self.assertEqual(items[3].summary, "Outra descrição")
         self.assertEqual(items[0].summary, "Descrição da página")
         self.assertEqual(items[0].score, 500)
         self.assertEqual(items[2].url, "https://news.ycombinator.com/item?id=2")
