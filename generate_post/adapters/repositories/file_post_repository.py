@@ -1,3 +1,4 @@
+import json
 import logging
 from pathlib import Path
 from typing import Optional
@@ -9,6 +10,7 @@ from generate_post.core.domain.interfaces.post_repository import (
     PostRepositoryInterface,
 )
 from generate_post.config.constants import POSTS_DIR
+from generate_post.utils.content_parser import split_labels
 
 logger = logging.getLogger(__name__)
 
@@ -17,6 +19,11 @@ _TITLE_RE = re.compile(r'title:\s*"([^"]+)"')
 _CATEGORIES_RE = re.compile(r"categories:\s*\[(.*)?\]")
 _TAGS_RE = re.compile(r"tags:\s*\[(.*)?\]")
 _DATE_RE = re.compile(r"^(\d{4}-\d{2}-\d{2})")
+
+
+def _yaml_str(value: str) -> str:
+    """Serializa uma string como escalar YAML entre aspas duplas."""
+    return json.dumps(value, ensure_ascii=False)
 
 
 class FilePostRepository(PostRepositoryInterface):
@@ -36,16 +43,21 @@ class FilePostRepository(PostRepositoryInterface):
             else datetime.now().strftime("%Y-%m-%d")
         )
 
+        # Strings JSON são escalares YAML válidos entre aspas: nenhum texto
+        # vindo do modelo consegue virar Hash ou quebrar o front matter.
+        title = _yaml_str(post.title)
+        categories = [_yaml_str(c) for c in split_labels(post.categories)]
+        tags = [_yaml_str(t) for t in split_labels(post.tags) + ["ai-generated"]]
         front_matter = (
             f"---\n"
-            f'title: "{post.title}"\n'
+            f"title: {title}\n"
             f"author: ia\n"
             f"date: {date_str} 00:00:00 -0300\n"
             f"image:\n"
             f"  path: {post.image_path}\n"
-            f'  alt: "{post.title}"\n'
-            f"categories: [{post.categories}]\n"
-            f"tags: [{post.tags}, ai-generated]\n"
+            f"  alt: {title}\n"
+            f"categories: [{', '.join(categories)}]\n"
+            f"tags: [{', '.join(tags)}]\n"
             f"---\n\n"
         )
 

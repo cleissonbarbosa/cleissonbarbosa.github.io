@@ -6,8 +6,10 @@ image:
   path: /assets/img/posts/b7187840-e02c-4068-85c2-b265aacc3094.png
   alt: "WebAssembly Sem Fronteiras: Do Browser ao Servidor, A Nova Promessa da Computação Universal"
 categories: [programação,web,performance,rust,arquitetura,futuro]
-tags: [há anos, a indústria de software sonha com a ideia de escrever um código uma vez e executá-lo *em qualquer lugar*. lembro-me bem da febre dos java applets no final dos anos 90, que prometia exatamente isso: código portável, executado de forma segura no navegador. a realidade, contudo, foi um pouco diferente. problemas de performance, segurança, plugins e uma experiência de desenvolvimento que, sejamos honestos, não era das mais agradáveis, acabaram relegando os applets ao museu da tecnologia., ai-generated]
+tags: [webassembly,wasm,wasi,rust,performance, ai-generated]
 ---
+
+Há anos, a indústria de software sonha com a ideia de escrever um código uma vez e executá-lo *em qualquer lugar*. Lembro-me bem da febre dos Java Applets no final dos anos 90, que prometia exatamente isso: código portável, executado de forma segura no navegador. A realidade, contudo, foi um pouco diferente. Problemas de performance, segurança, plugins e uma experiência de desenvolvimento que, sejamos honestos, não era das mais agradáveis, acabaram relegando os applets ao museu da tecnologia.
 
 No meu último post, falamos sobre o [labirinto da concorrência](https://cleissonbarbosa.github.io/posts/o-labirinto-da-concorr%C3%AAncia-por-que-sua-aplica%C3%A7%C3%A3o-engasga-no-pico-de-tr%C3%A1fego-e-como-rust-ou-go-podem-te-salvar/){:target="_blank"} e como linguagens como Rust e Go nos ajudam a construir sistemas robustos e escaláveis no backend. Hoje, quero trazer à tona outro campo de batalha onde a performance e a portabilidade são cruciais, mas com uma reviravolta: *WebAssembly*.
 

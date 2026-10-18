@@ -1,6 +1,4 @@
 import logging
-import random
-import re
 import requests
 from pathlib import PurePosixPath
 from typing import Dict, Optional
@@ -9,15 +7,20 @@ from urllib.parse import quote
 from generate_post.core.domain.interfaces.content_generator_service import (
     ContentGeneratorServiceInterface,
 )
+from generate_post.adapters.api import gemini_client
 from generate_post.config.env_config import EnvConfig
-from generate_post.utils.retry_decorator import retry
+from generate_post.utils.content_parser import parse_generated_content
+from generate_post.utils.model_fallback import first_successful
 
 logger = logging.getLogger(__name__)
 
+# Ordem de preferência; os seguintes só entram se o anterior falhar.
+# gemini-2.5-* ficou restrito a quem já usava: fica por último como reserva.
 _MODELS = [
-    "gemini-2.5-flash",
-    "gemini-2.5-pro",
+    "gemini-3.8-flash",
+    "gemini-3.6-flash",
     "gemini-3-flash-preview",
+    "gemini-2.5-flash",
 ]
 
 _SYSTEM_INSTRUCTION = (
@@ -31,10 +34,6 @@ _SYSTEM_INSTRUCTION = (
     "português brasileiro com tom informal mas tecnicamente preciso. "
     "Você nunca menciona que é uma IA — você é um autor humano do blog."
 )
-
-# Regex compilado para limpeza do título
-_TITLE_CLEAN_RE = re.compile(r'["#]|(?:title:|Title:)')
-_LABEL_CLEAN_RE = re.compile(r"(?:categorias:|categories:|tags:|\[|\])", re.IGNORECASE)
 
 
 class GeminiContentService(ContentGeneratorServiceInterface):
@@ -103,14 +102,14 @@ Resumo do conteúdo anterior:
 
         return base_prompt
 
-    @retry(max_attempts=3, delay=5)
     def generate_content(self, prompt: str) -> str:
         """Gera conteúdo a partir de um prompt usando a API Gemini"""
         self._env.validate_gemini()
+        return first_successful(
+            _MODELS, lambda model: self._generate_with_model(model, prompt)
+        )
 
-        model_name = random.choice(_MODELS)
-        logger.info("Modelo selecionado: %s", model_name)
-
+    def _generate_with_model(self, model_name: str, prompt: str) -> str:
         req_json = {
             "systemInstruction": {"parts": [{"text": _SYSTEM_INSTRUCTION}]},
             "contents": [{"parts": [{"text": prompt}]}],
@@ -120,76 +119,22 @@ Resumo do conteúdo anterior:
                     "threshold": "BLOCK_ONLY_HIGH",
                 }
             ],
-            "generationConfig": {
-                "temperature": 0.9,
-                "maxOutputTokens": 8192,
-                "topP": 0.95,
-                "topK": 40,
-            },
+            # Gemini 3 recomenda manter temperature no padrão (1.0): valores
+            # menores causam loops. O limite cobre também os tokens de thinking.
+            "generationConfig": {"maxOutputTokens": 32768},
         }
 
-        url = (
-            f"https://generativelanguage.googleapis.com/v1beta/"
-            f"models/{model_name}:generateContent"
+        candidate = gemini_client.generate_content(
+            self._session,
+            self._env.gemini_api_key,
+            model_name,
+            req_json,
+            timeout=180,
         )
-
-        response = self._session.post(
-            url,
-            headers={"x-goog-api-key": self._env.gemini_api_key},
-            json=req_json,
-            timeout=120,
-        )
-
-        if response.status_code != 200:
-            raise requests.RequestException(
-                f"Falha ao gerar post. Status: {response.status_code}, "
-                f"Resposta: {response.text[:500]}"
-            )
-
-        data = response.json()
-        candidates = data.get("candidates")
-        if not candidates or "content" not in candidates[0]:
-            raise ValueError(f"Formato de resposta inválido: {data}")
-
-        return candidates[0]["content"]["parts"][0]["text"]
+        return "".join(text for _, text in gemini_client.text_parts(candidate))
 
     def parse_generated_content(self, generated_text: str) -> Dict:
         """Extrai título, categorias, tags e conteúdo do texto gerado"""
-        lines = generated_text.strip().split("\n")
-
-        title = _TITLE_CLEAN_RE.sub("", lines[0]).strip()
-
-        # Avança para a próxima linha não-vazia (categorias)
-        idx = _next_non_empty(lines, 1)
-        categories = (
-            _LABEL_CLEAN_RE.sub("", lines[idx]).strip().lower()
-            if idx < len(lines)
-            else ""
+        return parse_generated_content(
+            generated_text, default_categories="programação", default_tags="programação"
         )
-
-        # Avança para a próxima linha não-vazia (tags)
-        idx = _next_non_empty(lines, idx + 1)
-        tags = (
-            _LABEL_CLEAN_RE.sub("", lines[idx]).strip().lower()
-            if idx < len(lines)
-            else ""
-        )
-
-        # Restante é conteúdo
-        idx = _next_non_empty(lines, idx + 1)
-        content = "\n".join(lines[idx:]).strip() if idx < len(lines) else ""
-
-        return {
-            "title": title,
-            "categories": categories,
-            "tags": tags,
-            "content": content,
-        }
-
-
-def _next_non_empty(lines: list[str], start: int) -> int:
-    """Retorna o índice da próxima linha não-vazia a partir de start."""
-    idx = start
-    while idx < len(lines) and not lines[idx].strip():
-        idx += 1
-    return idx

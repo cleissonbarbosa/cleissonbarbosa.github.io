@@ -7,8 +7,11 @@ from generate_post.config.constants import MAX_RETRIES, RETRY_DELAY
 logger = logging.getLogger(__name__)
 
 
-def retry(max_attempts=MAX_RETRIES, delay=RETRY_DELAY):
-    """Decorator para implementar retry com exponential backoff."""
+def retry(max_attempts=MAX_RETRIES, delay=RETRY_DELAY, giveup=()):
+    """Decorator para implementar retry com exponential backoff.
+
+    Exceções listadas em ``giveup`` são relançadas na hora, sem novas tentativas.
+    """
 
     def decorator(func):
         @wraps(func)
@@ -18,6 +21,8 @@ def retry(max_attempts=MAX_RETRIES, delay=RETRY_DELAY):
             for attempt in range(1, max_attempts + 1):
                 try:
                     return func(*args, **kwargs)
+                except giveup:
+                    raise
                 except Exception as e:
                     last_exception = e
                     if attempt < max_attempts:

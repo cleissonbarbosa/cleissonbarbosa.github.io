@@ -1,5 +1,4 @@
 import logging
-import random
 import re
 import requests
 from datetime import datetime, timedelta
@@ -8,14 +7,22 @@ from typing import Dict, Optional
 from generate_post.core.domain.interfaces.content_generator_service import (
     ContentGeneratorServiceInterface,
 )
+from generate_post.adapters.api import gemini_client
 from generate_post.config.env_config import EnvConfig
-from generate_post.utils.retry_decorator import retry
+from generate_post.utils.content_parser import parse_generated_content
+from generate_post.utils.model_fallback import first_successful
 
 logger = logging.getLogger(__name__)
 
-# Modelos que suportam Google Search grounding
-# Nota: gemini-2.5-flash-lite removido pois não activa consistentemente o grounding
-_GROUNDED_MODELS = ["gemini-2.5-flash", "gemini-2.0-flash"]
+# Modelos com Google Search grounding, em ordem de preferência.
+# Nos Gemini 3+ o grounding não tem free tier (só 5.000 buscas/mês no plano
+# pago); gemini-2.5-flash fica como reserva para chaves sem faturamento.
+# Nota: flash-lite fica de fora pois não ativa consistentemente o grounding.
+_GROUNDED_MODELS = [
+    "gemini-3.8-flash",
+    "gemini-3.6-flash",
+    "gemini-2.5-flash",
+]
 
 _SYSTEM_INSTRUCTION = (
     "Você é R. Daneel Olivaw, um engenheiro de software sênior "
@@ -28,9 +35,6 @@ _SYSTEM_INSTRUCTION = (
     "tecnicamente preciso. Você nunca menciona que é uma IA — "
     "você é um autor humano do blog."
 )
-
-_TITLE_CLEAN_RE = re.compile(r'["#]|(?:title:|Title:)')
-_LABEL_CLEAN_RE = re.compile(r"(?:categorias:|categories:|tags:|\[|\])", re.IGNORECASE)
 
 
 class GeminiNewsDigestService(ContentGeneratorServiceInterface):
@@ -93,13 +97,13 @@ Linha 5 em diante: Corpo do post em Markdown
 - Seja factual nas notícias mas opinativo nas análises
 """
 
-    @retry(max_attempts=3, delay=5)
     def generate_content(self, prompt: str) -> str:
         self._env.validate_gemini()
+        return first_successful(
+            _GROUNDED_MODELS, lambda model: self._generate_with_model(model, prompt)
+        )
 
-        model_name = random.choice(_GROUNDED_MODELS)
-        logger.info("Modelo selecionado (digest): %s", model_name)
-
+    def _generate_with_model(self, model_name: str, prompt: str) -> str:
         req_json = {
             "systemInstruction": {"parts": [{"text": _SYSTEM_INSTRUCTION}]},
             "contents": [{"parts": [{"text": prompt}]}],
@@ -111,44 +115,21 @@ Linha 5 em diante: Corpo do post em Markdown
                     "threshold": "BLOCK_ONLY_HIGH",
                 }
             ],
-            "generationConfig": {
-                "temperature": 0.7,
-                "maxOutputTokens": 8192,
-                "topP": 0.9,
-                "topK": 40,
-            },
+            # Gemini 3 recomenda manter temperature no padrão (1.0); o grounding
+            # é quem garante a factualidade. O limite cobre também o thinking.
+            "generationConfig": {"maxOutputTokens": 32768},
         }
 
-        url = (
-            "https://generativelanguage.googleapis.com"
-            f"/v1beta/models/{model_name}:generateContent"
+        candidate = gemini_client.generate_content(
+            self._session,
+            self._env.gemini_api_key,
+            model_name,
+            req_json,
+            timeout=300,
         )
-
-        response = self._session.post(
-            url,
-            headers={
-                "x-goog-api-key": self._env.gemini_api_key,
-            },
-            json=req_json,
-            timeout=180,
-        )
-
-        if response.status_code != 200:
-            raise requests.RequestException(
-                f"Falha ao gerar digest. "
-                f"Status: {response.status_code}, "
-                f"Resposta: {response.text[:500]}"
-            )
-
-        data = response.json()
-        candidates = data.get("candidates")
-        if not candidates or "content" not in candidates[0]:
-            raise ValueError(f"Formato de resposta inválido: {data}")
-
-        text = candidates[0]["content"]["parts"][0]["text"]
 
         # Extrair fontes do grounding metadata
-        grounding = candidates[0].get("groundingMetadata", {})
+        grounding = candidate.get("groundingMetadata", {})
         queries = grounding.get("webSearchQueries", [])
         chunks = grounding.get("groundingChunks", [])
         supports = grounding.get("groundingSupports", [])
@@ -162,14 +143,18 @@ Linha 5 em diante: Corpo do post em Markdown
         if queries:
             logger.info("Buscas realizadas pelo Gemini: %s", queries)
         if not chunks:
-            logger.warning(
-                "groundingChunks vazio — o modelo pode não ter realizado buscas. "
-                "Verifique se o modelo suporta google_search grounding."
+            # Sem buscas o "resumo" seria notícia inventada: melhor outro modelo.
+            raise gemini_client.ModelUnavailableError(
+                "groundingChunks vazio — o modelo não realizou buscas no Google"
             )
 
         # IMPORTANTE: injetar citações ANTES de qualquer limpeza, pois os byte
-        # offsets do groundingSupports são relativos ao texto original da API.
-        text = self._inject_inline_citations(text, grounding)
+        # offsets do groundingSupports são relativos ao texto original de cada
+        # parte da resposta.
+        text = "".join(
+            self._inject_inline_citations(part_text, grounding, part_index)
+            for part_index, part_text in gemini_client.text_parts(candidate)
+        )
         # Só depois remover links alucinados (preserva [N](url) que injetamos).
         text = self._remove_hallucinated_links(text)
 
@@ -196,6 +181,7 @@ Linha 5 em diante: Corpo do post em Markdown
     def _inject_inline_citations(
         text: str,
         grounding_metadata: dict,
+        part_index: int = 0,
     ) -> str:
         """Insere citações reais inline usando groundingSupports + groundingChunks.
 
@@ -221,6 +207,8 @@ Linha 5 em diante: Corpo do post em Markdown
 
         for support in sorted_supports:
             segment = support.get("segment", {})
+            if segment.get("partIndex", 0) != part_index:
+                continue
             end_index = segment.get("endIndex", 0)
             chunk_indices = support.get("groundingChunkIndices", [])
 
@@ -280,37 +268,8 @@ Linha 5 em diante: Corpo do post em Markdown
         return text.rstrip() + section
 
     def parse_generated_content(self, generated_text: str) -> Dict:
-        lines = generated_text.strip().split("\n")
-
-        title = _TITLE_CLEAN_RE.sub("", lines[0]).strip()
-
-        idx = _next_non_empty(lines, 1)
-        categories = (
-            _LABEL_CLEAN_RE.sub("", lines[idx]).strip().lower()
-            if idx < len(lines)
-            else "noticias,tecnologia,resumo-semanal"
+        return parse_generated_content(
+            generated_text,
+            default_categories="noticias,tecnologia,resumo-semanal",
+            default_tags="resumo-semanal,noticias,tecnologia,ia,desenvolvimento",
         )
-
-        idx = _next_non_empty(lines, idx + 1)
-        tags = (
-            _LABEL_CLEAN_RE.sub("", lines[idx]).strip().lower()
-            if idx < len(lines)
-            else "resumo-semanal,noticias,tecnologia,ia,desenvolvimento"
-        )
-
-        idx = _next_non_empty(lines, idx + 1)
-        content = "\n".join(lines[idx:]).strip() if idx < len(lines) else ""
-
-        return {
-            "title": title,
-            "categories": categories,
-            "tags": tags,
-            "content": content,
-        }
-
-
-def _next_non_empty(lines: list[str], start: int) -> int:
-    idx = start
-    while idx < len(lines) and not lines[idx].strip():
-        idx += 1
-    return idx
