@@ -1,4 +1,5 @@
 from pathlib import Path
+from zoneinfo import ZoneInfo
 
 # Diretório raiz do projeto
 ROOT_DIR = Path(__file__).resolve().parents[2]
@@ -8,6 +9,9 @@ ASSETS_DIR = ROOT_DIR / "assets" / "img" / "posts"
 
 # Diretório de posts
 POSTS_DIR = ROOT_DIR / "_posts"
+
+# Fuso do blog: define a data do arquivo e o horário no front matter
+TIMEZONE = ZoneInfo("America/Sao_Paulo")
 
 # Configuração de retries
 MAX_RETRIES = 3

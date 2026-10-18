@@ -38,12 +38,15 @@ class CLIHandler:
         if not github_output:
             return
 
-        with open(github_output, "a") as f:
-            f.write(
-                f"post_title={post.title}\n"
-                f"post_slug={post.slug}\n"
-                f"post_categories={post.categories}\n"
-                f"post_tags={post.tags}\n"
-                f"post_filename={post.filename}\n"
-                f"post_image={post.image_path.removeprefix('/') if post.image_path else ''}\n"
-            )
+        outputs = {
+            "post_title": post.title,
+            "post_slug": post.slug,
+            "post_categories": ",".join(post.categories),
+            "post_tags": ",".join(post.tags),
+            "post_filename": post.filename,
+            "post_image": post.image_path.removeprefix("/") if post.image_path else "",
+        }
+        with open(github_output, "a", encoding="utf-8") as f:
+            for key, value in outputs.items():
+                # Uma quebra de linha no valor criaria outra saída no GITHUB_OUTPUT
+                f.write(f"{key}={' '.join(str(value or '').split())}\n")

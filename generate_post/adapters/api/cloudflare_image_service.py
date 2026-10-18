@@ -1,6 +1,5 @@
 import base64
 import logging
-import random
 import uuid
 from typing import Optional
 
@@ -11,36 +10,43 @@ from generate_post.core.domain.interfaces.image_generator_service import (
 )
 from generate_post.config.env_config import EnvConfig
 from generate_post.config.constants import ASSETS_DIR
+from generate_post.utils.model_fallback import first_successful
 from generate_post.utils.retry_decorator import retry
 
 logger = logging.getLogger(__name__)
 
 _IMAGE_ASSET_PREFIX = "/assets/img/posts"
 
+# Proporção 40:21 do cabeçalho de post do tema Chirpy (múltiplos de 16 para o FLUX.2)
+_WIDTH, _HEIGHT = 1280, 672
+
+# Ordem de preferência. Os FLUX.2 só aceitam multipart/form-data; os demais, JSON.
+# Custo aproximado por imagem (free tier: 10.000 neurons/dia): klein-9b ~1.360,
+# klein-4b ~160, lucid-origin ~4.100, flux-1-schnell ~100.
 _MODEL_CONFIGS = {
-    "black-forest-labs/flux-1-schnell": lambda prompt: {
-        "prompt": prompt,
-        "steps": 8,
-    },
-    "leonardo/lucid-origin": lambda prompt: {
-        "prompt": prompt,
-        "guidance": 4.5,
-        "width": 1120,
-        "height": 1120,
-        "steps": 25,
-    },
-    "leonardo/phoenix-1.0": lambda prompt: {
-        "prompt": prompt,
-        "negative_prompt": (
-            "text, words, letters, watermark, "
-            "signature, logo, low quality, "
-            "blurry, pixelated, distorted"
-        ),
-        "width": 1024,
-        "height": 1024,
-        "steps": 25,
-        "guidance": 4,
-    },
+    "black-forest-labs/flux-2-klein-9b": (
+        "multipart",
+        lambda prompt: {"prompt": prompt, "width": _WIDTH, "height": _HEIGHT},
+    ),
+    "black-forest-labs/flux-2-klein-4b": (
+        "multipart",
+        lambda prompt: {"prompt": prompt, "width": _WIDTH, "height": _HEIGHT},
+    ),
+    "leonardo/lucid-origin": (
+        "json",
+        lambda prompt: {
+            "prompt": prompt,
+            "guidance": 4.5,
+            "width": _WIDTH,
+            "height": _HEIGHT,
+            "steps": 25,
+        },
+    ),
+    # Não aceita dimensões (sai 1024x1024); fica como última reserva.
+    "black-forest-labs/flux-1-schnell": (
+        "json",
+        lambda prompt: {"prompt": prompt, "steps": 8},
+    ),
 }
 
 _BINARY_SIGNATURES = (b"\x89PNG", b"\xff\xd8\xff")
@@ -53,27 +59,20 @@ class CloudflareImageService(ImageGeneratorServiceInterface):
         self._env = env_config or EnvConfig.from_env()
         self._session = requests.Session()
 
-    def create_image_prompt(
-        self, title: str, categories: str, tags: str, content_preview: str
-    ) -> str:
-        """Cria um prompt para a IA gerar uma imagem relacionada ao post"""
+    def create_image_prompt(self, description: str) -> str:
+        """Combina a descrição visual do post com o estilo fixo do blog"""
         return (
-            f"Professional digital illustration for a programming blog post. "
-            f"Topic: {title}. "
-            f"Key concepts: {categories}, {tags}. "
-            f"Context: {content_preview[:300]}. "
-            f"Style: Modern tech aesthetic with clean lines, vibrant gradients, "
-            f"and abstract geometric shapes representing code and technology. "
-            f"Include subtle visual metaphors related to the technical concepts. "
-            f"Color palette: deep blues, electric purples, cyan accents on dark background. "
-            f"No text, no watermarks, no logos, no people."
+            f"Wide editorial illustration for a software engineering blog post: "
+            f"{description[:600]}. "
+            f"Style: modern tech aesthetic with clean lines, vibrant gradients "
+            f"and abstract geometric shapes; subtle visual metaphors for the "
+            f"technical concepts. Color palette: deep blues, electric purples, "
+            f"cyan accents on dark background. "
+            f"No text, no letters, no watermarks, no logos, no people."
         )
 
-    @retry(max_attempts=3, delay=3)
-    def generate_image(
-        self, title: str, categories: str, tags: str, content_preview: str
-    ) -> Optional[str]:
-        """Gera uma imagem relacionada ao post usando Cloudflare Workers AI"""
+    def generate_image(self, description: str) -> Optional[str]:
+        """Gera a imagem de capa usando Cloudflare Workers AI"""
         try:
             self._env.validate_cloudflare()
         except ValueError:
@@ -82,28 +81,41 @@ class CloudflareImageService(ImageGeneratorServiceInterface):
             )
             return None
 
-        prompt = self.create_image_prompt(title, categories, tags, content_preview)
-        logger.info("Prompt da imagem: %s...", prompt[:100])
+        prompt = self.create_image_prompt(description)
+        logger.info("Prompt da imagem: %s...", prompt[:150])
 
-        model = random.choice(list(_MODEL_CONFIGS))
-        logger.info("Modelo de imagem selecionado: %s", model)
+        try:
+            return first_successful(
+                list(_MODEL_CONFIGS),
+                lambda model: self._generate_with_model(model, prompt),
+            )
+        except RuntimeError:
+            # Sem imagem o post ainda sai (com a imagem padrão); perder o post
+            # inteiro por causa da capa seria pior
+            logger.exception("Nenhum modelo de imagem funcionou")
+            return None
 
-        req_json = _MODEL_CONFIGS[model](prompt)
+    @retry(max_attempts=2, delay=3)
+    def _generate_with_model(self, model: str, prompt: str) -> str:
+        kind, build_payload = _MODEL_CONFIGS[model]
+        payload = build_payload(prompt)
 
         url = (
             f"https://api.cloudflare.com/client/v4/accounts/"
             f"{self._env.cf_account_id}/ai/run/@cf/{model}"
         )
+        headers = {"Authorization": f"Bearer {self._env.cf_api_token}"}
 
-        response = self._session.post(
-            url,
-            headers={
-                "Authorization": f"Bearer {self._env.cf_api_token}",
-                "Content-Type": "application/json",
-            },
-            json=req_json,
-            timeout=120,
-        )
+        if kind == "multipart":
+            # (None, valor) faz o requests enviar campos de formulário sem arquivo
+            files = {key: (None, str(value)) for key, value in payload.items()}
+            response = self._session.post(
+                url, headers=headers, files=files, timeout=120
+            )
+        else:
+            response = self._session.post(
+                url, headers=headers, json=payload, timeout=120
+            )
 
         if response.status_code != 200:
             raise requests.RequestException(

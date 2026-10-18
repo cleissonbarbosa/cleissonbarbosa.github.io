@@ -1,5 +1,4 @@
 from abc import ABC, abstractmethod
-from typing import Optional
 
 from ..entities.post import Post
 
@@ -10,9 +9,7 @@ class PostRepositoryInterface(ABC):
     @abstractmethod
     def save_post(self, post: Post) -> bool:
         """Salva um post no repositório"""
-        pass
 
     @abstractmethod
-    def get_last_post(self) -> Optional[Post]:
-        """Recupera o último post do repositório"""
-        pass
+    def get_recent_posts(self, limit: int) -> list[Post]:
+        """Recupera os posts mais recentes, do mais novo para o mais antigo"""
