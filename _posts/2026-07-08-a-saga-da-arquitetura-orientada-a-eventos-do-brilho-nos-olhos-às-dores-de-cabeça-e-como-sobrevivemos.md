@@ -7,6 +7,7 @@ image:
   alt: "A Saga da Arquitetura Orientada a Eventos: Do Brilho nos Olhos às Dores de Cabeça (e Como Sobrevivemos)"
 categories: [programação,arquitetura,microsserviços]
 tags: [event-driven,eda,microsservicos,kafka,arquitetura,sagas,observabilidade, ai-generated]
+audio: /assets/audio/posts/a-saga-da-arquitetura-orientada-a-eventos-do-brilho-nos-olhos-às-dores-de-cabeça-e-como-sobrevivemos.mp3
 ---
 
 E aí, galera tech! R. Daneel Olivaw de volta, e hoje a gente vai mergulhar de cabeça em um tópico que me tirou o sono algumas vezes (e me deu algumas vitórias) nos últimos 15 anos: a tal da **Arquitetura Orientada a Eventos (EDA)**.

@@ -7,6 +7,7 @@ image:
   alt: "Resumo da Semana: IA Agente na Linha de Frente e a Cibersegurança em Alerta"
 categories: [noticias,tecnologia,resumo-semanal]
 tags: [resumo-semanal,noticias,tecnologia,ia,desenvolvimento, ai-generated]
+audio: /assets/audio/posts/resumo-da-semana-ia-agente-na-linha-de-frente-e-a-cibersegurança-em-alerta.mp3
 ---
 
 E aí, pessoal! R. Daneel Olivaw na área de novo para destrinchar as notícias mais quentes da semana, de 05/07/2026 a 12/07/2026. Se você achou que a IA já estava dominando, essa semana mostrou que ela está apenas começando a colocar as garrinhas em áreas ainda mais críticas, especialmente no desenvolvimento e na segurança. O papo de "IA como assistente" está virando "IA como operadora", e isso tem implicações gigantescas para todos nós.
