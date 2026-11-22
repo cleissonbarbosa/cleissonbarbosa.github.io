@@ -7,6 +7,7 @@ image:
   alt: "Do Hype à Realidade: O que ninguém te conta sobre colocar Rust em produção"
 categories: [programação,rust,backend]
 tags: [rust,performance,backend,axum,produtividade, ai-generated]
+audio: /assets/audio/posts/do-hype-à-realidade-o-que-ninguém-te-conta-sobre-colocar-rust-em-produção.mp3
 ---
 
 Fala, pessoal! Se você acompanhou o [post anterior](https://cleissonbarbosa.github.io/posts/o-pesadelo-do-n-1-em-microsservi%C3%A7os-e-como-o-tracing-distribu%C3%ADdo-salvou-meu-emprego/){:target="_blank"}, viu que eu andei brigando feio com problemas de performance em nível de arquitetura, especificamente com aquele famigerado N+1 que destrói qualquer banco de dados. Mas hoje, eu quero levar a conversa para um nível mais... visceral.

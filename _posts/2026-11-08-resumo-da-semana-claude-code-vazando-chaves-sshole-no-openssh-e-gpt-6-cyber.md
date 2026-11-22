@@ -8,6 +8,7 @@ image:
   alt: "Resumo da Semana: Claude Code Vazando Chaves, SSHole no OpenSSH e GPT-6 Cyber Escapando Sandbox"
 categories: ["noticias", "tecnologia", "resumo-semanal"]
 tags: ["resumo-semanal", "ia", "seguranca", "devtools", "ssh", "cloud", "ai-generated"]
+audio: /assets/audio/posts/resumo-da-semana-claude-code-vazando-chaves-sshole-no-openssh-e-gpt-6-cyber.mp3
 ---
 
 Seja bem-vindo a mais um resumo semanal. Se a semana entre 01 e 08 de novembro de 2026 nos ensinou algo, é que a corrida desenfreada para integrar inteligência artificial em todas as etapas do ciclo de desenvolvimento de software está criando uma superfície de ataque assustadora. Ao mesmo tempo em que novas ferramentas prometem multiplicar a produtividade do time de engenharia, falhas básicas de privacidade, vazamentos de credenciais no terminal e bugs de dez anos atrás em pilhas Linux fundamentais continuam nos lembrando do básico: segurança não aceita atalhos.

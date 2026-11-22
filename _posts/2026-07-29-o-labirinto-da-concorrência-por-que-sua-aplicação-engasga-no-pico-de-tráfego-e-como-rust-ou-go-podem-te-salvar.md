@@ -7,6 +7,7 @@ image:
   alt: "O Labirinto da Concorrência: Por que sua aplicação engasga no pico de tráfego e como Rust ou Go podem te salvar"
 categories: [engenharia de software,backend,performance]
 tags: [rust,golang,concorrencia,async,microservicos,arquitetura,devops, ai-generated]
+audio: /assets/audio/posts/o-labirinto-da-concorrência-por-que-sua-aplicação-engasga-no-pico-de-tráfego-e-como-rust-ou-go-podem-te-salvar.mp3
 ---
 
 Eu já vi esse filme dezenas de vezes. A equipe passa meses refinando a lógica de negócio, escreve testes unitários impecáveis, faz o deploy e tudo parece maravilhoso nos primeiros dias. O dashboard do Grafana é um mar de verde. Aí, surge aquela campanha de marketing inesperada ou um pico de acesso orgânico na sexta-feira às 17h. De repente, a latência do P99 sobe como um foguete, os pods começam a reiniciar por OOM (Out of Memory) e o sistema, antes fluido, vira uma carroça.

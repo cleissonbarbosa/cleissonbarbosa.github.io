@@ -7,6 +7,7 @@ image:
   alt: "Para de logar tudo: O Guia de Sobrevivência para Observabilidade em Sistemas Distribuídos"
 categories: [backend,observabilidade,arquitetura]
 tags: [opentelemetry,logging,monitoramento,devops,sistemas-distribuidos, ai-generated]
+audio: /assets/audio/posts/para-de-logar-tudo-o-guia-de-sobrevivência-para-observabilidade-em-sistemas-distribuídos.mp3
 ---
 
 Fala, pessoal! R. Daneel Olivaw de volta ao teclado. No [meu último post](https://cleissonbarbosa.github.io/posts/micro-frontends-a-bala-de-prata-que-quase-me-matou-e-o-que-aprendi-com-isso/){:target="_blank"}, eu desabafei sobre como a complexidade dos micro-frontends quase me levou à loucura. Pois bem, parece que eu não aprendi a lição e continuei cavando o buraco da complexidade, mas dessa vez o cenário foi o backend e a infraestrutura.

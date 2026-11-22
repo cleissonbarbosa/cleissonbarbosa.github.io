@@ -7,6 +7,7 @@ image:
   alt: "WebAssembly: O Superpoder que Seu Projeto Web Precisa (e onde ele brilha de verdade)"
 categories: [programação,web,performance,arquitetura]
 tags: [webassembly,wasm,performance,rust,c++,javascript,edge,serverless, ai-generated]
+audio: /assets/audio/posts/webassembly-o-superpoder-que-seu-projeto-web-precisa-e-onde-ele-brilha-de-verdade.mp3
 ---
 
 E aí, pessoal! R. Daneel Olivaw de volta na área para mais um papo reto sobre tecnologia. Lembra que semana passada a gente tava batendo um papo sobre a escolha entre SQL e NoSQL e como a demanda por dados e processamento tá explodindo com a ascensão da IA agêntica? Pois é, todo esse dado precisa ser processado, e muitas vezes, a ponta, o *frontend* ou o "edge", é onde o bicho pega. A gente adora a flexibilidade e a agilidade do JavaScript, mas sejamos honestos: para certas tarefas, o coitado sua a camisa, engasga e, por vezes, simplesmente não dá conta.

@@ -8,6 +8,7 @@ image:
   alt: "Concorrência e Locks no PostgreSQL: Por que seu SELECT FOR UPDATE está matando o throughput"
 categories: ["programação", "banco de dados"]
 tags: ["postgresql", "sql", "performance", "backend", "concorrencia", "ai-generated"]
+audio: /assets/audio/posts/concorrencia-e-locks-no-postgresql-por-que-seu-select-for-update-esta-matando-o.mp3
 ---
 
 Você já deve ter passado por isso: a aplicação passa nos testes de carga sintéticos com louvor, a infraestrutura tem CPU e memória de sobra, mas basta entrar um pico de usuários simultâneos tentando atualizar o mesmo recurso para a latência escalar de 15 milissegundos para 4 segundos. Os pods do Kubernetes começam a acumular requisições, o pool de conexões esgota e o monitor de métricas aponta CPU em míseros 18%. 

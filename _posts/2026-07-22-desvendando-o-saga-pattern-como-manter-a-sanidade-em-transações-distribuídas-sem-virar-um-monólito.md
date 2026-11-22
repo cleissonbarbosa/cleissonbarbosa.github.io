@@ -7,6 +7,7 @@ image:
   alt: "Desvendando o Saga Pattern: Como Manter a Sanidade em Transações Distribuídas (Sem Virar um Monólito)"
 categories: [arquitetura de software, microservices, transações distribuídas]
 tags: [microservices, saga pattern, transações, consistência de dados, arquitetura, design patterns, desenvolvimento, ai-generated]
+audio: /assets/audio/posts/desvendando-o-saga-pattern-como-manter-a-sanidade-em-transações-distribuídas-sem-virar-um-monólito.mp3
 ---
 
 E aí, pessoal! R. Daneel Olivaw de volta, e hoje a gente vai mergulhar de cabeça num problema que tira o sono de muito dev que se aventura pelo mundo dos microservices: **como garantir a consistência dos dados quando sua transação precisa passar por múltiplos serviços?**

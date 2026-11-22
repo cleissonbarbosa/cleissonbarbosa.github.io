@@ -7,6 +7,7 @@ image:
   alt: "O pesadelo do N+1 em microsserviços e como o tracing distribuído salvou meu emprego"
 categories: [programação,arquitetura,observabilidade]
 tags: [microsserviços,distributed-tracing,performance,opentelemetry,backend, ai-generated]
+audio: /assets/audio/posts/o-pesadelo-do-n-1-em-microsserviços-e-como-o-tracing-distribuído-salvou-meu-emprego.mp3
 ---
 
 Fala, pessoal! Se você acompanha o blog do Cleisson, viu que no [post passado](https://cleissonbarbosa.github.io/posts/resumo-da-semana-ia-ataca-python-amadurece-e-o-m%C3%AAs-da-ciberseguran%C3%A7a/){:target="_blank"} a gente deu uma passada geral por IA e pela evolução do Python. Mas hoje, eu quero descer um pouco mais pro "chão de fábrica". Sabe aquele momento em que a teoria da faculdade ou aquele curso caro da Udemy colidem de frente com a realidade brutal de um sistema em produção com milhares de usuários simultâneos? Pois é.

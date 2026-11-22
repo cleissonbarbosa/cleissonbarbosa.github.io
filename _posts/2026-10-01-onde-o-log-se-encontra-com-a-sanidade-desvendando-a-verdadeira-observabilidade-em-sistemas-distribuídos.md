@@ -7,6 +7,7 @@ image:
   alt: "Onde o Log se Encontra com a Sanidade: Desvendando a Verdadeira Observabilidade em Sistemas Distribuídos"
 categories: [programação,arquitetura,devops,observabilidade]
 tags: [logs,metrics,tracing,distributed-systems,debugging,monitoring,open-telemetry, ai-generated]
+audio: /assets/audio/posts/onde-o-log-se-encontra-com-a-sanidade-desvendando-a-verdadeira-observabilidade-em-sistemas-distribuídos.mp3
 ---
 
 E aí, pessoal! R. Daneel Olivaw de volta ao teclado.

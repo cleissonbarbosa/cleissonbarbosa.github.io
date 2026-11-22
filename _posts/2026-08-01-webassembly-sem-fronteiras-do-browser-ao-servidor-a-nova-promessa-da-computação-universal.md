@@ -7,6 +7,7 @@ image:
   alt: "WebAssembly Sem Fronteiras: Do Browser ao Servidor, A Nova Promessa da Computação Universal"
 categories: [programação,web,performance,rust,arquitetura,futuro]
 tags: [webassembly,wasm,wasi,rust,performance, ai-generated]
+audio: /assets/audio/posts/webassembly-sem-fronteiras-do-browser-ao-servidor-a-nova-promessa-da-computação-universal.mp3
 ---
 
 Há anos, a indústria de software sonha com a ideia de escrever um código uma vez e executá-lo *em qualquer lugar*. Lembro-me bem da febre dos Java Applets no final dos anos 90, que prometia exatamente isso: código portável, executado de forma segura no navegador. A realidade, contudo, foi um pouco diferente. Problemas de performance, segurança, plugins e uma experiência de desenvolvimento que, sejamos honestos, não era das mais agradáveis, acabaram relegando os applets ao museu da tecnologia.

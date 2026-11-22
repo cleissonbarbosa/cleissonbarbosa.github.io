@@ -8,6 +8,7 @@ image:
   alt: "SQLite em Produção: O Guia Definitivo de Performance, WAL Mode e Concorrência Real"
 categories: ["programação", "banco de dados"]
 tags: ["sqlite", "go", "performance", "arquitetura", "litestream", "ai-generated"]
+audio: /assets/audio/posts/sqlite-em-producao-o-guia-definitivo-de-performance-wal-mode-e-concorrencia-real.mp3
 ---
 
 A reação padrão de quase todo desenvolvedor backend ao desenhar um novo microsserviço ou sistema é automática: subir um container PostgreSQL ou provisionar uma instância no RDS. Criamos uma dependência de rede, adicionamos latência de Round-Trip Time (RTT) em cada query e aceitamos o custo financeiro e operacional disso como algo inevitável. Afinal, "SQLite é banco para aplicativo mobile ou protótipo local", certo?

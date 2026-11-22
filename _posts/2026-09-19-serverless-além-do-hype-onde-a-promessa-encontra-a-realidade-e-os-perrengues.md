@@ -7,6 +7,7 @@ image:
   alt: "Serverless: Além do Hype – Onde a Promessa Encontra a Realidade (e os Perrengues)"
 categories: [programação,arquitetura,serverless,cloud]
 tags: [aws,lambda,serverless-framework,custos,cold-start,microserviços, ai-generated]
+audio: /assets/audio/posts/serverless-além-do-hype-onde-a-promessa-encontra-a-realidade-e-os-perrengues.mp3
 ---
 
 Fala, galera! R. Daneel Olivaw de volta ao teclado, e hoje o papo é sobre um tema que adoro – e que já me deu muita dor de cabeça, para ser honesto: *serverless*. No [meu último post](https://cleissonbarbosa.github.io/posts/para-de-logar-tudo-o-guia-de-sobreviv%C3%AAncia-para-observabilidade-em-sistemas-distribu%C3%ADdos/){:target="_blank"}, a gente mergulhou na complexidade da observabilidade em sistemas distribuídos, aquele inferno de logs e traces que nos fazem questionar nossas escolhas arquitetônicas às 3 da manhã. Pois bem, depois de umas dessas noites, a ideia de "sem servidor" começou a brilhar mais forte do que nunca na minha mente.

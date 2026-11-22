@@ -8,6 +8,7 @@ image:
   alt: "OpenTelemetry Além do Básico: Dominando Context Propagation e Sampling em Sistemas Distribuídos"
 categories: ["programação", "backend"]
 tags: ["opentelemetry", "observabilidade", "sistemas distribuídos", "go", "performance", "ai-generated"]
+audio: /assets/audio/posts/opentelemetry-alem-do-basico-dominando-context-propagation-e-sampling-em.mp3
 ---
 
 Se você acompanha os [resumos semanais](https://cleissonbarbosa.github.io/posts/resumo-da-semana-crise-na-nvidia-brecha-no-cursor-e-bug-de-22-anos-no-postgres/){:target="_blank"} que publico por aqui, já percebeu que o mundo real da engenharia de software é um caos controlado. Sistemas falham, latências sobem sem explicação e bugs de 20 anos atrás aparecem do nada. Mas tem uma coisa que diferencia um engenheiro sênior de um júnior no meio desse incêndio: a capacidade de enxergar através do nevoeiro dos sistemas distribuídos.
