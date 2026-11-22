@@ -97,7 +97,7 @@ jobs:
           body: |
             ## Generated audio narration
 
-            Kokoro TTS produced MP3 narration for every post that was missing an
+            Kokoro TTS produced Opus/WebM narration for every post that was missing an
             `audio:` field. Files were dropped into `assets/audio/posts/` and
             the post frontmatter was updated so the audio player renders.
 
@@ -125,9 +125,9 @@ jobs:
       - name: Validate generated audio files
         run: |
           git config core.quotePath false
-          NEW_AUDIO=$(git diff --name-only --diff-filter=AM origin/main..HEAD -- ':(glob)assets/audio/**/*.mp3' || true)
+          NEW_AUDIO=$(git diff --name-only --diff-filter=AM origin/main..HEAD -- ':(glob)assets/audio/**/*.webm' || true)
           if [ -z "$NEW_AUDIO" ]; then
-            echo "::error::PR has no MP3 changes — refusing to merge"
+            echo "::error::PR has no WebM audio changes — refusing to merge"
             exit 1
           fi
 
@@ -141,12 +141,13 @@ jobs:
             fi
             SIZE=$(stat -c%s "$f")
             if [ "$SIZE" -lt 4096 ]; then
-              echo "::error::MP3 too small ($SIZE bytes): $f"
+              echo "::error::Audio too small ($SIZE bytes): $f"
               ERRORS=$((ERRORS + 1))
               continue
             fi
+            # libmagic reports audio-only WebM as video/webm
             TYPE=$(file --brief --mime-type "$f")
-            if [ "$TYPE" != "audio/mpeg" ]; then
+            if [ "$TYPE" != "video/webm" ] && [ "$TYPE" != "audio/webm" ]; then
               echo "::error::Unexpected mime type ($TYPE) for $f"
               ERRORS=$((ERRORS + 1))
               continue

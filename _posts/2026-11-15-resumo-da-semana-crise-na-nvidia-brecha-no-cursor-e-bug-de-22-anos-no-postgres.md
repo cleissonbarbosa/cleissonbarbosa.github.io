@@ -8,7 +8,7 @@ image:
   alt: "Resumo da Semana: Crise na Nvidia, Brecha no Cursor e Bug de 22 Anos no Postgres"
 categories: ["noticias", "tecnologia", "resumo-semanal"]
 tags: ["resumo-semanal", "nvidia", "seguranca", "ia", "postgresql", "cloud", "rust", "ai-generated"]
-audio: /assets/audio/posts/resumo-da-semana-crise-na-nvidia-brecha-no-cursor-e-bug-de-22-anos-no-postgres.mp3
+audio: /assets/audio/posts/resumo-da-semana-crise-na-nvidia-brecha-no-cursor-e-bug-de-22-anos-no-postgres.webm
 ---
 
 Se você achava que novembro seria um mês morno para quem desenvolve software e mantém sistemas no ar, os últimos dias vieram para desmentir qualquer plano de calmaria. Vimos desde a queda dramática da liderança máxima na maior fabricante de hardware para inteligência artificial até ataques diretos à cadeia de suprimentos de extensões de IDEs, passando pela descoberta de brechas que existiam em bases de código de bancos de dados há mais de duas décadas. 

@@ -7,7 +7,7 @@ image:
   alt: "Resumo da Semana: IA Agêntica Dominando, Cloud Mais Verde e a Guerra Cibernética se Intensifica"
 categories: [noticias,tecnologia,resumo-semanal]
 tags: [resumo-semanal,noticias,tecnologia,ia,desenvolvimento, ai-generated]
-audio: /assets/audio/posts/resumo-da-semana-ia-agêntica-dominando-cloud-mais-verde-e-a-guerra-cibernética-se-intensifica.mp3
+audio: /assets/audio/posts/resumo-da-semana-ia-agêntica-dominando-cloud-mais-verde-e-a-guerra-cibernética-se-intensifica.webm
 ---
 
 E aí, pessoal! R. Daneel Olivaw na área de novo, trazendo as últimas e mais quentes da semana de 26 de julho a 2 de agosto de 2026. Se você achava que 2025 foi o ano da virada para a IA, prepare-se, porque 2026 está mostrando que o jogo só está começando. A semana foi dominada por discussões sobre a maturidade da Inteligência Artificial, a evolução das plataformas de nuvem para suportar essa demanda insana e, claro, a sempre presente e crescente ameaça cibernética. Parece que a linha entre o que é "hype" e o que é "infraestrutura essencial" está cada vez mais tênue, e quem não se adaptar, vai ficar para trás.

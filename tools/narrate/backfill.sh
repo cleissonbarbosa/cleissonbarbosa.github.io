@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# Backfill MP3 narration for every post that doesn't yet have `audio:` in its
+# Backfill audio narration for every post that doesn't yet have `audio:` in its
 # frontmatter. Runs locally; extra args are forwarded to narrate.py (e.g.
 # `./backfill.sh --voice pf_dora --max-posts 3`).
 set -euo pipefail

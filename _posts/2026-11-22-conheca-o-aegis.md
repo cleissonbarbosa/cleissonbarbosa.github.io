@@ -9,7 +9,7 @@ image:
 categories: [arquitetura, sistemas distribuídos]
 pin: true
 tags: [rust, webassembly, cedar, simulação, open-source]
-audio: /assets/audio/posts/conheca-o-aegis.mp3
+audio: /assets/audio/posts/conheca-o-aegis.webm
 ---
 
 O **AEGIS** é um simulador de infraestrutura em nuvem. Criei o projeto para acompanhar o caminho de uma requisição e entender como uma falha em um serviço afeta os que dependem dele. Se o banco de pedidos demora a responder, por exemplo, posso ver onde as requisições se acumulam. Depois, repito o incidente com mais capacidade no banco e comparo o tempo de recuperação.

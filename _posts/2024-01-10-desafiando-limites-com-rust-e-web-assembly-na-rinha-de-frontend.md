@@ -8,7 +8,7 @@ image:
 categories: [Rust, Frontend, Competição]
 tags: [rust, rinha, frontend, front-end, webassembly, WebAssembly, wasm, trunk]
 pin: false
-audio: /assets/audio/posts/desafiando-limites-com-rust-e-web-assembly-na-rinha-de-frontend.mp3
+audio: /assets/audio/posts/desafiando-limites-com-rust-e-web-assembly-na-rinha-de-frontend.webm
 ---
 
 ## Introdução

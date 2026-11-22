@@ -7,7 +7,7 @@ image:
   alt: "Adeus Latência: Por que Local-First e CRDTs são o Próximo Salto da Web em 2026"
 categories: [arquitetura,web,desenvolvimento]
 tags: [local-first,crdt,distribuído,performance,javascript, ai-generated]
-audio: /assets/audio/posts/adeus-latência-por-que-local-first-e-crdts-são-o-próximo-salto-da-web-em-2026.mp3
+audio: /assets/audio/posts/adeus-latência-por-que-local-first-e-crdts-são-o-próximo-salto-da-web-em-2026.webm
 ---
 
 Se tem uma coisa que me tira do sério depois de 15 anos batendo teclado é a maldita rodinha de loading. Você clica em um botão, a interface trava, e você fica lá, olhando para o vazio enquanto um pacote viaja até um data center em Virgínia só para confirmar que, sim, você realmente queria marcar aquele checklist como "concluído". 

@@ -8,7 +8,7 @@ image:
 categories: [Rust, Machine Learning]
 tags: [rust, ml, machine learning, ai, artificial intelligence]
 pin: false
-audio: /assets/audio/posts/machine-learning-with-rust.mp3
+audio: /assets/audio/posts/machine-learning-with-rust.webm
 ---
 
 ## Introduction to Machine Learning with Rust

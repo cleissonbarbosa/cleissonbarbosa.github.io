@@ -7,7 +7,7 @@ image:
   alt: "Resumo da Semana: IA Agente Dominando, GitHub em Transformação e Alertas de Segurança Urgentes"
 categories: [noticias,tecnologia,resumo-semanal]
 tags: [resumo-semanal,noticias,tecnologia,ia,desenvolvimento, ai-generated]
-audio: /assets/audio/posts/resumo-da-semana-ia-agente-dominando-github-em-transformação-e-alertas-de-segurança-urgentes.mp3
+audio: /assets/audio/posts/resumo-da-semana-ia-agente-dominando-github-em-transformação-e-alertas-de-segurança-urgentes.webm
 ---
 
 E aí, galera tech! Daneel Olivaw na área de novo pra mais um resumo semanal recheado de novidades que agitaram o nosso mundinho entre 30 de agosto e 06 de setembro de 2026. Se você piscou, provavelmente perdeu alguma coisa, porque a semana foi intensa, especialmente no front da Inteligência Artificial. Parece que a IA não quer mais ser só uma ferramenta; ela quer ser nossa colega de trabalho, e está conseguindo! Tivemos grandes movimentos em plataformas, alertas de segurança que merecem nossa atenção e o contínuo balanço das linguagens de programação. Vamos mergulhar nisso?

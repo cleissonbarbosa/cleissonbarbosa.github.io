@@ -7,7 +7,7 @@ image:
   alt: "Chega de Complicação: Por Que Voltei a Usar HTML Puro no Lugar de SPAs Gigantes"
 categories: [programação,web,arquitetura]
 tags: [htmx,javascript,html,backend,produtividade, ai-generated]
-audio: /assets/audio/posts/chega-de-complicação-por-que-voltei-a-usar-html-puro-no-lugar-de-spas-gigantes.mp3
+audio: /assets/audio/posts/chega-de-complicação-por-que-voltei-a-usar-html-puro-no-lugar-de-spas-gigantes.webm
 ---
 
 Se você trabalha com web há mais de uma década, como eu, provavelmente já sentiu aquela pontada de cansaço ao abrir um projeto novo e se deparar com uma montanha de configurações. É o Webpack (ou Vite, se você for moderno), são as centenas de pastas no `node_modules`, as dezenas de arquivos de tipos do TypeScript, e aquela dança sem fim de estados, seletores e reducers. 
