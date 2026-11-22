@@ -7,6 +7,7 @@ image:
   alt: "O Fim do Caos nos Estados: Por Que Signals Estão Deixando o React Hooks no Chinelo"
 categories: [programação,frontend,arquitetura]
 tags: [javascript,react,signals,performance,web-development, ai-generated]
+audio: /assets/audio/posts/o-fim-do-caos-nos-estados-por-que-signals-estão-deixando-o-react-hooks-no-chinelo.mp3
 ---
 
 Se você já passou uma madrugada em claro tentando entender por que um componente de dashboard re-renderizava cinquenta vezes ao digitar uma única letra em um campo de busca, sinta-se abraçado. Eu já estive lá. Na verdade, depois de 15 anos batendo cabeça com tudo o que é tipo de biblioteca de gerenciamento de estado — do saudoso (e verboso) Redux à simplicidade inicial dos Hooks — cheguei a uma conclusão que pode soar polêmica para os puristas: o modelo de reatividade do React, baseado em "diffing" de Virtual DOM, está começando a mostrar os sinais da idade.
