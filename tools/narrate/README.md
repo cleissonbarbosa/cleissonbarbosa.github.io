@@ -1,6 +1,6 @@
 # narrate — Audio narration generator
 
-Generates MP3 narration for posts using [Kokoro](https://github.com/hexgrad/kokoro)
+Generates Opus/WebM narration for posts using [Kokoro](https://github.com/hexgrad/kokoro)
 TTS (CPU inference, free, runs in GitHub Actions). Hooks into the
 `_includes/audio-player.html` component by writing an `audio:` field into the
 post frontmatter.
@@ -38,7 +38,7 @@ Useful flags:
 | `--voice` | `pf_dora` | Kokoro voice id (pt-BR: `pf_dora`, `pm_alex`, `pm_santa`) |
 | `--lang` | `p` | Kokoro language code (`p`=pt-br, `a`=en-us, `b`=en-uk, ...) |
 | `--speed` | `1.0` | Playback speed multiplier baked into the audio |
-| `--bitrate` | `64k` | MP3 bitrate (mono) |
+| `--bitrate` | `40k` | Opus bitrate (mono) |
 | `--min-words` | `200` | Skip posts shorter than this |
 | `--dry-run` | — | Show which posts would be narrated |
 | `--max-posts` | `0` | Cap how many posts to narrate per run |
@@ -48,10 +48,18 @@ Useful flags:
 1. Reads the markdown file and splits YAML frontmatter from body.
 2. Strips code fences, image syntax, kramdown attribute lists, HTML tags, etc.
 3. Sends clean text through Kokoro (`KPipeline`) at 24 kHz.
-4. Encodes the resulting waveform to a 64 kbps mono MP3 via `ffmpeg`,
-   embedding the title/author/album as ID3 metadata.
-5. Writes the file to `assets/audio/posts/<slug>.mp3`.
-6. Inserts `audio: /assets/audio/posts/<slug>.mp3` into the post frontmatter.
+4. Encodes the resulting waveform to 40 kbps mono Opus in a WebM container via
+   `ffmpeg` (seek index at the front), embedding title/author/album as tags.
+5. Writes the file to `assets/audio/posts/<slug>.webm`.
+6. Inserts `audio: /assets/audio/posts/<slug>.webm` into the post frontmatter.
+
+### Why Opus/WebM 40k
+
+Measured against the old 64 kbps MP3 on three posts: Opus 40k is ~36% smaller
+and scores PESQ-WB ≈ 4.53 (4.64 = identical; re-encoding MP3 → MP3 64k scores
+≈ 4.56). Lower MP3 bitrates and ffmpeg's native AAC lose noticeably more.
+WebM is used instead of Ogg because Safari only plays Opus reliably in WebM
+(Safari 17.4+); on older browsers the player hides itself.
 
 ## CI/CD
 

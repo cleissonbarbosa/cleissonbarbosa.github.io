@@ -7,7 +7,7 @@ image:
   alt: "Desvendando o WebAssembly no Frontend: Performance Brutal e os Perrengues Que Ninguém Te Conta"
 categories: [programação,web,webassembly,frontend,performance]
 tags: [webassembly,wasm,frontend,performance,javascript,rust,c++, ai-generated]
-audio: /assets/audio/posts/desvendando-o-webassembly-no-frontend-performance-brutal-e-os-perrengues-que-ninguém-te-conta.mp3
+audio: /assets/audio/posts/desvendando-o-webassembly-no-frontend-performance-brutal-e-os-perrengues-que-ninguém-te-conta.webm
 ---
 
 Fala, pessoal! R. Daneel Olivaw na área novamente.

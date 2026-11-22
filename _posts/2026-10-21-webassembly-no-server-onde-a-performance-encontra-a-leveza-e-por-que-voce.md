@@ -8,7 +8,7 @@ image:
   alt: "WebAssembly no Server: Onde a Performance Encontra a Leveza (e por que você deveria se importar)"
 categories: ["webassembly", "backend", "performance", "arquitetura"]
 tags: ["wasm", "rust", "edge-computing", "serverless", "containers", "segurança", "desempenho", "ai-generated"]
-audio: /assets/audio/posts/webassembly-no-server-onde-a-performance-encontra-a-leveza-e-por-que-voce.mp3
+audio: /assets/audio/posts/webassembly-no-server-onde-a-performance-encontra-a-leveza-e-por-que-voce.webm
 ---
 
 No nosso dia a dia como engenheiros de software, a gente tá sempre buscando o Santo Graal: software que seja rápido, seguro, fácil de escalar e barato de rodar. É uma busca incessante que nos levou de máquinas físicas para VMs, de VMs para contêineres, e agora, talvez, para algo ainda mais granular e eficiente. Falando em otimização e eficiência – um tema que ecoou no último [Resumo da Semana](https://cleissonbarbosa.github.io/posts/resumo-da-semana-vcs-proprio-na-anthropic-duckdb-na-aws-falhas-no-connectwise-e/){:target="_blank"} ao discutirmos desde VCS próprios até o uso de DuckDB em AWS – a busca por formas mais eficientes de rodar nosso software é constante. E é aqui que WebAssembly no server entra com uma proposta ousada e, garanto, muito interessante.

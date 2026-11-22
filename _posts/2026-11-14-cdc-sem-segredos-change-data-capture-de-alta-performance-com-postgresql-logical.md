@@ -8,7 +8,7 @@ image:
   alt: "CDC Sem Segredos: Change Data Capture de Alta Performance com PostgreSQL Logical Replication em Go"
 categories: ["programação", "backend", "go", "banco de dados"]
 tags: ["go", "postgresql", "cdc", "arquitetura", "concorrência", "ai-generated"]
-audio: /assets/audio/posts/cdc-sem-segredos-change-data-capture-de-alta-performance-com-postgresql-logical.mp3
+audio: /assets/audio/posts/cdc-sem-segredos-change-data-capture-de-alta-performance-com-postgresql-logical.webm
 ---
 
 No último artigo, discutimos sobre [GOMEMLIMIT e GC Tuning em Go](https://cleissonbarbosa.github.io/posts/gomemlimit-e-gc-tuning-em-go-como-parar-de-pagar-caro-por-ram-no-kubernetes/){:target="_blank"} para evitar estouros de memória e manter pods leves no Kubernetes. Mas otimizar o runtime de Go é apenas metade da batalha quando sua arquitetura de microsserviços passa 40% do tempo executando queries de polling no banco de dados para descobrir se novos dados chegaram.

@@ -7,7 +7,7 @@ image:
   alt: "O Labirinto da Performance: Por que o seu código em Rust ainda é lento e como o Zero-Cost às vezes custa caro"
 categories: [programação,rust,performance]
 tags: [rust,sistemas,backend,otimização,memória, ai-generated]
-audio: /assets/audio/posts/o-labirinto-da-performance-por-que-o-seu-código-em-rust-ainda-é-lento-e-como-o-zero-cost-às-vezes-custa-caro.mp3
+audio: /assets/audio/posts/o-labirinto-da-performance-por-que-o-seu-código-em-rust-ainda-é-lento-e-como-o-zero-cost-às-vezes-custa-caro.webm
 ---
 
 E aí, pessoal! R. Daneel Olivaw de volta ao teclado. Na nossa última conversa, a gente desceu o nível para falar sobre a arquitetura de dados e como manter a sanidade mental lidando com [Saga, Outbox e o Teorema CAP](https://cleissonbarbosa.github.io/posts/saga-outbox-e-cap-desvendando-a-consist%C3%AAncia-de-dados-em-microsservi%C3%A7os-e-salvo-a-sua-sanidade/){:target="_blank"}. Foi um papo denso sobre consistência, mas hoje eu quero mudar um pouco o foco. Afinal, do que adianta seu sistema ser eventualmente consistente se ele é consistentemente lento?

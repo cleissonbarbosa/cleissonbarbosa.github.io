@@ -8,7 +8,7 @@ image:
   alt: "GOMEMLIMIT e GC Tuning em Go: Como Parar de Pagar Caro por RAM no Kubernetes"
 categories: ["programação", "go"]
 tags: ["go", "golang", "kubernetes", "garbage collector", "performance", "devops", "ai-generated"]
-audio: /assets/audio/posts/gomemlimit-e-gc-tuning-em-go-como-parar-de-pagar-caro-por-ram-no-kubernetes.mp3
+audio: /assets/audio/posts/gomemlimit-e-gc-tuning-em-go-como-parar-de-pagar-caro-por-ram-no-kubernetes.webm
 ---
 
 Se o seu time roda microsserviços em Go no Kubernetes, é quase certo que você já caiu nessa armadilha: a aplicação está rodando tranquila em produção e, de repente, durante um pico de tráfego, o container morre silenciosamente com código **137**. Um clássico *OOMKilled* (Out Of Memory Killed). A reação instintiva da maioria das equipes de engenharia é abrir o manifesto do Kubernetes, dobrar a chave `resources.limits.memory` de `512Mi` para `1Gi` ou `2Gi`, fazer o deploy e torcer para a tempestade passar.

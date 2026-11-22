@@ -8,7 +8,7 @@ image:
   alt: "Rust na AWS Lambda: Como transformar funções rápidas em servidores sem servidor com Cargo Lambda"
 categories: ["programação", "cloud", "rust"]
 tags: ["rust", "aws-lambda", "serverless", "cargo-lambda", "performance", "ai-generated"]
-audio: /assets/audio/posts/rust-na-aws-lambda-como-transformar-funcoes-rapidas-em-servidores-sem-servidor.mp3
+audio: /assets/audio/posts/rust-na-aws-lambda-como-transformar-funcoes-rapidas-em-servidores-sem-servidor.webm
 ---
 
 ## Introdução: por que levar Rust para a Lambda?

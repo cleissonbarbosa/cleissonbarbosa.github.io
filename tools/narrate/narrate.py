@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
-"""Generate MP3 narration for a Jekyll post using Kokoro TTS.
+"""Generate audio narration for a Jekyll post using Kokoro TTS.
 
 Reads a markdown post, strips it down to readable text, runs Kokoro to produce
-audio (24 kHz WAV) and re-encodes to 64 kbps mono MP3 via ffmpeg. Then updates
-the post frontmatter so the audio-player.html include can render.
+audio (24 kHz WAV) and encodes it to 40 kbps mono Opus in a WebM container via
+ffmpeg. Then updates the post frontmatter so the audio-player.html include can
+render.
+
+Opus 40k was picked over the previous 64 kbps MP3: files are ~36% smaller and
+PESQ-WB against the old MP3 stays at ~4.53/4.64. WebM (not Ogg) is used because
+Safari only plays Opus reliably inside WebM (Safari 17.4+).
 """
 from __future__ import annotations
 
@@ -31,7 +36,8 @@ DEFAULT_SPEED = 1.0
 DEFAULT_MIN_WORDS = 200
 DEFAULT_AUDIO_DIR = Path("assets/audio/posts")
 DEFAULT_AUDIO_URL_PREFIX = "/assets/audio/posts"
-DEFAULT_BITRATE = "64k"
+DEFAULT_BITRATE = "40k"
+AUDIO_EXT = ".webm"
 
 
 FRONTMATTER_RE = re.compile(r"^---\n(.*?)\n---\n", re.DOTALL)
@@ -114,30 +120,37 @@ def synthesize(text: str, voice: str, lang: str, speed: float) -> np.ndarray:
     return np.concatenate(chunks)
 
 
-def encode_mp3(wav_path: Path, mp3_path: Path, bitrate: str, metadata: dict) -> None:
-    mp3_path.parent.mkdir(parents=True, exist_ok=True)
+def encode_audio(src_path: Path, out_path: Path, bitrate: str, metadata: dict) -> None:
+    """Encode any ffmpeg-readable input to mono Opus/WebM.
+
+    Cues (the seek index) are moved to the front so browsers can seek without
+    first fetching the end of the file.
+    """
+    out_path.parent.mkdir(parents=True, exist_ok=True)
     cmd = [
-        "ffmpeg", "-y", "-loglevel", "error",
-        "-i", str(wav_path),
-        "-ac", "1",
+        "ffmpeg", "-nostdin", "-y", "-loglevel", "error",
+        "-i", str(src_path),
+        "-vn", "-ac", "1",
+        "-codec:a", "libopus",
         "-b:a", bitrate,
-        "-codec:a", "libmp3lame",
+        "-application", "audio",
+        "-cues_to_front", "1",
     ]
     for key, value in metadata.items():
         if value:
             cmd.extend(["-metadata", f"{key}={value}"])
-    cmd.append(str(mp3_path))
+    cmd.extend(["-f", "webm", str(out_path)])
     subprocess.run(cmd, check=True)
 
 
-def write_audio(text: str, mp3_path: Path, voice: str, lang: str, speed: float,
+def write_audio(text: str, audio_path: Path, voice: str, lang: str, speed: float,
                 bitrate: str, metadata: dict) -> None:
     waveform = synthesize(text, voice=voice, lang=lang, speed=speed)
     with tempfile.NamedTemporaryFile(suffix=".wav", delete=False) as tmp:
         tmp_path = Path(tmp.name)
     try:
         sf.write(tmp_path, waveform, SAMPLE_RATE)
-        encode_mp3(tmp_path, mp3_path, bitrate=bitrate, metadata=metadata)
+        encode_audio(tmp_path, audio_path, bitrate=bitrate, metadata=metadata)
     finally:
         tmp_path.unlink(missing_ok=True)
 
@@ -192,19 +205,19 @@ def narrate_one(post: Path, *, audio_dir: Path, url_prefix: str, voice: str,
                 wc, voice, lang, speed)
 
     slug = slug_for_post(post)
-    mp3_path = audio_dir / f"{slug}.mp3"
+    audio_path = audio_dir / f"{slug}{AUDIO_EXT}"
 
     metadata = {
         "title": parts.frontmatter.get("title", slug),
         "artist": parts.frontmatter.get("author", ""),
         "album": site_title or "",
     }
-    write_audio(text, mp3_path, voice=voice, lang=lang, speed=speed,
+    write_audio(text, audio_path, voice=voice, lang=lang, speed=speed,
                 bitrate=bitrate, metadata=metadata)
-    url = f"{url_prefix.rstrip('/')}/{slug}.mp3"
+    url = f"{url_prefix.rstrip('/')}/{slug}{AUDIO_EXT}"
     update_frontmatter(post, url)
-    LOGGER.info("  wrote %s (%.1f KB)", mp3_path, mp3_path.stat().st_size / 1024)
-    return mp3_path
+    LOGGER.info("  wrote %s (%.1f KB)", audio_path, audio_path.stat().st_size / 1024)
+    return audio_path
 
 
 def parse_args() -> argparse.Namespace:

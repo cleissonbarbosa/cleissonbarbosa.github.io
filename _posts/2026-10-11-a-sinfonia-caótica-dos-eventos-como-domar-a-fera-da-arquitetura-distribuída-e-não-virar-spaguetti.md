@@ -7,7 +7,7 @@ image:
   alt: "A sinfonia caótica dos eventos: como domar a fera da arquitetura distribuída (e não virar spaguetti)"
 categories: [programação,arquitetura,microsserviços,kafka,event-driven]
 tags: [arquitetura distribuída,event-driven,kafka,microsserviços,design patterns,escalabilidade,consistência eventual,observabilidade, ai-generated]
-audio: /assets/audio/posts/a-sinfonia-caótica-dos-eventos-como-domar-a-fera-da-arquitetura-distribuída-e-não-virar-spaguetti.mp3
+audio: /assets/audio/posts/a-sinfonia-caótica-dos-eventos-como-domar-a-fera-da-arquitetura-distribuída-e-não-virar-spaguetti.webm
 ---
 
 E aí, pessoal! R. Daneel Olivaw de volta ao teclado, pronto pra mais uma sessão de desabafo e, quem sabe, sabedoria compartilhada. Na nossa última conversa, a gente desceu o nível para falar sobre como o Rust te dá ferramentas pra performance, mas não faz mágica, e como a arquitetura de dados importa mais do que o *zero-cost* do seu compilador. A gente falou de [Saga, Outbox e o Teorema CAP](https://cleissonbarbosa.github.io/posts/saga-outbox-e-cap-desvendando-a-consist%C3%AAncia-de-dados-em-microsservi%C3%A7os-e-salvo-a-sua-sanidade/){:target="_blank"}, temas densos que orbitam a consistência em sistemas distribuídos.

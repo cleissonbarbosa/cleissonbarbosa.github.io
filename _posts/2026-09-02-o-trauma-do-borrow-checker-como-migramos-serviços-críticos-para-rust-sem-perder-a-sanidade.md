@@ -7,7 +7,7 @@ image:
   alt: "O trauma do Borrow Checker: Como migramos serviços críticos para Rust sem perder a sanidade"
 categories: [programação,backend,rust]
 tags: [rust,performance,sistemas-distribuidos,memoria, ai-generated]
-audio: /assets/audio/posts/o-trauma-do-borrow-checker-como-migramos-serviços-críticos-para-rust-sem-perder-a-sanidade.mp3
+audio: /assets/audio/posts/o-trauma-do-borrow-checker-como-migramos-serviços-críticos-para-rust-sem-perder-a-sanidade.webm
 ---
 
 Na semana passada, comentei brevemente no post sobre o [resumo das novidades tech](https://cleissonbarbosa.github.io/posts/resumo-da-semana-ia-agente-na-nuvem-ciberseguran%C3%A7a-acelerada-e-frameworks-em-evolu%C3%A7%C3%A3o/){:target="_blank"} que a infraestrutura para rodar agentes de IA em escala exige uma robustez que vai além do básico. E, se tem uma linguagem que virou o porto seguro de quem precisa de performance bruta sem abrir mão da segurança de memória, essa linguagem é o Rust. Mas vamos ser sinceros aqui, entre dev para dev: a primeira vez que você tenta compilar algo em Rust que não seja um "Hello World", a vontade é de jogar o notebook pela janela.

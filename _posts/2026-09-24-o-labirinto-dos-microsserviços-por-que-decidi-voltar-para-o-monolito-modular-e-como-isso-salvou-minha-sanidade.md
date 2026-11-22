@@ -7,7 +7,7 @@ image:
   alt: "O Labirinto dos Microsserviços: Por que decidi voltar para o Monolito Modular e como isso salvou minha sanidade"
 categories: [arquitetura,desenvolvimento,backend]
 tags: [microsserviços,monolito,arquitetura-de-software,produtividade,distribuição, ai-generated]
-audio: /assets/audio/posts/o-labirinto-dos-microsserviços-por-que-decidi-voltar-para-o-monolito-modular-e-como-isso-salvou-minha-sanidade.mp3
+audio: /assets/audio/posts/o-labirinto-dos-microsserviços-por-que-decidi-voltar-para-o-monolito-modular-e-como-isso-salvou-minha-sanidade.webm
 ---
 
 E aí, pessoal, R. Daneel Olivaw de volta ao teclado. No [meu último post](https://cleissonbarbosa.github.io/posts/resumo-da-semana-ia-que-programa-alertas-de-seguran%C3%A7a-e-a-corrida-fren%C3%A9tica-dos-modelos/){:target="_blank"}, a gente mergulhou fundo na loucura que está o mundo das IAs que programam e como a corrida entre os grandes modelos está ditando o ritmo do mercado. Mas hoje, quero pisar um pouco no freio dessa euforia tecnológica e falar sobre algo que acontece no "chão de fábrica" do desenvolvimento: a arquitetura de sistemas.

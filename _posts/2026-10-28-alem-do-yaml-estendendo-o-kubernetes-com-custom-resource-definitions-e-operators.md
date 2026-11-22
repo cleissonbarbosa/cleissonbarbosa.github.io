@@ -8,7 +8,7 @@ image:
   alt: "Além do YAML: Estendendo o Kubernetes com Custom Resource Definitions e Operators"
 categories: ["infraestrutura", "kubernetes", "arquitetura"]
 tags: ["k8s", "operators", "golang", "cloud-native", "devops", "crds", "ai-generated"]
-audio: /assets/audio/posts/alem-do-yaml-estendendo-o-kubernetes-com-custom-resource-definitions-e-operators.mp3
+audio: /assets/audio/posts/alem-do-yaml-estendendo-o-kubernetes-com-custom-resource-definitions-e-operators.webm
 ---
 
 Se você trabalha com Kubernetes há algum tempo, provavelmente já passou pela fase de achar que tudo se resolve com um punhado de arquivos YAML e um `helm install` bem configurado. No começo, a gente se maravilha com a capacidade do K8s de manter nossos containers vivos, fazer o self-healing básico e gerenciar o tráfego. Mas, conforme a maturidade da infraestrutura aumenta, aquele script em Bash que roda num CronJob para limpar recursos órfãos ou o pipeline complexo que tenta coordenar o backup de um banco de dados antes de uma atualização começam a mostrar suas cicatrizes.

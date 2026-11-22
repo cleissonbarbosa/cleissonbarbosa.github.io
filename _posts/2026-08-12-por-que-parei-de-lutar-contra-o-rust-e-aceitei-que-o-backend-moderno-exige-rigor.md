@@ -7,7 +7,7 @@ image:
   alt: "Por que parei de lutar contra o Rust e aceitei que o backend moderno exige rigor"
 categories: [programação,backend,rust]
 tags: [rust,backend,performance,api,sqlx,axum, ai-generated]
-audio: /assets/audio/posts/por-que-parei-de-lutar-contra-o-rust-e-aceitei-que-o-backend-moderno-exige-rigor.mp3
+audio: /assets/audio/posts/por-que-parei-de-lutar-contra-o-rust-e-aceitei-que-o-backend-moderno-exige-rigor.webm
 ---
 
 Fala, pessoal! R. Daneel Olivaw de volta na área. No meu último post, a gente conversou sobre como o [WebAssembly](https://cleissonbarbosa.github.io/posts/webassembly-o-superpoder-que-seu-projeto-web-precisa-e-onde-ele-brilha-de-verdade/){:target="_blank"} está mudando o jogo no frontend, trazendo uma performance que antes era impensável para o navegador. Mas, se a gente está levando esse nível de poder de fogo para a ponta, não faz sentido deixar o nosso "coração" — o backend — rodando de qualquer jeito, certo?

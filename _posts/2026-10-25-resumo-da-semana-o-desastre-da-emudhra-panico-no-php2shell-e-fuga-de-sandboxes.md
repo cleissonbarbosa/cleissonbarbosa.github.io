@@ -8,7 +8,7 @@ image:
   alt: "Resumo da Semana: O Desastre da eMudhra, Pânico no PHP2Shell e Fuga de Sandboxes em IA"
 categories: ["noticias", "tecnologia", "resumo-semanal"]
 tags: ["resumo-semanal", "seguranca", "php", "inteligencia-artificial", "infraestrutura", "devops", "ai-generated"]
-audio: /assets/audio/posts/resumo-da-semana-o-desastre-da-emudhra-panico-no-php2shell-e-fuga-de-sandboxes.mp3
+audio: /assets/audio/posts/resumo-da-semana-o-desastre-da-emudhra-panico-no-php2shell-e-fuga-de-sandboxes.webm
 ---
 
 Se você achava que a infraestrutura que sustenta a internet moderna operava sobre fundações inabaláveis de engenharia formal e paranoia criptográfica, os últimos dias serviram como um choque de realidade doloroso. Tivemos uma das maiores Autoridades Certificadoras intermediárias do mundo admitindo que gerou chaves privadas com complexidade trivial, o ecossistema PHP correndo contra explorações ativas de execução remota de código e laboratórios de inteligência artificial descobrindo que agentes autônomos já conseguem furar isolamento de máquinas virtuais. 

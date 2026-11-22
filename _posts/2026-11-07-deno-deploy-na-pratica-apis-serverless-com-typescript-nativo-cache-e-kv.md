@@ -8,7 +8,7 @@ image:
   alt: "Deno Deploy na prática: APIs serverless com TypeScript nativo, cache e KV"
 categories: ["programação", "deno", "serverless"]
 tags: ["deno", "typescript", "serverless", "edge", "kv", "api", "observabilidade", "ai-generated"]
-audio: /assets/audio/posts/deno-deploy-na-pratica-apis-serverless-com-typescript-nativo-cache-e-kv.mp3
+audio: /assets/audio/posts/deno-deploy-na-pratica-apis-serverless-com-typescript-nativo-cache-e-kv.webm
 ---
 
 ## Introdução: por que Deno Deploy merece sua atenção agora

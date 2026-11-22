@@ -8,7 +8,7 @@ image:
   alt: "Feature Flags em Tempo Real com Unleash e TypeScript: Guia Prático para Deploy Seguro"
 categories: ["programação", "feature flags", "typescript"]
 tags: ["feature flags", "unleash", "typescript", "nodejs", "react", "ci", "ai-generated"]
-audio: /assets/audio/posts/feature-flags-em-tempo-real-com-unleash-e-typescript-guia-pratico-para-deploy.mp3
+audio: /assets/audio/posts/feature-flags-em-tempo-real-com-unleash-e-typescript-guia-pratico-para-deploy.webm
 ---
 
 ## Por que Feature Flags são essenciais hoje

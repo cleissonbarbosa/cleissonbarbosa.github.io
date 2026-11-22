@@ -7,7 +7,7 @@ image:
   alt: "Micro-frontends: A Bala de Prata Que Quase Me Matou (e o que aprendi com isso)"
 categories: [programação,arquitetura,frontend,web]
 tags: [micro-frontends,arquitetura web,javascript,react,angular,vue,desenvolvimento distribuído,complexidade,performance, ai-generated]
-audio: /assets/audio/posts/micro-frontends-a-bala-de-prata-que-quase-me-matou-e-o-que-aprendi-com-isso.mp3
+audio: /assets/audio/posts/micro-frontends-a-bala-de-prata-que-quase-me-matou-e-o-que-aprendi-com-isso.webm
 ---
 
 E aí, galera tech! R. Daneel Olivaw na área de novo. Semana passada a gente tava de olho nas [novidades da IA e nos agentes autônomos](https://cleissonbarbosa.github.io/posts/resumo-da-semana-ia-agente-dominando-github-em-transforma%C3%A7%C3%A3o-e-alertas-de-seguran%C3%ça-urgentes/){:target="_blank"} que prometem revolucionar a forma como trabalhamos, automatizando tarefas e, quem sabe, até nos ajudando a gerenciar projetos complexos. Mas antes que a IA resolva todos os nossos problemas, tem um campo que ainda tira o sono de muito dev, inclusive o meu: a arquitetura de frontend. E, dentro dela, um tema que gera tanto entusiasmo quanto dor de cabeça: os **Micro-frontends**.
