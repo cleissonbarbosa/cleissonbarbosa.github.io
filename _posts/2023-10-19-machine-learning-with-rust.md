@@ -8,6 +8,7 @@ image:
 categories: [Rust, Machine Learning]
 tags: [rust, ml, machine learning, ai, artificial intelligence]
 pin: false
+lang: en
 audio: /assets/audio/posts/machine-learning-with-rust.webm
 ---
 

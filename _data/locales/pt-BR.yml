@@ -1,0 +1,17 @@
+# Site-specific strings, merged by Jekyll on top of the theme's pt-BR locale.
+# Only keys the theme lacks or leaves in English belong here.
+
+panel:
+  trending_tags: Tags em alta
+
+post:
+  # _includes/audio-player.html
+  audio_label: Ouça este post
+  audio_play: Reproduzir narração
+  audio_pause: Pausar narração
+  audio_back: Voltar 15 segundos
+  audio_forward: Avançar 15 segundos
+  audio_speed: Velocidade de reprodução
+  audio_seek: Posição na narração
+  audio_of: de
+  audio_error: Não foi possível carregar a narração. Verifique sua conexão e recarregue a página.

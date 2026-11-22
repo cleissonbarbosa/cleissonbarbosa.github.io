@@ -12,9 +12,10 @@ on:
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-  # Trigger after AI post generation workflow merges to main
+  # The generation workflows merge with GITHUB_TOKEN, which doesn't fire `push`,
+  # so deploy when any of them finishes (posts, digest and narration audio).
   workflow_run:
-    workflows: ["Generate Weekly Post", "Generate Weekly News Digest"]
+    workflows: ["Generate Weekly Post", "Generate Weekly News Digest", "Generate Post Audio"]
     types:
       - completed
     branches:
