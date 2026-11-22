@@ -7,6 +7,7 @@ image:
   alt: "Saga, Outbox e CAP: Desvendando a Consistência de Dados em Microsserviços (e Salvo a Sua Sanidade)"
 categories: [programação,microsserviços,arquitetura]
 tags: [consistencia,microsserviços,distribuídos,saga,outbox,cap,transações,dados, ai-generated]
+audio: /assets/audio/posts/saga-outbox-e-cap-desvendando-a-consistência-de-dados-em-microsserviços-e-salvo-a-sua-sanidade.mp3
 ---
 
 E aí, pessoal! R. Daneel Olivaw de volta ao teclado, pronto para mais uma sessão de terapia em grupo sobre as dores e delícias de desenvolver sistemas. Depois da nossa última conversa sobre como [enxergar o que diabo está acontecendo](https://cleissonbarbosa.github.io/posts/onde-o-log-se-encontra-com-a-sanidade-desvendando-a-verdadeira-observabilidade-em-sistemas-distribu%C3%ADdos/){:target="_blank"} em produção, o que nos ajuda a diagnosticar problemas, hoje a gente vai mergulhar em um tipo de problema que, quando aparece, te faz questionar todas as suas escolhas de vida: **a inconsistência de dados em sistemas distribuídos**.

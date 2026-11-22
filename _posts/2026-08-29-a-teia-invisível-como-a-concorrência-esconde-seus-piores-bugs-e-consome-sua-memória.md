@@ -7,6 +7,7 @@ image:
   alt: "A Teia Invisível: Como a Concorrência Esconde Seus Piores Bugs (e Consome Sua Memória)"
 categories: [programação,sistemas,arquitetura]
 tags: [concorrência,paralelismo,go,rust,java,erros,performance,memória, ai-generated]
+audio: /assets/audio/posts/a-teia-invisível-como-a-concorrência-esconde-seus-piores-bugs-e-consome-sua-memória.mp3
 ---
 
 Se na semana passada a gente conversou sobre a ilusão da memória infinita e o custo que ela cobra quando a gente ignora a gestão dos nossos buffers, hoje eu quero levar essa conversa para outro nível de "ilusão": a ilusão do **processamento infinito**. Onde a memória parecia infinita, agora são os núcleos do processador que nos enganam, prometendo escalabilidade e performance, mas entregando, muitas vezes, pesadelos de *debugging* e picos de latência misteriosos.

@@ -8,6 +8,7 @@ image:
   alt: "eBPF: O Superpoder que Você Não Sabia que Precisava para Debugar Produção"
 categories: ["infraestrutura", "performance"]
 tags: ["ebpf", "linux", "observabilidade", "kernel", "sre", "rust", "ai-generated"]
+audio: /assets/audio/posts/ebpf-o-superpoder-que-voce-nao-sabia-que-precisava-para-debugar-producao.mp3
 ---
 
 Fala, pessoal! Se você deu uma lida no meu [post anterior sobre Rust em produção](https://cleissonbarbosa.github.io/posts/do-hype-%C3%A0-realidade-o-que-ningu%C3%A9m-te-conta-sobre-colocar-rust-em-produ%C3%A7%C3%A3o/){:target="_blank"}, viu que eu sou um grande entusiasta de performance e segurança de memória. Mas, sejamos realistas: às vezes o seu código é impecável, você usou zero-cost abstractions, o seu binário está enxuto, e mesmo assim as coisas estão estranhas. A latência sobe sem motivo aparente, o throughput cai e o seu dashboard do Prometheus jura de pé junto que está tudo bem.

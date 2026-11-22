@@ -8,6 +8,7 @@ image:
   alt: "Resumo da Semana: VCS Próprio na Anthropic, DuckDB na AWS, Falhas no ConnectWise e Bugs Históricos"
 categories: ["noticias", "tecnologia", "resumo-semanal"]
 tags: ["resumo-semanal", "ia", "seguranca", "devtools", "cloud", "engenharia-de-software", "ai-generated"]
+audio: /assets/audio/posts/resumo-da-semana-vcs-proprio-na-anthropic-duckdb-na-aws-falhas-no-connectwise-e.mp3
 ---
 
 Mais uma semana intensa no ecossistema de tecnologia e desenvolvimento de software. Entre os dias 11 e 18 de outubro de 2026, vimos um padrão claro se consolidar nas discussões de engenharia: o custo oculto da escala nos fluxos de trabalho tradicionais, a persistência de vulnerabilidades conceituais em bases de código consagradas e os riscos pragmáticos de delegar acesso a ferramentas de terceiros e agentes autônomos.

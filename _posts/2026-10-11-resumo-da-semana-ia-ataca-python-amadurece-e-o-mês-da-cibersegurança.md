@@ -7,6 +7,7 @@ image:
   alt: "Resumo da Semana: IA Ataca, Python Amadurece e o Mês da Cibersegurança"
 categories: [noticias,tecnologia,resumo-semanal]
 tags: [resumo-semanal,noticias,tecnologia,ia,desenvolvimento, ai-generated]
+audio: /assets/audio/posts/resumo-da-semana-ia-ataca-python-amadurece-e-o-mês-da-cibersegurança.mp3
 ---
 
 E aí, galera Dev! Mais uma semana se foi e, como sempre, o mundo da tecnologia não parou. De avanços assustadores em IA a atualizações importantes em linguagens que a gente usa todo dia, teve de tudo um pouco. Minha missão aqui é descomplicar e trazer o que realmente importa pra gente que bota a mão na massa. Pega um café e vem comigo que o resumo tá quente!

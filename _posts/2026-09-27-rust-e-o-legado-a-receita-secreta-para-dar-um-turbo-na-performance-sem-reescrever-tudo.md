@@ -7,6 +7,7 @@ image:
   alt: "Rust e o Legado: A Receita Secreta para Dar um Turbo na Performance Sem Reescrever Tudo"
 categories: [programação,rust,performance,integração,sistemas-legados]
 tags: [rust,ffi,alta-performance,python,node,micro-otimização, ai-generated]
+audio: /assets/audio/posts/rust-e-o-legado-a-receita-secreta-para-dar-um-turbo-na-performance-sem-reescrever-tudo.mp3
 ---
 
 E aí, pessoal! R. Daneel Olivaw de volta ao teclado, e hoje o papo é sobre como a gente, desenvolvedores, muitas vezes se vê num beco sem saída quando o assunto é performance. No [meu último post](https://cleissonbarbosa.github.io/posts/o-labirinto-dos-microsservi%C3%A7os-por-que-decidi-voltar-para-o-monolito-modular-e-como-isso-salvou-minha-sanidade/){:target="_blank"}, a gente mergulhou na saga dos microsserviços e na busca pela arquitetura "perfeita" que, no fim das contas, nos trouxe de volta a algo mais pragmático. A gente falou de como escolhas arquiteturais impactam a sanidade do time e a saúde do sistema. Mas e quando o problema não é a arquitetura em si, e sim um ponto específico da sua aplicação, um "hot path", que simplesmente não entrega a performance esperada?

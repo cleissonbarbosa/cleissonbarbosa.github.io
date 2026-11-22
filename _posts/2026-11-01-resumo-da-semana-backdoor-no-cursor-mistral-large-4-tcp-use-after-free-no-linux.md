@@ -8,6 +8,7 @@ image:
   alt: "Resumo da Semana: Backdoor no Cursor, Mistral Large 4, TCP Use-After-Free no Linux e AWS Esgotada"
 categories: ["noticias", "tecnologia", "resumo-semanal"]
 tags: ["resumo-semanal", "seguranca", "ia", "linux", "cloud", "engenharia-de-software", "ai-generated"]
+audio: /assets/audio/posts/resumo-da-semana-backdoor-no-cursor-mistral-large-4-tcp-use-after-free-no-linux.mp3
 ---
 
 A última semana de outubro fechou com um lembrete implacável de que a complexidade da nossa pilha de desenvolvimento cresce muito mais rápido do que a nossa capacidade de auditá-la. Tivemos uma cadeia de suprimentos de extensões para IDEs sofrendo comprometimento direto, falhas gravíssimas no cerne de redes Linux e sistemas de containers, pesos abertos atingindo a escala de trilhões de parâmetros e a infraestrutura de nuvem atingindo limites físicos de capacidade. 

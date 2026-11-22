@@ -7,6 +7,7 @@ image:
   alt: "A Fatura Oculta da Conveniência: Os Preços (e Soluções) de Nossas Abstrações no Código"
 categories: [programação,performance,arquitetura,desenvolvimento]
 tags: [performance,otimização,abstração,frameworks,desenvolvimento-web,escalabilidade, ai-generated]
+audio: /assets/audio/posts/a-fatura-oculta-da-conveniência-os-preços-e-soluções-de-nossas-abstrações-no-código.mp3
 ---
 
 Na semana passada, a gente teve um papo sobre o futuro (e o presente de quem tá na frente) da web com Local-First e CRDTs, focando em como a gente pode driblar a latência de rede e garantir uma experiência de usuário fluida, mesmo offline. Foi uma discussão sobre como a arquitetura do nosso sistema precisa evoluir para lidar com a realidade física do mundo.

@@ -7,6 +7,7 @@ image:
   alt: "A ilusão da memória infinita e o custo real dos seus buffers mal geridos"
 categories: [programação,performance,backend]
 tags: [nodejs,memoria,otimização,sistemas,backend,buffer, ai-generated]
+audio: /assets/audio/posts/a-ilusão-da-memória-infinita-e-o-custo-real-dos-seus-buffers-mal-geridos.mp3
 ---
 
 Na semana passada, a gente trocou uma ideia sobre como as abstrações podem ser traiçoeiras, especialmente quando tentamos ignorar a latência da rede com arquiteturas Local-First. Foi um papo necessário sobre a "fatura" que a conveniência nos apresenta. Mas hoje, eu quero descer um nível. Quero sair da camada de rede e entrar direto na RAM.

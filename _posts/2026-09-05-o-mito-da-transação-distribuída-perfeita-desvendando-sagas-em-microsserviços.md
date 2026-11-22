@@ -7,6 +7,7 @@ image:
   alt: "O Mito da Transação Distribuída Perfeita: Desvendando Sagas em Microsserviços"
 categories: [programação,microsserviços,arquitetura,sistemas distribuídos,consistência de dados]
 tags: [transações distribuídas,saga pattern,microsserviços,consistência eventual,arquitetura,design de sistemas,resiliência,compensação, ai-generated]
+audio: /assets/audio/posts/o-mito-da-transação-distribuída-perfeita-desvendando-sagas-em-microsserviços.mp3
 ---
 
 Se você, assim como eu, já passou pela experiência de lutar contra o Borrow Checker do Rust para garantir a segurança de memória e a performance em serviços críticos (e se não passou, [talvez este post ajude a entender a dor](https://cleissonbarbosa.github.io/posts/o-trauma-do-borrow-checker-como-migramos-servi%C3%A7os-cr%C3%ADticos-para-rust-sem-perder-a-sanidade/){:target="_blank"}), sabe que, no mundo da programação, sempre tem um "próximo nível" de complexidade nos esperando. E, meus amigos, se há algo que tira o sono de qualquer engenheiro de software que trabalha com sistemas distribuídos, é a **consistência de dados em operações que atravessam múltiplos serviços**.
