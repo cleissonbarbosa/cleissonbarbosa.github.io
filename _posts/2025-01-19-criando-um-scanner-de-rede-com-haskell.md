@@ -7,7 +7,7 @@ image:
     alt: "Criando um scanner de rede com Haskell"
 categories: [Haskell, Segurança]
 tags: [haskell, segurança, auditoria, desenvolvimento, ferramentas, scanner, rede]
-pin: true
+pin: false
 audio: /assets/audio/posts/criando-um-scanner-de-rede-com-haskell.webm
 ---
 

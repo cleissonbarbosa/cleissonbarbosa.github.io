@@ -7,7 +7,7 @@ image:
   alt: "Demonstração do ASL Viewer"
 categories: [React, AWS, Frontend]
 tags: [react, aws, step-functions, asl, typescript, frontend, visualization, open-source]
-pin: true
+pin: false
 audio: /assets/audio/posts/apresentando-asl-viewer.webm
 ---
 

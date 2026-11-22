@@ -2,7 +2,8 @@
 
 source "https://rubygems.org"
 
-gem "jekyll-theme-chirpy", "~> 7.5"
+# _layouts/post.html is a copy of the theme's layout: re-sync it when bumping this.
+gem "jekyll-theme-chirpy", "~> 7.6.0"
 
 gem "html-proofer", "~> 5.0", group: :test
 

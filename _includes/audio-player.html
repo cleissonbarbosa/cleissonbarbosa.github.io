@@ -382,6 +382,8 @@
 </style>
 
 <script>
+  /* Block comments only: in production compress_html joins this script into
+     one line, where a line comment would swallow all the code after it. */
   (function () {
     var player = document.querySelector('.audio-player');
     if (!player) return;
@@ -389,8 +391,8 @@
     var src = player.getAttribute('data-src');
     var audio = new Audio();
 
-    // Opus/WebM needs Safari 17.4+; hide the player instead of showing a
-    // control that can never play.
+    /* Opus/WebM needs Safari 17.4+; hide the player instead of showing a
+       control that can never play. */
     var mimeByExt = {
       webm: 'audio/webm; codecs="opus"',
       ogg: 'audio/ogg; codecs="opus"',
@@ -464,8 +466,8 @@
       audio.currentTime = Math.min(audio.duration, Math.max(0, t));
     }
 
-    // 'progress' can fire before the duration is known and stop once the file
-    // is fully cached, so the buffered bar is also refreshed on other events.
+    /* 'progress' can fire before the duration is known and stop once the file
+       is fully cached, so the buffered bar is also refreshed on other events. */
     function renderBuffered() {
       if (!hasDuration() || !audio.buffered.length) return;
       var end = audio.buffered.end(audio.buffered.length - 1);
@@ -536,7 +538,7 @@
       isSeeking = false;
     });
 
-    // A native arrow-key step is 1/1000 of the file (~0.5s); jump 5s instead.
+    /* A native arrow-key step is 1/1000 of the file (~0.5s); jump 5s instead. */
     seekInput.addEventListener('keydown', function (e) {
       var dir = { ArrowRight: 1, ArrowUp: 1, ArrowLeft: -1, ArrowDown: -1 }[e.key];
       if (!dir || !hasDuration()) return;
@@ -551,7 +553,7 @@
       speedBtn.setAttribute('aria-label', labels.speed + ': ' + speeds[speedIndex] + '×');
     });
 
-    // Lock-screen / notification controls on phones and desktop media keys
+    /* Lock-screen / notification controls on phones and desktop media keys */
     if ('mediaSession' in navigator) {
       audio.addEventListener('play', function () {
         var art = player.getAttribute('data-artwork');
