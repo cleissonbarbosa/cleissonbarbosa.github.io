@@ -8,6 +8,7 @@ image:
   alt: "Resumo da Semana: PostgreSQL 19, Java4Shell, Vazamentos em Agentes de IA e Receita Federal Open-Source"
 categories: ["noticias", "tecnologia", "resumo-semanal"]
 tags: ["resumo-semanal", "postgresql", "seguranca", "ia", "java", "github", "ai-generated"]
+audio: /assets/audio/posts/resumo-da-semana-postgresql-19-java4shell-vazamentos-em-agentes-de-ia-e-receita.webm
 ---
 
 Fala, pessoal! Mais uma semana intensa no universo de desenvolvimento de software, infraestrutura e inteligência artificial. Entre o lançamento de uma nova versão major do PostgreSQL, falhas de segurança de impacto global em executáveis Java e servidores Nginx, e vazamentos inusitados causados por assistentes de IA diretamente nos repositórios, tivemos dias repletos de aprendizados práticos para quem mantém sistemas em produção.
